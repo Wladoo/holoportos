@@ -1,17 +1,13 @@
 self: super:
 
 # This overlay adds this repository as a package to the nixpkgs available
-# in all of the modules. This is used to make our custom configuration.nix
-# and modules this system was built with are available under /etc/nixos/holoport
+# in all of the modules. This is used to create our custom configuration.nix
+# that imports our modules into the NixOS modules
 
 {
-  holoportModules = self.stdenv.mkDerivation {
+  holoportModules = builtins.path {
     name = "holoport-modules";
-    src = builtins.filterSource (path: type: type != "symlink" || baseNameOf path != ".git") ./.;
-    dontBuild = true;
-    installPhase = ''
-      mkdir -p $out
-      cp -r . $out
-    '';
+    path = ./.;
+    filter = (path: type: type != "symlink" || baseNameOf path != ".git");
   };
 }
