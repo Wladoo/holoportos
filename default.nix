@@ -9,6 +9,13 @@ let
   pkgs = import nixpkgs { inherit system; };
   lib = pkgs.lib;
 
+  version = lib.fileContents "${nixpkgs}/.version";
+  versionSuffix = ".${toString nixpkgs.revCount}.${nixpkgs.shortRev}";
+
+  versionModule = {
+    system.nixos.versionSuffix = versionSuffix;
+    system.nixos.revision = nixpkgs.rev or nixpkgs.shortRev;
+  };
 
 in
 
@@ -17,6 +24,9 @@ in
       inherit system;
       modules = [
         "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+
+        # This is needed to inject the correct nixos version from Hydra
+        versionModule
 
         # The custom config for our install iso
         ({ pkgs, ... }: {
@@ -41,16 +51,14 @@ in
     }).config.system.build.isoImage;
 
   channels.nixos = import "${nixpkgs}/nixos/lib/make-channel.nix" {
-    inherit pkgs nixpkgs;
-    version = lib.fileContents "${nixpkgs}/.version";
-    versionSuffix = ".${toString nixpkgs.revCount}.${nixpkgs.shortRev}";
-   };
+    inherit pkgs nixpkgs version versionSuffix;
+  };
 
   channels.holoport = pkgs.releaseTools.makeSourceTarball {
     name = "holoport-channel";
     src = holoport;
     version = "0.1";
-    versionSuffix = ".${toString holoport.revCount}.${nixpkgs.shortRev}";
+    versionSuffix = ".${toString holoport.revCount}.${holoport.shortRev}";
 
     distPhase = ''
       rm -rf .git*
