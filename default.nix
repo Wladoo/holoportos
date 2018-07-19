@@ -1,6 +1,17 @@
-{ nixpkgs ? (fetchTarball "https://github.com/NixOS/nixpkgs-channels/archive/nixos-18.03.tar.gz")
+{ nixpkgs ? { outPath = fetchTarball "https://github.com/NixOS/nixpkgs-channels/archive/nixos-18.03.tar.gz";
+              revCount = 0; shortRev = "latest"; }
 , system ? builtins.currentSystem
 }:
+
+let
+
+  pkgs = import nixpkgs { inherit system; };
+  lib = pkgs.lib;
+
+  version = lib.fileContents "${nixpkgs}/.version";
+  versionSuffix = ".${toString nixpkgs.revCount}.${nixpkgs.shortRev}";
+
+in
 
 {
   iso = (import "${nixpkgs}/nixos/lib/eval-config.nix" {
@@ -32,4 +43,8 @@
         })
       ];
     }).config.system.build.isoImage;
+
+    channels.nixos = import "${nixpkgs}/nixos/lib/make-channel.nix" {
+      inherit pkgs nixpkgs version versionSuffix;
+    };
 }
