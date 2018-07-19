@@ -1,4 +1,4 @@
-{ nixpkgs ? <nixpkgs>
+{ nixpkgs ? (fetchTarball "https://github.com/NixOS/nixpkgs-channels/archive/nixos-18.03.tar.gz")
 , system ? builtins.currentSystem
 }:
 
