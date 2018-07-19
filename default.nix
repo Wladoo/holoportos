@@ -19,13 +19,10 @@ in
       modules = [
         "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
 
-        # The base module contains stuff we want on both the install iso
-        # and the installed systems
-        ./modules/base.nix
-
         # The custom config for our install iso
         ({ pkgs, ... }: {
           isoImage.isoBaseName = "holoportos";
+          nixpkgs.overlays = [ (import ./overlay.nix) ];
 
           # The NIXOS_CONFIG variable will be used by nixos-install on the so
           # as the configuration of the system to install. This configuration
