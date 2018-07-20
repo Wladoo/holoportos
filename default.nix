@@ -50,7 +50,7 @@ in
       ];
     }).config.system.build.isoImage;
 
-  channels.nixos = import "${nixpkgs}/nixos/lib/make-channel.nix" {
+  channels.nixpkgs = import "${nixpkgs}/nixos/lib/make-channel.nix" {
     inherit pkgs nixpkgs version versionSuffix;
   };
 
