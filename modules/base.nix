@@ -60,7 +60,7 @@ in
 
       environment.etc."nixos/holoport-configuration.nix" = {
         text = replaceStrings ["%%HOLOPORT_MODULES_PATH%%"] [pkgs.holoportModules]
-          (readFile "${pkgs.holoportModules}/configuration.nix");
+          (readFile ../configuration.nix);
       };
     })
   ];

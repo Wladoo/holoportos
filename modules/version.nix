@@ -6,9 +6,9 @@ let
   cfg = config.holoport;
   gitCommitId = lib.substring 0 7 cfg.revision;
 
-  releaseFile = "${pkgs.holoportModules}/.version";
-  suffixFile = "${pkgs.holoportModules}/.version-suffix";
-  revisionFile = "${pkgs.holoportModules}/.git-revision";
+  releaseFile = ../.version;
+  suffixFile = ../.version-suffix;
+  revisionFile = ../.git-revision;
   gitRepo = ../.git;
 
   gitRevision = if pathIsDirectory gitRepo then commitIdFromGitRepo gitRepo
