@@ -55,7 +55,7 @@ in
       # Caches tarballs obtained via fetchurl for 60 seconds, mainly
       # used for the channels
       nix.extraOptions = ''
-        tarball-ttl 60
+        tarball-ttl = 60
       '';
 
       environment.etc."nixos/holoport-configuration.nix" = {
