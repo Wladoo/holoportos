@@ -1,5 +1,5 @@
 { holoport ? { outPath = ./.; revCount = 0; shortRev = "master"; }
-, nixpkgs ? { outPath = fetchTarball "https://github.com/NixOS/nixpkgs-channels/archive/nixos-18.03.tar.gz";
+, nixpkgs ? { outPath = fetchTarball "https://nixos.org/channels/nixos-18.03/nixexprs.tar.xz";
               revCount = 0; shortRev = "latest"; }
 , system ? builtins.currentSystem
 }:
@@ -9,13 +9,7 @@ let
   pkgs = import nixpkgs { inherit system; };
   lib = pkgs.lib;
 
-  version = lib.fileContents "${nixpkgs}/.version";
-  versionSuffix = ".${toString nixpkgs.revCount}.${nixpkgs.shortRev}";
-
-  versionModule = {
-    system.nixos.versionSuffix = versionSuffix;
-    system.nixos.revision = nixpkgs.rev or nixpkgs.shortRev;
-  };
+  nixpkgsVersionSuffix = ".${toString nixpkgs.revCount}.${nixpkgs.shortRev}";
 
 in
 
@@ -25,13 +19,18 @@ in
       modules = [
         "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
 
-        # This is needed to inject the correct nixos version from Hydra
-        versionModule
+        # These modules are needed to inject the correct nixos version from Hydra
+        ./modules/base.nix
+        ./modules/version.nix
 
         # The custom config for our install iso
         ({ pkgs, ... }: {
           isoImage.isoBaseName = "holoportos";
-          nixpkgs.overlays = [ (import ./overlay.nix) ];
+          holoport.versionSuffix = ".${toString holoport.revCount}.${holoport.shortRev}";
+          holoport.revision = holoport.rev or holoport.shortRev;
+
+          system.nixos.versionSuffix = nixpkgsVersionSuffix;
+          system.nixos.revision = nixpkgs.rev or nixpkgs.shortRev;
 
           # The NIXOS_CONFIG variable will be used by nixos-install on the so
           # as the configuration of the system to install. This configuration
@@ -51,17 +50,20 @@ in
     }).config.system.build.isoImage;
 
   channels.nixpkgs = import "${nixpkgs}/nixos/lib/make-channel.nix" {
-    inherit pkgs nixpkgs version versionSuffix;
+    inherit pkgs nixpkgs;
+    version = lib.fileContents "${nixpkgs}/.version";
+    versionSuffix = nixpkgsVersionSuffix;
   };
 
   channels.holoport = pkgs.releaseTools.makeSourceTarball {
     name = "holoport-channel";
     src = holoport;
-    version = "0.1";
+    version = builtins.readFile ./.version;
     versionSuffix = ".${toString holoport.revCount}.${holoport.shortRev}";
 
     distPhase = ''
       rm -rf .git*
+      echo -n "$VERSION_SUFFIX" > .version-suffix
       echo -n ${holoport.rev or holoport.shortRev} > .git-revision
       releaseName=holoport-$VERSION$VERSION_SUFFIX
       mkdir -p $out/tarballs

@@ -33,22 +33,29 @@ in
         URL understood by Nix to the Holoport channel
       '';
     };
-  };
 
-  config = {
-    nix.nixPath = lib.mkForce [
-      # The nixpkgs used for nixos-rebuild and all other nix commands
-      "nixpkgs=${cfg.channels.nixpkgs}"
-
-      # The custom configuration.nix that injects our modules
-      "nixos-config=/etc/nixos/holoport-configuration.nix"
-    ];
-
-    environment.etc."nixos/holoport-configuration.nix" = {
-      text = replaceStrings ["%%HOLOPORT_MODULES_PATH%%"] [pkgs.holoportModules]
-        (readFile "${pkgs.holoportModules}/configuration.nix");
+    holoport.isInstallMedium = mkOption {
+      type = types.bool;
+      default = false;
     };
-
-    nixpkgs.overlays = [ (import ../overlay.nix) ];
   };
+
+  config = mkMerge [
+    { nixpkgs.overlays = [ (import ../overlay.nix) ]; }
+
+    (mkIf (!cfg.isInstallMedium) {
+      nix.nixPath = lib.mkForce [
+        # The nixpkgs used for nixos-rebuild and all other nix commands
+        "nixpkgs=${cfg.channels.nixpkgs}"
+
+        # The custom configuration.nix that injects our modules
+        "nixos-config=/etc/nixos/holoport-configuration.nix"
+      ];
+
+      environment.etc."nixos/holoport-configuration.nix" = {
+        text = replaceStrings ["%%HOLOPORT_MODULES_PATH%%"] [pkgs.holoportModules]
+          (readFile "${pkgs.holoportModules}/configuration.nix");
+      };
+    })
+  ];
 }
