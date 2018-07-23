@@ -58,7 +58,7 @@ in
   channels.holoport = pkgs.releaseTools.makeSourceTarball {
     name = "holoport-channel";
     src = holoport;
-    version = builtins.readFile ./.version;
+    version = lib.fileContents ./.version;
     versionSuffix = ".${toString holoport.revCount}.${holoport.shortRev}";
 
     distPhase = ''
