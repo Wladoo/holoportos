@@ -16,10 +16,8 @@ let
     else "master";
 
   release = fileContents releaseFile;
-  versionSuffix = if pathIsDirectory gitRepo then ".${gitCommitId}"
-    else if pathExists suffixFile then fileContents suffixFile
-    else "pre-git";
-  version = release + versionSuffix;
+  versionSuffix = if pathExists suffixFile then fileContents suffixFile
+    else ".${gitCommitId}";
 
 in
 
