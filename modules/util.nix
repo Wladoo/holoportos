@@ -1,9 +1,12 @@
 { config, lib, pkgs, ... }:
 
 {
-  environment.systemPackages = [
-    #scm
-    pkgs.git
+  environment.systemPackages = with pkgs; [
+    git
+    vim
+    htop
   ];
 
+  programs.bash.enableCompletion = true;
+  programs.command-not-found.enable = false;
 }
