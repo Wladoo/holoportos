@@ -52,6 +52,12 @@ in
         "nixos-config=/etc/nixos/holoport-configuration.nix"
       ];
 
+      # Caches tarballs obtained via fetchurl for 60 seconds, mainly
+      # used for the channels
+      nix.extraOptions = ''
+        tarball-ttl 60
+      '';
+
       environment.etc."nixos/holoport-configuration.nix" = {
         text = replaceStrings ["%%HOLOPORT_MODULES_PATH%%"] [pkgs.holoportModules]
           (readFile "${pkgs.holoportModules}/configuration.nix");
