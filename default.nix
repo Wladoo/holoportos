@@ -1,5 +1,5 @@
 { holoport ? { outPath = ./.; revCount = 0; shortRev = "master"; }
-, nixpkgs ? { outPath = fetchTarball "https://nixos.org/channels/nixos-18.03/nixexprs.tar.xz";
+, nixpkgs ? { outPath = fetchTarball "https://github.com/NixOS/nixpkgs-channels/archive/nixos-18.03.tar.gz";
               revCount = 0; shortRev = "latest"; }
 , system ? builtins.currentSystem
 }:
@@ -9,11 +9,12 @@ let
   pkgs = import nixpkgs { inherit system; };
   lib = pkgs.lib;
 
+  nixpkgsVersion = lib.fileContents "${nixpkgs}/.version";
   nixpkgsVersionSuffix = ".${toString nixpkgs.revCount}.${nixpkgs.shortRev}";
 
 in
 
-{
+rec {
   iso = (import "${nixpkgs}/nixos/lib/eval-config.nix" {
     inherit system;
     modules = [
@@ -51,7 +52,7 @@ in
 
   channels.nixpkgs = import "${nixpkgs}/nixos/lib/make-channel.nix" {
     inherit pkgs nixpkgs;
-    version = lib.fileContents "${nixpkgs}/.version";
+    version = nixpkgsVersion;
     versionSuffix = nixpkgsVersionSuffix;
   };
 
@@ -73,4 +74,16 @@ in
       tar cfJ $out/tarballs/$releaseName.tar.xz $releaseName
     '';
   };
+
+  tested = lib.hydraJob (pkgs.releaseTools.aggregate {
+    name = "nixos-${nixpkgsVersion}${nixpkgsVersionSuffix}+holoport-${channels.holoport.version}${channels.holoport.version}";
+    meta = {
+      description = "Release-critical builds for holoportOS";
+    };
+    constituents = [
+      iso
+      channels.nixpkgs
+      channels.holoport
+    ];
+  });
 }
