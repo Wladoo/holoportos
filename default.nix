@@ -12,9 +12,20 @@ let
   nixpkgsVersion = lib.fileContents "${nixpkgs}/.version";
   nixpkgsVersionSuffix = ".${toString nixpkgs.revCount}.${nixpkgs.shortRev}";
 
+  mkTest = import "${nixpkgs}/nixos/tests/make-test.nix";
+  mkTestJob = t:
+    let
+      job = lib.hydraJob ((mkTest (import t)) { inherit system; });
+    in {
+      name = lib.removePrefix "vm-test-run-" job.name;
+      value = job;
+    };
+
 in
 
 rec {
+  tests = lib.listToAttrs (map mkTestJob (import ./tests/all-tests.nix));
+
   iso = import lib/make-iso.nix { inherit nixpkgs system holoport nixpkgsVersionSuffix; };
 
   channels.nixpkgs = import "${nixpkgs}/nixos/lib/make-channel.nix" {
@@ -51,6 +62,6 @@ rec {
       iso
       channels.nixpkgs
       channels.holoport
-    ];
+    ] ++ (lib.attrValues tests);
   });
 }
