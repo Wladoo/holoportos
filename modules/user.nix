@@ -17,5 +17,5 @@
       holoport ALL=(ALL) NOPASSWD: ALL, SETENV: ALL
     '';
   services.openssh.enable = true;
-  services.openssh.authorizedKeyfiles = ["/home/holoport/.ssh/support_key"];
+  #services.openssh.authorizedKeyfiles = ["/home/holoport/.ssh/support_key"];
 }
