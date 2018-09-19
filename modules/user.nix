@@ -5,6 +5,10 @@
     isNormalUser = true;
     extraGroups = [ "wheel" ];
   };
+  users.extraUsers.manager = {
+    isNormalUser = true;
+    extraGroups = [ "manager" ];
+  }
   services.mingetty.autologinUser = "holoport";
   security.sudo.wheelNeedsPassword = false;
   security.sudo.configFile =
@@ -17,5 +21,5 @@
       holoport ALL=(ALL) NOPASSWD: ALL, SETENV: ALL
     '';
   services.openssh.enable = true;
-  services.openssh.authorizedKeysFiles = ["/home/holoport/.ssh/support_key"];
+  services.openssh.authorizedKeysFiles = ["/home/manager/.ssh/support_key"];
 }
