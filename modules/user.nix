@@ -8,7 +8,7 @@
   users.extraUsers.manager = {
     isNormalUser = true;
     extraGroups = [ "manager" ];
-  }
+  };
   services.mingetty.autologinUser = "holoport";
   security.sudo.wheelNeedsPassword = false;
   security.sudo.configFile =
