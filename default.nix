@@ -9,59 +9,40 @@ let
   pkgs = import nixpkgs { inherit system; };
   lib = pkgs.lib;
 
-  version = lib.fileContents "${nixpkgs}/.version";
-  versionSuffix = ".${toString nixpkgs.revCount}.${nixpkgs.shortRev}";
+  nixpkgsVersion = lib.fileContents "${nixpkgs}/.version";
+  nixpkgsVersionSuffix = ".${toString nixpkgs.revCount}.${nixpkgs.shortRev}";
 
-  versionModule = {
-    system.nixos.versionSuffix = versionSuffix;
-    system.nixos.revision = nixpkgs.rev or nixpkgs.shortRev;
-  };
+  mkTest = import "${nixpkgs}/nixos/tests/make-test.nix";
+  mkTestJob = t:
+    let
+      job = lib.hydraJob ((mkTest (import t)) { inherit system; });
+    in {
+      name = lib.removePrefix "vm-test-run-" job.name;
+      value = job;
+    };
 
 in
 
-{
-  iso = (import "${nixpkgs}/nixos/lib/eval-config.nix" {
-      inherit system;
-      modules = [
-        "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+rec {
+  tests = lib.listToAttrs (map mkTestJob (import ./tests/all-tests.nix));
 
-        # This is needed to inject the correct nixos version from Hydra
-        versionModule
-
-        # The custom config for our install iso
-        ({ pkgs, ... }: {
-          isoImage.isoBaseName = "holoportos";
-          nixpkgs.overlays = [ (import ./overlay.nix) ];
-
-          # The NIXOS_CONFIG variable will be used by nixos-install on the so
-          # as the configuration of the system to install. This configuration
-          # will first import the actual configuration.nix that was generated
-          # with nixos-generated-config on the target fs mount on /mnt.
-          # Additionally, all our custom modules will be imported so our
-          # configuration is applied.
-          environment.variables.NIXOS_CONFIG =
-            toString (pkgs.writeText "holoport-configuration.nix" ''
-              {
-                imports = [ "/mnt/etc/nixos/configuration.nix" ]
-                  ++ (import "${pkgs.holoportModules}/modules/module-list.nix");
-              }
-            '');
-        })
-      ];
-    }).config.system.build.isoImage;
+  iso = import lib/make-iso.nix { inherit nixpkgs system holoport nixpkgsVersionSuffix; };
 
   channels.nixpkgs = import "${nixpkgs}/nixos/lib/make-channel.nix" {
-    inherit pkgs nixpkgs version versionSuffix;
+    inherit pkgs nixpkgs;
+    version = nixpkgsVersion;
+    versionSuffix = nixpkgsVersionSuffix;
   };
 
   channels.holoport = pkgs.releaseTools.makeSourceTarball {
     name = "holoport-channel";
     src = holoport;
-    version = "0.1";
+    version = lib.fileContents ./.version;
     versionSuffix = ".${toString holoport.revCount}.${holoport.shortRev}";
 
     distPhase = ''
       rm -rf .git*
+      echo -n "$VERSION_SUFFIX" > .version-suffix
       echo -n ${holoport.rev or holoport.shortRev} > .git-revision
       releaseName=holoport-$VERSION$VERSION_SUFFIX
       mkdir -p $out/tarballs
@@ -71,4 +52,16 @@ in
       tar cfJ $out/tarballs/$releaseName.tar.xz $releaseName
     '';
   };
+
+  tested = lib.hydraJob (pkgs.releaseTools.aggregate {
+    name = "nixos-${channels.nixpkgs.version}+holoport-${channels.holoport.version}";
+    meta = {
+      description = "Release-critical builds for holoportOS";
+    };
+    constituents = [
+      iso
+      channels.nixpkgs
+      channels.holoport
+    ] ++ (lib.attrValues tests);
+  });
 }

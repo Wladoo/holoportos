@@ -3,4 +3,6 @@
   ./base.nix
   ./auto-update.nix
   ./user.nix
+  ./util.nix
+  ./version.nix
 ]

@@ -50,4 +50,8 @@ To that end, if you'd like to help out, feel free to check out the [Holo-Host gi
 
 5. nixos-generate-config --root /mnt
 
-6. edit target system on /mnt/etc/nixos/configuration.nix and uncomment boot.loader.grup.device = "/dev/sda";
+6. edit target system on /mnt/etc/nixos/configuration.nix and uncomment `boot.loader.grub.device = "/dev/sda";`
+
+7. Run `nixos-install`
+
+8. reboot and the system should boot into the nixos-based holoportos

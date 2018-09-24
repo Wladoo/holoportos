@@ -33,22 +33,40 @@ in
         URL understood by Nix to the Holoport channel
       '';
     };
-  };
 
-  config = {
-    nix.nixPath = lib.mkForce [
-      # The nixpkgs used for nixos-rebuild and all other nix commands
-      "nixpkgs=${cfg.channels.nixpkgs}"
-
-      # The custom configuration.nix that injects our modules
-      "nixos-config=/etc/nixos/holoport-configuration.nix"
-    ];
-
-    environment.etc."nixos/holoport-configuration.nix" = {
-      text = replaceStrings ["%%HOLOPORT_MODULES_PATH%%"] [pkgs.holoportModules]
-        (readFile "${pkgs.holoportModules}/configuration.nix");
+    holoport.isInstallMedium = mkOption {
+      type = types.bool;
+      default = false;
     };
-
-    nixpkgs.overlays = [ (import ../overlay.nix) ];
   };
+
+  config = mkMerge [
+    { nixpkgs.overlays = [ (import ../overlay.nix) ]; }
+
+    (mkIf (!cfg.isInstallMedium) {
+      boot.loader.grub.splashImage = (pkgs.fetchurl {
+        url = "https://holo.host/wp-content/uploads/2017/11/HOL215_HoloPort_6.png";
+        sha256 = "1cp4p4xd1wq4ad9b3bnpa4rznjhxnfsi6xd3j2bwy137q46c3k21";
+      });
+
+      nix.nixPath = lib.mkForce [
+        # The nixpkgs used for nixos-rebuild and all other nix commands
+        "nixpkgs=${cfg.channels.nixpkgs}"
+
+        # The custom configuration.nix that injects our modules
+        "nixos-config=/etc/nixos/holoport-configuration.nix"
+      ];
+
+      # Caches tarballs obtained via fetchurl for 60 seconds, mainly
+      # used for the channels
+      nix.extraOptions = ''
+        tarball-ttl = 60
+      '';
+
+      environment.etc."nixos/holoport-configuration.nix" = {
+        text = replaceStrings ["%%HOLOPORT_MODULES_PATH%%"] [pkgs.holoportModules]
+          (readFile ../configuration.nix);
+      };
+    })
+  ];
 }
