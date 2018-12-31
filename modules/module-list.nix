@@ -2,6 +2,7 @@
 [
   ./base.nix
   ./auto-update.nix
+  ./udiskie.nix
   ./user.nix
   ./util.nix
   ./version.nix
