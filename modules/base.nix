@@ -45,8 +45,8 @@ in
 
     (mkIf (!cfg.isInstallMedium) {
       boot.loader.grub.splashImage = (pkgs.fetchurl {
-        url = "https://cdn.shopify.com/s/files/1/0084/7360/8250/products/holoport-front_1024x1024@2x.jpg";
-        sha256 = "f0db62e315faa46e4ce38b7e0924cc653b2d30a4c3d911030cfe117acd32f5d4";
+        url = "https://i.imgur.com/S8tZLqs.jpg";
+        sha256 = "aa281dc590987818188ca27b3f6c0f56f975505c909a1fd2156be54a38a0e57e";
       });
 
       nix.nixPath = lib.mkForce [
