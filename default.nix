@@ -34,8 +34,8 @@ rec {
     versionSuffix = nixpkgsVersionSuffix;
   };
 
-  channels.holoport = pkgs.releaseTools.makeSourceTarball {
-    name = "holoport-channel";
+  channels.holoport-testnet = pkgs.releaseTools.makeSourceTarball {
+    name = "holoport-testnet-channel";
     src = holoport;
     version = lib.fileContents ./.version;
     versionSuffix = ".${toString holoport.revCount}.${holoport.shortRev}";
@@ -61,7 +61,7 @@ rec {
     constituents = [
       iso
       channels.nixpkgs
-      channels.holoport
+      channels.holoport-testnet
     ] ++ (lib.attrValues tests);
   });
 }

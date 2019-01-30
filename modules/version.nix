@@ -47,6 +47,6 @@ in
 
   config = {
     holoport.version = mkDefault (cfg.release + cfg.versionSuffix);
-    system.nixos.label = "${config.system.nixos.version}+holoport-${cfg.version}";
+    system.nixos.label = "${config.system.nixos.version}+holoport-testnet-${cfg.version}";
   };
 }
