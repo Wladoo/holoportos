@@ -54,7 +54,7 @@ rec {
   };
 
   tested = lib.hydraJob (pkgs.releaseTools.aggregate {
-    name = "nixos-${channels.nixpkgs.version}+holoport-${channels.holoport.version}";
+    name = "nixos-${channels.nixpkgs.version}+holoport-testnet${channels.holoport-testnet.version}";
     meta = {
       description = "Release-critical builds for holoportOS";
     };
