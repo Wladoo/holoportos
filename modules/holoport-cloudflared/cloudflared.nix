@@ -13,7 +13,7 @@ buildGoPackage rec {
   };
 
   goDeps = ./deps.nix;
-
+  environment.systemPackages = [pkgs.cloudflared-${version}];
 #  meta = with stdenv.lib; {
 #    description = "CloudFlare Argo Tunnel daemon (and DNS-over-HTTPS client)";
 #    homepage    = https://www.cloudflare.com/products/argo-tunnel;
