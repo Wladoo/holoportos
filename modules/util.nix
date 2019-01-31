@@ -2,7 +2,6 @@
 
 {
   environment.systemPackages = with pkgs; [
-    cloudflared
     git
     vim
     htop
