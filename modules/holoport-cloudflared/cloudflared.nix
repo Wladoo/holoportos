@@ -14,11 +14,11 @@ buildGoPackage rec {
 
   goDeps = ./deps.nix;
 
-  meta = with stdenv.lib; {
-    description = "CloudFlare Argo Tunnel daemon (and DNS-over-HTTPS client)";
-    homepage    = https://www.cloudflare.com/products/argo-tunnel;
-    license     = licenses.unfree;
-    platforms   = platforms.unix;
-    maintainers = [ maintainers.thoughtpolice ];
-  };
+#  meta = with stdenv.lib; {
+#    description = "CloudFlare Argo Tunnel daemon (and DNS-over-HTTPS client)";
+#    homepage    = https://www.cloudflare.com/products/argo-tunnel;
+#    license     = licenses.unfree;
+#    platforms   = platforms.unix;
+#    maintainers = [ maintainers.thoughtpolice ];
+#  };
 }
