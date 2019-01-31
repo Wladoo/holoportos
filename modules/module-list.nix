@@ -2,7 +2,7 @@
 [
   ./auto-update.nix
   ./base.nix
-  ./holoport-cloudflared/cloudfalred.nix
+  ./holoport-cloudflared/cloudflared.nix
   ./udiskie.nix
   ./user.nix
   ./util.nix
