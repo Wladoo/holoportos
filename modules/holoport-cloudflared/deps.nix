@@ -37,15 +37,6 @@
     };
   }
   {
-    goPackagePath  = "github.com/cloudflare/golibs";
-    fetch = {
-      type = "git";
-      url = "https://github.com/cloudflare/golibs";
-      rev =  "333127dbecfcc23a8db7d9a4f52785d23aff44a1";
-      sha256 = "170hbv9wyfmb5da9a6wjz2mphp0pylv23h8qp8h5kwa2i9frdqqi";
-    };
-  }
-  {
     goPackagePath  = "github.com/coredns/coredns";
     fetch = {
       type = "git";

@@ -2,14 +2,14 @@
 { stdenv, buildGoPackage, fetchFromGitHub }:
 buildGoPackage rec {
   name    = "cloudflared-${version}";
-  version = "2019.1.0";
+  version = "2018.10.3";
   goPackagePath = "github.com/cloudflare/cloudflared";
 
   src = fetchFromGitHub {
     owner  = "cloudflare";
     repo   = "cloudflared";
-    rev    = "6a331b13ba671398be0db9659eac6ea5cfcda827"; 
-    sha256 = "14rrqv9vv09rvrxg0vhclyzkgsh1lkxwqshc575njs846qxjqwkd";
+    rev    = "41916365b689bf2cc1446ea5717e4d26cc8aed43";
+    sha256 = "109bhnmvlvj3ag9vw090fy202z8aaqr1rakhn8v550wwy30h9zkf";
   };
 
   goDeps = ./deps.nix;
