@@ -17,7 +17,7 @@ buildGoPackage rec {
   meta = with stdenv.lib; {
     description = "CloudFlare Argo Tunnel daemon (and DNS-over-HTTPS client)";
     homepage    = https://www.cloudflare.com/products/argo-tunnel;
-    license     = licenses.notfree;
+    license     = licenses.unfree;
     platforms   = platforms.unix;
     maintainers = [ maintainers.thoughtpolice ];
   };
