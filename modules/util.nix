@@ -5,6 +5,7 @@
     git
     vim
     htop
+    cloudflared
   ];
 
   programs.bash.enableCompletion = true;
