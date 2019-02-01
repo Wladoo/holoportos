@@ -16,5 +16,5 @@ in
 
 
   # master copy
-  cloudflared = callPackage ./modules/holport-cloudflared/cloudflared.nix {};
+  cloudflared = callPackage ./modules/holoport-cloudflared/cloudflared.nix {};
 }
