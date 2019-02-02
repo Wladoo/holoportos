@@ -16,5 +16,4 @@ in
     # The local system's configuration
     "/etc/nixos/configuration.nix"
   ] ++ (import "${holoportModules}/modules/module-list.nix");
-  nixpkgs.config.allowUnfree = true;
 }

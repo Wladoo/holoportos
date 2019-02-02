@@ -15,6 +15,6 @@ in
   };
 
 
-  # master copy
+  nixpkgs.config.allowUnfree = true;
   cloudflared = callPackage ./modules/holoport-cloudflared/cloudflared.nix {};
 }
