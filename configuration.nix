@@ -11,7 +11,7 @@ in
 
 {
   holoport.modules = holoportModules;
-
+  nixpkgs.config.allowUnfree = true;
   imports = [
     # The local system's configuration
     "/etc/nixos/configuration.nix"
