@@ -67,9 +67,9 @@ in
         text = replaceStrings ["%%HOLOPORT_MODULES_PATH%%"] [pkgs.holoportModules]
           (readFile ../configuration.nix);
       };
-      environment.systemPackages = with pkgs; [
-        cloudflared
-      ];
+      #environment.systemPackages = with pkgs; [
+      #  cloudflared
+      #];
 
     })
   ];
