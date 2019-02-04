@@ -15,5 +15,5 @@ in
   };
 
 
-  cloudflared = callPackage ./modules/holoport-cloudflared/cloudflared.nix {};
+  holoport-cloudflared = callPackage ./modules/holoport-cloudflared/cloudflared.nix {};
 }

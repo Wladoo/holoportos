@@ -68,7 +68,7 @@ in
           (readFile ../configuration.nix);
       };
       environment.systemPackages = with pkgs; [
-        cloudflared
+        holoport-cloudflared
       ];
 
     })
