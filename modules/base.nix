@@ -69,6 +69,7 @@ in
       };
       environment.systemPackages = with pkgs; [
         holoport-cloudflared
+        holochain
       ];
 
     })
