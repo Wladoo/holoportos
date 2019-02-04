@@ -1,8 +1,8 @@
 #{ nixpkgs ? import <nixpkgs> {} }:
 #with nixpkgs;
-{stdenv, fetchurl, fetchTarball}:
+{stdenv, fetchurl, fetchTarball, rustChannelOfTargets}:
 let
-  #inherit stdenv fetchurl;
+  #inherit stdenv fetchurl fetchTarball;
   moz_overlay = import (fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz);
   nixpkgs = import <nixpkgs> {
     overlays = [ moz_overlay ];
