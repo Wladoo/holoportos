@@ -1,12 +1,13 @@
-{  pkgs, rust_overlay ? builtins.fetchTarball "https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz"}:
+{  pkgs, ... }:
 let
+  moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz);
   nixpkgs = import <nixpkgs> {
-    overlays = [ rust_overlay ];
+    overlays = [ moz_overlay ];
   };
 
   date = "2019-01-24";
   wasmTarget = "wasm32-unknown-unknown";
-  rust-build = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
+    rust-build = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
 
   nodejs-8_13 = nixpkgs.nodejs-8_x.overrideAttrs(oldAttrs: rec {
     name = "nodejs-${version}";
