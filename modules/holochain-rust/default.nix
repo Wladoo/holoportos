@@ -25,8 +25,8 @@ stdenv.mkDerivation rec {
 
  name = "holochain-rust-environment";
  # as discussed at https://github.com/NixOS/nixpkgs/issues/23099#issue-209660108
- src = builtins.filterSource (path: type: false) ./.;
-  buildInputs = [
+ unpackPhase = "true";
+ buildInputs = [
 
     # https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/rust.section.md
     binutils gcc gnumake openssl pkgconfig coreutils
@@ -39,5 +39,5 @@ stdenv.mkDerivation rec {
     nodejs-8_13
     yarn
     zeromq4
-   ];
+ ];
 }
