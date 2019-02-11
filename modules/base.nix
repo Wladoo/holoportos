@@ -61,7 +61,7 @@ in
       # used for the channels
       nix.extraOptions = ''
         tarball-ttl = 60
-        allowed-uris = https://github.com/mozilla/nixpkgs-mozilla/archive/ https://static.rust-lang.org/dist/2019-01-24/channel-rust-nightly.toml
+        allowed-uris = https://
       '';
       nixpkgs.config.allowUnfree = true;
       environment.etc."nixos/holoport-configuration.nix" = {
