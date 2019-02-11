@@ -1,6 +1,17 @@
 {  pkgs, ... }:
 let
-  moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz);
+
+  moz_overlay = import ((import <nixpkgs> {}).fetchFromGitHub
+    { owner = "mozilla";
+      repo = "nixpkgs-mozilla";
+      inherit
+       ({ url = "https://github.com/mozilla/nixpkgs-mozilla";
+          rev = "507efc7f62427ded829b770a06dd0e30db0a24fe";
+          sha256 = "17p1krbs6x6rnz59g46rja56b38gcigri3h3x9ikd34cxw77wgs9";
+          fetchSubmodules = false;
+	}) rev sha256;
+  });
+
   nixpkgs = import <nixpkgs> {
     overlays = [ moz_overlay ];
   };
