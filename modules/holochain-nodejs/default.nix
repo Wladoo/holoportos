@@ -10,7 +10,7 @@ let
   #date = "2019-01-24";
   #wasmTarget = "wasm32-unknown-unknown";
   #rust-build = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
-  nixpkgs = import <nixpkgs>;
+  nixpkgs = import <nixpkgs> {};
   nodejs-8_13 = nixpkgs.nodejs-8_x.overrideAttrs(oldAttrs: rec {
     name = "nodejs-${version}";
     version = "8.13.0";
