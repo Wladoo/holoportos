@@ -21,7 +21,7 @@ let
   });
 in
 #with nixpkgs;
-stdenv.mkDerivation rec {
+pkgs.stdenv.mkDerivation rec {
 
  name = "holochain-nodejs-environment";
 
