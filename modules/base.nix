@@ -61,7 +61,6 @@ in
       # used for the channels
       nix.extraOptions = ''
         tarball-ttl = 60
-        allowed-uris = https://
       '';
       nixpkgs.config.allowUnfree = true;
       environment.etc."nixos/holoport-configuration.nix" = {
@@ -70,6 +69,7 @@ in
       };
       environment.systemPackages = with pkgs; [
         holoport-cloudflared
+        holochain-nodejs
       ];
 
     })
