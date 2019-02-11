@@ -5,6 +5,10 @@ let
 
   date = "2019-01-24";
   wasmTarget = "wasm32-unknown-unknown";
+  nixpkgs = import <nixpkgs> {
+    overlays = [ moz_overlay ];
+  };
+
   rust-build = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
 
   nodejs-8_13 = nixpkgs.nodejs-8_x.overrideAttrs(oldAttrs: rec {
@@ -17,10 +21,6 @@ let
   });
 in
 with nixpkgs;
-
-  nixpkgs = import <nixpkgs> {
-    overlays = [ moz_overlay ];
-  };
 
   environment.systemPackages = with pkgs;
     [
