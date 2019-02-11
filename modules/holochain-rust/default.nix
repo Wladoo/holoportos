@@ -11,7 +11,7 @@ let
   #wasmTarget = "wasm32-unknown-unknown";
   #rust-build = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
 
-  nodejs-8_13 = nixpkgs.nodejs-8_x.overrideAttrs(oldAttrs: rec {
+  nodejs-8_13 = pkgs.nodejs-8_x.overrideAttrs(oldAttrs: rec {
     name = "nodejs-${version}";
     version = "8.13.0";
     src = pkgs.fetchurl {
