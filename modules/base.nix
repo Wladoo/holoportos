@@ -4,6 +4,15 @@ with lib;
 
 let
   cfg = config.holoport;
+  nodejs-8_13 = pkgs.nodejs-8_x.overrideAttrs(oldAttrs: rec {
+    name = "nodejs-${version}";
+    version = "8.13.0";
+    src = pkgs.fetchurl {
+      url = "https://nodejs.org/dist/v${version}/node-v${version}.tar.xz";
+      sha256 = "1qidcj4smxsz3pmamg3czgk6hlbw71yw537h2jfk7iinlds99a9a";
+    };
+  });
+
 in
 {
   options = {
@@ -69,7 +78,8 @@ in
       };
       environment.systemPackages = with pkgs; [
         holoport-cloudflared
-        holochain-nodejs
+        nodejs-8_13
+        yarn
       ];
 
     })
