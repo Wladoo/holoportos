@@ -23,14 +23,14 @@ in
 with pkgs;
 stdenv.mkDerivation rec {
 
- name = "holochain-nodejs-environment";
-
+  name = "holochain-nodejs-environment";
+  src = ./.;
   buildInputs = [
 
     # https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/rust.section.md
     binutils gcc gnumake openssl pkgconfig coreutils
 
-    cmake
+    #cmake
     python
     pkgconfig
 
