@@ -12,6 +12,15 @@ let
       sha256 = "1qidcj4smxsz3pmamg3czgk6hlbw71yw537h2jfk7iinlds99a9a";
     };
   });
+  moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz);
+  nixpkgs = import <nixpkgs> {
+    overlays = [ moz_overlay ];
+  };
+
+  date = "2019-01-24";
+  wasmTarget = "wasm32-unknown-unknown";
+
+  rust-build = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
 
 in
 {
@@ -80,6 +89,7 @@ in
         holoport-cloudflared
         nodejs-8_13
         yarn
+        rust-build
       ];
 
     })
