@@ -1,15 +1,15 @@
-{  config, pkgs, ... }:
+{  pkgs, ... }:
 let
 
-  moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz);
+  #moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz);
 
-  date = "2019-01-24";
-  wasmTarget = "wasm32-unknown-unknown";
-  nixpkgs = import <nixpkgs> {
-    overlays = [ moz_overlay ];
-  };
+  #nixpkgs = import <nixpkgs> {
+  #  overlays = [ moz_overlay ];
+  #};
 
-  rust-build = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
+  #date = "2019-01-24";
+  #wasmTarget = "wasm32-unknown-unknown";
+  #rust-build = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
 
   nodejs-8_13 = nixpkgs.nodejs-8_x.overrideAttrs(oldAttrs: rec {
     name = "nodejs-${version}";
@@ -21,19 +21,21 @@ let
   });
 in
 with nixpkgs;
+stdenv.mkDerivation rec {
 
-  environment.systemPackages = with pkgs;
-    [
+ name = "holochain-nodejs-environment";
 
-      # https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/rust.section.md
-      binutils gcc gnumake openssl pkgconfig coreutils
+  buildInputs = [
 
-      cmake
-      python
-      pkgconfig
-      nodejs-8_13
-      yarn
-      zeromq4
-    ];
+    # https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/rust.section.md
+    binutils gcc gnumake openssl pkgconfig coreutils
 
+    cmake
+    python
+    pkgconfig
+
+    nodejs-8_13
+    yarn
+    zeromq4
+   ];
 }
