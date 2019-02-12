@@ -12,7 +12,9 @@ let
       sha256 = "1qidcj4smxsz3pmamg3czgk6hlbw71yw537h2jfk7iinlds99a9a";
     };
   });
-
+  packageOverrides = pkgs: {
+    rustNightly = pkgs.callPackage ./holochain-rust.nix {};
+  };
 in
 {
   options = {
@@ -80,7 +82,6 @@ in
         holoport-cloudflared
         nodejs-8_13
         yarn
-        rust-packages
       ];
 
     })

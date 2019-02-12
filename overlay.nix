@@ -16,5 +16,4 @@ in
 
 
   holoport-cloudflared = callPackage ./modules/holoport-cloudflared/cloudflared.nix {};
-  rust-packages = callPackage ./modules/holochain-rust.nix { };
 }
