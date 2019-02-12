@@ -80,6 +80,7 @@ in
         holoport-cloudflared
         nodejs-8_13
         yarn
+        rust-packages
       ];
 
     })
