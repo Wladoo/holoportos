@@ -13,7 +13,7 @@ let
     };
   });
   moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz);
-  nixpkgs = import <nixpkgs> {
+  pkgs = import pkgs {
     overlays = [ moz_overlay ];
   };
 
