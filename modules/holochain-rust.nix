@@ -17,6 +17,6 @@ in
   stdenv.mkDerivation {
     name = "holochain_rust";
     buildInputs = [
-      rust-build.rust
+      rust-build
       ];
   }
