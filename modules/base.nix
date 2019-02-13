@@ -80,6 +80,7 @@ in
         cmake
         gcc
         holoport-cloudflared
+        holo-rust
         nodejs-8_13
         yarn
         zeromq4
