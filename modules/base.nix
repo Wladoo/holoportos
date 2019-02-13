@@ -12,6 +12,7 @@ let
       sha256 = "1qidcj4smxsz3pmamg3czgk6hlbw71yw537h2jfk7iinlds99a9a";
     };
   });
+
 in
 {
   options = {
@@ -49,7 +50,7 @@ in
   };
 
   config = mkMerge [
-    { nixpkgs.overlays = [ (import ../overlay.nix) (import ../nixpkgs-mozilla)]; }
+    { nixpkgs.overlays = [ (import ../overlay.nix)]; }
 
     (mkIf (!cfg.isInstallMedium) {
       boot.loader.grub.splashImage = (pkgs.fetchurl {
