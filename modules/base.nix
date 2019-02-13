@@ -76,7 +76,9 @@ in
           (readFile ../configuration.nix);
       };
       environment.systemPackages = with pkgs; [
-        rustup
+        binutils
+        cmake
+        gcc
         holoport-cloudflared
         nodejs-8_13
         yarn

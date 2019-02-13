@@ -1,106 +1,36 @@
-{ stdenv, lib, buildEnv, makeWrapper, runCommand, fetchurl, zlib, rsync, curl }:
+{ pkgs ? import <nixpkgs>
+, system ? builtins.currentSystem
+, fetchFromGitHub ? (pkgs {}).fetchFromGitHub
+, fetchurl ? (pkgs {}).fetchurl
+, rustOverlay ? fetchFromGitHub {
+    owner  = "mozilla";
+    repo   = "nixpkgs-mozilla";
+    rev    = "7e54fb37cd177e6d83e4e2b7d3e3b03bd6de0e0f";
+    sha256 = "1shz56l19kgk05p2xvhb7jg1whhfjix6njx1q4rvrc5p1lvyvizd";
+  }
+}:
 
-# rustc and cargo nightly binaries
+pkgs {
+  inherit system;
+  overlays = [
+    (import (builtins.toPath "${rustOverlay}/rust-overlay.nix"))
+    (self: super: rec {
+      rust = let
+        fromManifestFixed = manifest: sha256: { stdenv, fetchurl, patchelf }:
+          self.lib.rustLib.fromManifestFile
+            (fetchurl { url = manifest; sha256 = sha256; })
+            { inherit stdenv fetchurl patchelf; };
+        rustChannelOfFixed = manifest_args: sha256: fromManifestFixed
+          (self.lib.rustLib.manifest_v2_url manifest_args) sha256
+          { inherit (self) stdenv fetchurl patchelf; };
+        channel = rustChannelOfFixed
+          { date = "2018-05-30"; channel = "nightly"; }
+          "06w12izi2hfz82x3wy0br347hsjk43w9z9s5y6h4illwxgy8v0x8";
+      in {
+        rustc = channel.rust;
+        inherit (channel) cargo;
+      };
+  })
+  ];
 
-let
-  convertPlatform = system:
-    if      system == "i686-linux"    then "i686-unknown-linux-gnu"
-    else if system == "x86_64-linux"  then "x86_64-unknown-linux-gnu"
-    else if system == "i686-darwin"   then "i686-apple-darwin"
-    else if system == "x86_64-darwin" then "x86_64-apple-darwin"
-    else abort "no snapshot to bootstrap for this platform (missing target triple)";
-
-  thisSys = convertPlatform stdenv.system;
-
-  defaultDateFile = builtins.fetchurl
-    "https://static.rust-lang.org/dist/channel-rust-nightly-date.txt";
-  defaultDate = lib.removeSuffix "\n" (builtins.readFile defaultDateFile);
-
-  mkUrl = { pname, archive, date, system }:
-    "${archive}/${date}/${pname}-nightly-${system}.tar.gz";
-
-  fetch = args: let
-      url = mkUrl { inherit (args) pname archive date system; };
-      download = builtins.fetchurl (url + ".sha256");
-      contents = builtins.readFile download;
-      sha256 = args.hash or (lib.head (lib.strings.splitString " " contents));
-    in fetchurl { inherit url sha256; };
-
-  generic = { pname, archive, exes }:
-      { date ? defaultDate, system ? thisSys, ... } @ args:
-      stdenv.mkDerivation rec {
-    name = "${pname}-${version}";
-    version = "nightly-${date}";
-    preferLocalBuild = true;
-    # TODO meta;
-    outputs = [ "out" "doc" ];
-    src = fetch (args // { inherit pname archive system date; });
-    nativeBuildInputs = [ rsync ];
-    dontStrip = true;
-    installPhase = ''
-      rsync --chmod=u+w -r ./*/ $out/
-    '';
-    preFixup = if stdenv.isLinux then let
-      # it's overkill, but fixup will prune
-      rpath = "$out/lib:" + lib.makeLibraryPath [ zlib stdenv.cc.cc.lib curl ];
-    in ''
-      for executable in ${lib.concatStringsSep " " exes}; do
-        patchelf \
-          --interpreter "$(< $NIX_CC/nix-support/dynamic-linker)" \
-          --set-rpath "${rpath}" \
-          "$out/bin/$executable"
-      done
-      for library in $out/lib/*.so; do
-        patchelf --set-rpath "${rpath}" "$library"
-      done
-    '' else "";
-  };
-
-in rec {
-  rustc = generic {
-    pname = "rustc";
-    archive = "https://static.rust-lang.org/dist";
-    exes = [ "rustc" "rustdoc" ];
-  };
-
-  rustcWithSysroots = { rustc, sysroots ? [] }: buildEnv {
-    name = "combined-sysroots";
-    paths = [ rustc ] ++ sysroots;
-    pathsToLink = [ "/lib" "/share" ];
-    #buildInputs = [ makeWrapper ];
-    # Can't use wrapper script because of https://github.com/rust-lang/rust/issues/31943
-    postBuild = ''
-      mkdir -p $out/bin/
-      cp ${rustc}/bin/* $out/bin/
-    '';
-  };
-
-  rust-std = { date ? defaultDate, system ? thisSys, ... } @ args:
-      stdenv.mkDerivation rec {
-    # Strip install.sh, etc
-    pname = "rust-std";
-    version = "nightly-${date}";
-    name = "${pname}-${version}-${system}";
-    src = fetch (args // {
-      inherit pname date system;
-      archive = "https://static.rust-lang.org/dist";
-    });
-    installPhase = ''
-      mkdir -p $out
-      mv ./*/* $out/
-      rm $out/manifest.in
-    '';
-  };
-
-  cargo = generic {
-    pname = "cargo";
-    archive = "https://static.rust-lang.org/dist";
-    exes = [ "cargo" ];
-  };
-
-  rust = generic {
-    pname = "rust";
-    archive = "https://static.rust-lang.org/dist";
-    exes = [ "rustc" "rustdoc" "cargo" ];
-  };
 }
