@@ -76,11 +76,11 @@ in
           (readFile ../configuration.nix);
       };
       environment.systemPackages = with pkgs; [
-        cargo
         rustup
         holoport-cloudflared
         nodejs-8_13
         yarn
+        zeromq4
       ];
 
     })
