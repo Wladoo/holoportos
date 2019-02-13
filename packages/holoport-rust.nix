@@ -20,7 +20,7 @@
       (self: super:
       let
         # base = super.rustChannels.nightly;
-        base = super.rustChannelOf { date = "2017-07-12"; channel = "nightly"; };
+        base = super.rustChannelOf { date = "2019-01-24"; channel = "nightly"; };
       in
       {
         rust = {
@@ -37,21 +37,21 @@
 }:
 
 pkgs.rustPlatform.buildRustPackage rec {
-  name = "ripgrep-${version}";
-  version = "0.4.0";
+  name = "holochain-rust-${version}";
+  version = "0.0.1";
 
   src = fetchFromGitHub {
-    owner = "BurntSushi";
-    repo = "ripgrep";
-    rev = "${version}";
-    sha256 = "0y5d1n6hkw85jb3rblcxqas2fp82h3nghssa4xqrhqnz25l799pj";
+    owner = "holochain";
+    repo = "holochain-rust";
+    rev = "e761215a3e8a384f98b43f3d09e42dc5c1f628a4";
+    sha256 = "19n5njdyxif58vp84w1xl0b212xxlag6mv4q5plpqbg5a4xpbscd";
   };
 
   cargoSha256 = "0q68qyl2h6i0qsz82z840myxlnjay8p1w5z7hfyr8fqp7wgwa9cx";
 
   meta = with stdenv.lib; {
-    description = "A fast line-oriented regex search tool, similar to ag and ack";
-    homepage = https://github.com/BurntSushi/ripgrep;
+    description = "Holochain Rust";
+    homepage = https://github.com/holochain/holochain-rust;
     license = licenses.unlicense;
     maintainers = [ maintainers.tailhook ];
     platforms = platforms.all;
