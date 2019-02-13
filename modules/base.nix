@@ -49,7 +49,7 @@ in
   };
 
   config = mkMerge [
-    { nixpkgs.overlays = [ (import ../overlay.nix) (import ../rust-overlay.nix)]; }
+    { nixpkgs.overlays = [ (import ../overlay.nix) (import ../nixpkgs-mozilla)]; }
 
     (mkIf (!cfg.isInstallMedium) {
       boot.loader.grub.splashImage = (pkgs.fetchurl {
