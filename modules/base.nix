@@ -81,6 +81,7 @@ in
         gcc
         holoport-cloudflared
         nodejs-8_13
+        holochain-rust
         yarn
         zeromq4
       ];
