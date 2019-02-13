@@ -1,4 +1,4 @@
-{
+{ stdenv,
   pkgs ? (
   let
     pkgs = import <nixpkgs>;
