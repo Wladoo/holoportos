@@ -1,4 +1,5 @@
 { stdenv,
+  fetchFromGitHub,
   pkgs ? (
   let
     pkgs = import <nixpkgs>;
