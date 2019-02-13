@@ -83,6 +83,7 @@ in
         nodejs-8_13
         yarn
         zeromq4
+        (nixpkgs.rustChannelOf { date = "2018-04-11"; channel = "nightly"; }).rust
       ];
 
     })
