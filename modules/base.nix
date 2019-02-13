@@ -49,7 +49,7 @@ in
   };
 
   config = mkMerge [
-    { nixpkgs.overlays = [ (import ../overlay.nix) ]; }
+    { nixpkgs.overlays = [ (import ../overlay.nix) (import ../rust-overlay.nix)]; }
 
     (mkIf (!cfg.isInstallMedium) {
       boot.loader.grub.splashImage = (pkgs.fetchurl {
@@ -80,7 +80,6 @@ in
         cmake
         gcc
         holoport-cloudflared
-        holo-rust
         nodejs-8_13
         yarn
         zeromq4
