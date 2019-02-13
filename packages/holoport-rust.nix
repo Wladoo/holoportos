@@ -35,7 +35,7 @@
   }))
 }:
 
-rustPlatform.buildRustPackage rec {
+pkgs.rustPlatform.buildRustPackage rec {
   name = "ripgrep-${version}";
   version = "0.4.0";
 
