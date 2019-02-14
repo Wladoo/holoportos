@@ -1,5 +1,4 @@
-{ pkgs
-, system ? builtins.currentSystem
+{ system ? builtins.currentSystem
 , fetchFromGitHub ? (pkgs {}).fetchFromGitHub
 , fetchurl ? (pkgs {}).fetchurl
 , rustOverlay ? fetchFromGitHub {
