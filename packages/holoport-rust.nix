@@ -1,6 +1,6 @@
 { system ? builtins.currentSystem
-, fetchFromGitHub ? (pkgs {}).fetchFromGitHub
-, fetchurl ? (pkgs {}).fetchurl
+, fetchFromGitHub
+, fetchurl 
 , rustOverlay ? fetchFromGitHub {
     owner  = "mozilla";
     repo   = "nixpkgs-mozilla";
