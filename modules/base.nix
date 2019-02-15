@@ -75,12 +75,16 @@ in
         text = replaceStrings ["%%HOLOPORT_MODULES_PATH%%"] [pkgs.holoportModules]
           (readFile ../configuration.nix);
       };
+      rust = (pkgs.latest.rustChannels.nightly.rust.override {
+        date = "2019-01-24"; channel = "nightly"; targets = [ "x86_64-unknown-linux-gnu" "wasm32-unknown-unknown" ];
+      });
+
       environment.systemPackages = with pkgs; [
         binutils
         cmake
         gcc
         holoport-cloudflared
-        rustChannelOfTargets { date = "2019-01-24"; channel = "nightly"; targets = "wasm32-unknown-unkown"; }.rust
+        rust
         nodejs-8_13
         yarn
         zeromq4
