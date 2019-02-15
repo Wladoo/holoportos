@@ -1,5 +1,4 @@
-{
-    system ? builtins.currentSystem
+{ system ? builtins.currentSystem
 , fetchFromGitHub
 , fetchurl
 , rustOverlay ? fetchFromGitHub {
@@ -36,7 +35,7 @@ rustPlatform.buildRustPackage rec {
     rev = "082775d0388552e32b644a1e3da8755a5f5e8c6a";
     sha256 = "1jhkhpyh8g0ja6rr8bffphybhz53m7fav6r8pndv94msjdjdc7f6";
   };
-  buildInputs = [ rustc cargo ];
+  buildInputs = [ cargo ];
   cargoSha256 = "0sjjj9z1dhilhpc8pq4154czrb79z9cm044jvn75kxcjv6v5l2m5";
 
   meta = with stdenv.lib; {
