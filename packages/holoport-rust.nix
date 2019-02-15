@@ -22,7 +22,7 @@ rust = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
 
 rustPlatform = makeRustPlatform {
   rustc = rust.rust;
-  inherit (rust.rust) cargo;
+  cargo = cargo;
 };
 in
 rustPlatform.buildRustPackage rec {
