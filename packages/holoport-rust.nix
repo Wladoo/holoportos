@@ -25,7 +25,7 @@ rustPlatform = makeRustPlatform {
   inherit (rust) cargo;
 };
 in
-rustPlatform.buildRustPackage = rec {
+rustPlatform.buildRustPackage rec {
   name = "hello_world";
   version = "0.0.1";
 
