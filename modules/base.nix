@@ -12,7 +12,7 @@ let
       sha256 = "1qidcj4smxsz3pmamg3czgk6hlbw71yw537h2jfk7iinlds99a9a";
     };
   });
-
+  moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz);
 in
 {
   options = {
@@ -50,7 +50,7 @@ in
   };
 
   config = mkMerge [
-    { nixpkgs.overlays = [ (import ../overlay.nix)]; }
+    { nixpkgs.overlays = [ (import ../overlay.nix) moz_overlay ]; }
 
     (mkIf (!cfg.isInstallMedium) {
       boot.loader.grub.splashImage = (pkgs.fetchurl {
@@ -81,7 +81,7 @@ in
         cmake
         gcc
         holoport-cloudflared
-        holoport-rust
+        #holoport-rust
         nodejs-8_13
         yarn
         zeromq4
