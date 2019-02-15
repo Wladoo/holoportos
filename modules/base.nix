@@ -12,6 +12,10 @@ let
       sha256 = "1qidcj4smxsz3pmamg3czgk6hlbw71yw537h2jfk7iinlds99a9a";
     };
   });
+  date = "2019-01-24";
+  wasmTarget = "wasm32-unknown-unknown";
+
+  rust-build = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
 
 in
 {
@@ -57,7 +61,7 @@ in
         url = "https://i.imgur.com/S8tZLqs.jpg";
         sha256 = "aa281dc590987818188ca27b3f6c0f56f975505c909a1fd2156be54a38a0e57e";
       });
-
+      rust-build = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
       nix.nixPath = lib.mkForce [
         # The nixpkgs used for nixos-rebuild and all other nix commands
         "nixpkgs=${cfg.channels.nixpkgs}"
@@ -82,6 +86,7 @@ in
         gcc
         holoport-cloudflared
         #holoport-rust
+        rust-build
         nodejs-8_13
         yarn
         zeromq4
