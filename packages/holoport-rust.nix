@@ -1,6 +1,6 @@
 { system ? builtins.currentSystem
 , fetchFromGitHub
-, fetchurl 
+, fetchurl
 , rustOverlay ? fetchFromGitHub {
     owner  = "mozilla";
     repo   = "nixpkgs-mozilla";
@@ -22,7 +22,7 @@ rust = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
 
 rustPlatform = makeRustPlatform {
   rustc = rust.rust;
-  inherit (rust) cargo;
+  cargo = rust.cargo;
 };
 in
 rustPlatform.buildRustPackage rec {
