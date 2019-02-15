@@ -12,10 +12,6 @@ let
       sha256 = "1qidcj4smxsz3pmamg3czgk6hlbw71yw537h2jfk7iinlds99a9a";
     };
   });
-  date = "2019-01-24";
-  wasmTarget = "wasm32-unknown-unknown";
-
-  rust-build = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
 
 in
 {
@@ -85,8 +81,7 @@ in
         cmake
         gcc
         holoport-cloudflared
-        #holoport-rust
-        rust-build
+        rustChannelOfTargets { date = "2019-01-24"; channel = "nightly"; targets = "wasm32-unknown-unkown"; }.rust
         nodejs-8_13
         yarn
         zeromq4
