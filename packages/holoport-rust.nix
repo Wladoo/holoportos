@@ -9,7 +9,6 @@
   }
   , makeRustPlatform
   , stdenv
-  , fetchFromGitHub
 }:
 let
 rust_overlay = import (builtins.toPath "${rustOverlay}/rust-overlay.nix");
@@ -30,7 +29,7 @@ rustPlatform.buildRustPackage = rec {
   name = "hello_world";
   version = "0.0.1";
 
-  src = pkgs.fetchFromGitHub {
+  src = fetchFromGitHub {
     owner = "samrose";
     repo = "hello_world";
     rev = "082775d0388552e32b644a1e3da8755a5f5e8c6a";
