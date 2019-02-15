@@ -12,7 +12,13 @@ let
       sha256 = "1qidcj4smxsz3pmamg3czgk6hlbw71yw537h2jfk7iinlds99a9a";
     };
   });
-  moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz);
+    moz_overlay = import (pkgs.fetchFromGitHub {
+    owner  = "mozilla";
+    repo   = "nixpkgs-mozilla";
+    rev    = "37f7f33ae3ddd70506cd179d9718621b5686c48d";
+    sha256 = "0cmvc9fnr38j3n0m4yf0k6s2x589w1rdby1qry1vh435v79gp95j";
+  });
+
 in
 {
   options = {
