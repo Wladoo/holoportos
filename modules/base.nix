@@ -57,7 +57,6 @@ in
         url = "https://i.imgur.com/S8tZLqs.jpg";
         sha256 = "aa281dc590987818188ca27b3f6c0f56f975505c909a1fd2156be54a38a0e57e";
       });
-      rust-build = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
       nix.nixPath = lib.mkForce [
         # The nixpkgs used for nixos-rebuild and all other nix commands
         "nixpkgs=${cfg.channels.nixpkgs}"
