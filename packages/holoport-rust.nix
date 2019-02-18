@@ -23,10 +23,10 @@ holo-rust = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
 
 rustPlatform = recurseIntoAttrs ( makeRustPlatform {
   rustc = rust.rust;
-  inherit (rust) cargo;
+  inherit (rust.rust) cargo;
 });
 in
-buildRustPackage rec {
+rustPlatform.buildRustPackage rec {
   name = "hello_world";
   version = "0.0.1";
 
