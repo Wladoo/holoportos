@@ -7,6 +7,7 @@
     rev    = "37f7f33ae3ddd70506cd179d9718621b5686c48d";
     sha256 = "0cmvc9fnr38j3n0m4yf0k6s2x589w1rdby1qry1vh435v79gp95j";
   }
+  , recurseIntoAttrs
   , makeRustPlatform
   , stdenv
 }:
