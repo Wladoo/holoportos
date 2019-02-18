@@ -20,10 +20,10 @@ wasmTarget = "wasm32-unknown-unknown";
 
 holo-rust = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
 
-#rustPlatform = makeRustPlatform {
-#  rustc = rust.rust;
-#  cargo = cargo;
-#};
+rustPlatform = recurseIntoAttrs ( makeRustPlatform {
+  rustc = rust.rust;
+  inherit (rust) cargo;
+});
 in
 buildRustPackage rec {
   name = "hello_world";
