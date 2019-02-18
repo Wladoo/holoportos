@@ -20,11 +20,8 @@ date = "2019-01-24";
 wasmTarget = "wasm32-unknown-unknown";
 
 rust = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
-
-rustPlatform = recurseIntoAttrs ( makeRustPlatform {
-  rustc = rust.rust;
-  cargo = rust.cargo;
-});
+inherit (rust) cargo rustc;
+rustPlatform = recurseIntoAttrs ( makeRustPlatform rust);
 in
 rustPlatform.buildRustPackage rec {
   name = "hello_world";
