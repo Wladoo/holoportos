@@ -19,11 +19,11 @@ nixpkgs = import <nixpkgs> {
 date = "2019-01-24";
 wasmTarget = "wasm32-unknown-unknown";
 
-holo-rust = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
+rust = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
 
 rustPlatform = recurseIntoAttrs ( makeRustPlatform {
   rustc = rust.rust;
-  inherit (rust.rust) cargo;
+  inherit (rust) cargo;
 });
 in
 rustPlatform.buildRustPackage rec {
