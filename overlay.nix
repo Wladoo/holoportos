@@ -5,19 +5,6 @@ self: super:
 # that imports our modules into the NixOS modules
 let
   callPackage = super.lib.callPackageWith super;
-
-in
-
-{
-  holoportModules = builtins.path {
-    name = "holoport-modules";
-    path = ./.;
-    filter = (path: type: type != "symlink" || baseNameOf path != ".git");
-  };
-
-
-  holoport-cloudflared = callPackage ./modules/holoport-cloudflared/cloudflared.nix {};
-  hello-rust = callPackage ./packages/holoport-rust.nix {};
   rustNightly = (recurseIntoAttrs (callPackage ./packages/rust/nightly.nix {
     rustPlatform = recurseIntoAttrs (makeRustPlatform rustBeta);
   }));
@@ -43,4 +30,18 @@ in
       };
 
   });
+
+in
+
+{
+  holoportModules = builtins.path {
+    name = "holoport-modules";
+    path = ./.;
+    filter = (path: type: type != "symlink" || baseNameOf path != ".git");
+  };
+
+
+  holoport-cloudflared = callPackage ./modules/holoport-cloudflared/cloudflared.nix {};
+  hello-rust = callPackage ./packages/holoport-rust.nix {};
+
 }
