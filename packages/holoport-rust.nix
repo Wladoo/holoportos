@@ -1,28 +1,4 @@
-{ system ? builtins.currentSystem
-, fetchFromGitHub
-, fetchurl
-, rustOverlay ? fetchFromGitHub {
-    owner  = "mozilla";
-    repo   = "nixpkgs-mozilla";
-    rev    = "37f7f33ae3ddd70506cd179d9718621b5686c48d";
-    sha256 = "0cmvc9fnr38j3n0m4yf0k6s2x589w1rdby1qry1vh435v79gp95j";
-  }
-  , recurseIntoAttrs
-  , makeRustPlatform
-  , stdenv
-}:
-let
-rust_overlay = import (builtins.toPath "${rustOverlay}/rust-overlay.nix");
-nixpkgs = import <nixpkgs> {
-  overlays = [ rust_overlay ];
-};
-date = "2019-01-24";
-wasmTarget = "wasm32-unknown-unknown";
-
-rust = (nixpkgs.rustChannelOfTargets "nightly" date [ wasmTarget ]);
-inherit (rust) cargo rustc;
-rustPlatform = recurseIntoAttrs ( makeRustPlatform rust);
-in
+{ stdenv, fetchFromGitHub, rustPlatform }:
 rustPlatform.buildRustPackage rec {
   name = "hello_world";
   version = "0.0.1";

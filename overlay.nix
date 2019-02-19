@@ -17,5 +17,30 @@ in
 
 
   holoport-cloudflared = callPackage ./modules/holoport-cloudflared/cloudflared.nix {};
-  holoport-rust = callPackage ./packages/holoport-rust.nix {};
+  hello-rust = callPackage ./packages/holoport-rust.nix {};
+  rustNightly = (recurseIntoAttrs (callPackage ./packages/rust/nightly.nix {
+    rustPlatform = recurseIntoAttrs (makeRustPlatform rustBeta);
+  }));
+  rust = rustNightly;
+  cargo = rust.cargo;
+  rustc = rust.rustc;
+  rustPlatform = recurseIntoAttrs (makeRustPlatform rust);
+  makeRustPlatform = rust: lib.fix (self:
+    let
+      callPackage = newScope self;
+    in {
+      inherit rust;
+
+      buildRustPackage = callPackage ../build-support/rust {
+        inherit rust;
+      };
+
+      rustcSrc = stdenv.mkDerivation {
+        name = "rust-src";
+        src = rust.rustc.src;
+        phases = ["unpackPhase" "installPhase"];
+        installPhase = "mv src $out";
+      };
+
+  });
 }
