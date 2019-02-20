@@ -11,7 +11,7 @@ let
   rust = rustNightly;
   cargo = rust.cargo;
   rustc = rust.rustc;
-  rustPlatform = recurseIntoAttrs (makeRustPlatform rust);
+  rustPlatform = super.recurseIntoAttrs (makeRustPlatform rust);
   makeRustPlatform = rust: lib.fix (self:
     let
       callPackage = newScope self;
