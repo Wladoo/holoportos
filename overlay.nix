@@ -6,9 +6,7 @@ self: super:
 let
   callPackage = super.lib.callPackageWith super;
   newScope = super.lib.newScope super;
-  rustNightly = (super.recurseIntoAttrs (callPackage ./packages/rust/nightly.nix {
-    rustPlatform = super.recurseIntoAttrs (makeRustPlatform rustBeta);
-  }));
+  rustNightly = (super.recurseIntoAttrs (callPackage ./packages/rust/nightly.nix {}));
   rust = rustNightly;
   cargo = rust.cargo;
   rustc = rust.rustc;
