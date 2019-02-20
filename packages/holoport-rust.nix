@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, rustPlatform }:
+{ pkgs, stdenv, fetchFromGitHub, rustPlatform }:
 rustPlatform.buildRustPackage rec {
   name = "holochain-rust";
   version = "0.0.1";
@@ -9,7 +9,7 @@ rustPlatform.buildRustPackage rec {
     rev = "330af276015c02956ba4b3d1d65b032585778931";
     sha256 = "10z21m18rwk1xa5d4zm77j5bp3b4vyvnqvb9hn8wbi2kqixlqnzr";
   };
-  buildInputs = [ zeromq4 ];
+  buildInputs = [ pkgs.zeromq4 ];
   cargoSha256 = "06nvsllzv4qkyv1213qa566dfanpfb44mhp4n19w64hjw45qpc83";
 
   meta = with stdenv.lib; {
