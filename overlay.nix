@@ -16,9 +16,9 @@ let
     in {
       inherit rust;
 
-      buildRustPackage = callPackage ./packages/rust/build-support/rust {
-        inherit rust;
-      };
+      #buildRustPackage = callPackage ./packages/rust/build-support/rust {
+      #  inherit rust;
+      #};
 
       rustcSrc = super.stdenv.mkDerivation {
         name = "rust-src";
