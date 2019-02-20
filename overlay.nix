@@ -16,7 +16,7 @@ let
     in {
       inherit rust;
 
-      buildRustPackage = callPackage ../build-support/rust {
+      buildRustPackage = callPackage ./packages/rust/build-support/rust {
         inherit rust;
       };
 
