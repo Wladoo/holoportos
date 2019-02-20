@@ -1,5 +1,5 @@
 { stdenv, callPackage, rustPlatform, llvm, fetchurl
-, targets ? []
+, targets ? [ "x86_64-unknown-linux-gnu" "wasm32-unknown-unknown" ]
 , targetToolchains ? []
 , targetPatches ? []
 }:
