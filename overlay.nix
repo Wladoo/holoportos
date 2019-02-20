@@ -41,6 +41,6 @@ in
 
 
   holoport-cloudflared = callPackage ./modules/holoport-cloudflared/cloudflared.nix {};
-  hello-rust = callPackage ./packages/holoport-rust.nix { rustPlatform };
+  hello-rust = callPackage ./packages/holoport-rust.nix { rustPlatform; };
 
 }
