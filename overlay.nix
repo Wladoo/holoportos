@@ -23,7 +23,7 @@ let
         inherit rust;
       };
 
-      rustcSrc = stdenv.mkDerivation {
+      rustcSrc = super.stdenv.mkDerivation {
         name = "rust-src";
         src = rust.rustc.src;
         phases = ["unpackPhase" "installPhase"];
