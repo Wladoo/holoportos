@@ -10,7 +10,6 @@ let
   rust = rustNightly;
   cargo = rust.cargo;
   rustc = rust.rustc;
-  rustPlatform = super.recurseIntoAttrs (makeRustPlatform rust);
   makeRustPlatform = rust: super.lib.fix (self:
     let
       callPackage = newScope self;
@@ -29,6 +28,7 @@ let
       };
 
   });
+  rustPlatform = super.recurseIntoAttrs (makeRustPlatform rust);
 
 in
 
@@ -41,6 +41,6 @@ in
 
 
   holoport-cloudflared = callPackage ./modules/holoport-cloudflared/cloudflared.nix {};
-  hello-rust = callPackage ./packages/holoport-rust.nix {};
+  hello-rust = callPackage ./packages/holoport-rust.nix { rustPlatform };
 
 }
