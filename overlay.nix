@@ -12,7 +12,7 @@ let
   rustc = rust.rustc;
   makeRustPlatform = rust: super.lib.fix (self:
     let
-      callPackage = self.newScope self;
+      callPackage = super.newScope self;
     in {
       inherit rust;
 
