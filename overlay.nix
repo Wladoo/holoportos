@@ -12,7 +12,7 @@ let
   cargo = rust.cargo;
   rustc = rust.rustc;
   rustPlatform = super.recurseIntoAttrs (makeRustPlatform rust);
-  makeRustPlatform = rust: lib.fix (self:
+  makeRustPlatform = rust: super.lib.fix (self:
     let
       callPackage = newScope self;
     in {
