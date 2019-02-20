@@ -5,6 +5,7 @@ self: super:
 # that imports our modules into the NixOS modules
 let
   callPackage = super.lib.callPackageWith super;
+  newScope = super.lib.newScope super;
   rustNightly = (super.recurseIntoAttrs (callPackage ./packages/rust/nightly.nix {
     rustPlatform = super.recurseIntoAttrs (makeRustPlatform rustBeta);
   }));
