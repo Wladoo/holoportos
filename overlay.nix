@@ -11,26 +11,8 @@ let
   rust = rustNightly;
   cargo = rust.cargo;
   rustc = rust.rustc;
-  makeRustPlatform = rust: super.lib.fix (self:
-    let
-      callPackage = super.newScope self;
-    in {
-      inherit rust;
 
-      buildRustPackage = callPackage ./packages/rust/build-support/rust {
-        inherit rust;
-        rustRegistry = rustRegistry;
-      };
-
-      rustcSrc = super.stdenv.mkDerivation {
-        name = "rust-src";
-        src = rust.rustc.src;
-        phases = ["unpackPhase" "installPhase"];
-        installPhase = "mv src $out";
-      };
-
-  });
-  holorustPlatform = super.recurseIntoAttrs (makeRustPlatform rust);
+  holorustPlatform = rustNightly;
 
 in
 
