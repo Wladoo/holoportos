@@ -12,6 +12,7 @@
 , doCheck ? true
 , broken ? false
 , buildPlatform, hostPlatform
+, rust
 } @ args:
 
 let
@@ -46,9 +47,9 @@ stdenv.mkDerivation {
 
   # We need rust to build rust. If we don't provide it, configure will try to download it.
   configureFlags = configureFlags
-                ++ [ "--enable-local-rust" "--local-rust-root=${rustPlatform.rust.rustc}" "--enable-rpath" ]
-                #++ [ "--enable-vendor" "--disable-locked-deps" ]
-                ++ [ "--enable-vendor" ]
+                ++ [ "--enable-local-rust" "--local-rust-root=${rust}" "--enable-rpath" ]
+                ++ [ "--enable-vendor" "--disable-locked-deps" ]
+                #++ [ "--enable-vendor" ]
                 ++ [ "--enable-llvm-link-shared" ]
                 # ++ [ "--jemalloc-root=${jemalloc}/lib"
                 ++ [ "--default-linker=${stdenv.cc}/bin/cc" ]
