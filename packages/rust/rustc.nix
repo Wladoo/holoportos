@@ -154,7 +154,7 @@ stdenv.mkDerivation {
     description = "A safe, concurrent, practical language";
     maintainers = with maintainers; [ madjar cstrahan wizeman globin havvy wkennington ];
     license = [ licenses.mit licenses.asl20 ];
-    platforms = platforms.linux ++ platforms.darwin;
-    broken = broken;
+    platforms = platforms.linux;
+    broken = false;
   };
 }
