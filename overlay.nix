@@ -7,12 +7,12 @@ let
   callPackage = super.lib.callPackageWith super;
   #newScope = super.lib.newScope super;
   rustRegistry = callPackage ./rust-packages.nix { };
-  rustNightly = (super.recurseIntoAttrs (callPackage ./packages/rust/nightly.nix {}));
+  rustNightly = (self.recurseIntoAttrs (callPackage ./packages/rust/nightly.nix {}));
   rust = rustNightly;
   cargo = rust.cargo;
   rustc = rust.rustc;
 
-  holorustPlatform = rustNightly;
+  holorustPlatform = rust;
 
 in
 

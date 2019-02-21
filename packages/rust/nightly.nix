@@ -4,14 +4,13 @@
 , targetPatches ? []
 , recurseIntoAttrs
 , makeRustPlatform
-, buildRustPackage
 }:
 let
     rustPlatform = recurseIntoAttrs (makeRustPlatform (callPackage ./bootstrap.nix {}));
 in
 rec {
   rustc = callPackage ./rustc.nix {
-    inherit llvm targets targetPatches targetToolchains rustPlatform buildRustPackage;
+    inherit llvm targets targetPatches targetToolchains rustPlatform;
 
     version = "nightly-2019-01-24";
 
@@ -27,7 +26,7 @@ rec {
     #] ++ stdenv.lib.optional stdenv.needsPax ./patches/grsec.patch;
     patches = [];
     doCheck = false;
-    broken = true;
+    broken = false;
   };
 
   cargo = callPackage ./cargo.nix rec {
