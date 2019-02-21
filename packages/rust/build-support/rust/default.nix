@@ -3,7 +3,7 @@
 let
   rustRegistry' = rustRegistry;
 in
-{ name, depsSha256
+{ name, cargoSha256
 , rustRegistry ? rustRegistry'
 , src ? null
 , srcs ? null
@@ -24,7 +24,7 @@ let
 
   cargoDeps = fetchDeps {
     inherit name src srcs sourceRoot cargoUpdateHook;
-    sha256 = depsSha256;
+    sha256 = cargoSha256;
   };
 
 in stdenv.mkDerivation (args // {
