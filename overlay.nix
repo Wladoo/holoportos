@@ -15,7 +15,7 @@ let
     let
       callPackage = super.newScope self;
     in {
-      inherit rust;
+      inherit rust rustc cargo;
 
       buildRustPackage = callPackage ./packages/rust/build-support/rust {
         inherit rust;
@@ -30,7 +30,7 @@ let
       };
 
   });
-  holorustPlatform = super.recurseIntoAttrs (makeRustPlatform rust cargo);
+  holorustPlatform = super.recurseIntoAttrs (makeRustPlatform rust);
 
 in
 
