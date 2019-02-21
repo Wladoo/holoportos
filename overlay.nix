@@ -30,7 +30,7 @@ let
       };
 
   });
-  holorustPlatform = super.recurseIntoAttrs (makeRustPlatform rust);
+  holorustPlatform = super.recurseIntoAttrs (makeRustPlatform rust cargo);
 
 in
 
