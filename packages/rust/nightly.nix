@@ -3,6 +3,7 @@
 , targetToolchains ? []
 , targetPatches ? []
 , recurseIntoAttrs
+, makeRustPlatform
 }:
 let
     rustPlatform = recurseIntoAttrs (makeRustPlatform (callPackage ./bootstrap.nix {}));
