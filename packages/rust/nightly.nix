@@ -10,7 +10,7 @@ let
 in
 rec {
   rustc = callPackage ./rustc.nix {
-    inherit llvm targets targetPatches targetToolchains rustPlatform;
+    inherit llvm targets targetPatches targetToolchains rustPlatform buildRustPackage;
 
     version = "nightly-2019-01-24";
 
