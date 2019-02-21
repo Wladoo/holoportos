@@ -2,6 +2,7 @@
 , targets ? [ "x86_64-unknown-linux-gnu" "wasm32-unknown-unknown" ]
 , targetToolchains ? []
 , targetPatches ? []
+, recurseIntoAttrs
 }:
 let
     rustPlatform = recurseIntoAttrs (makeRustPlatform (callPackage ./bootstrap.nix {}));
