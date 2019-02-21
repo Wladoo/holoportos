@@ -15,7 +15,7 @@ let
     let
       callPackage = super.newScope self;
     in {
-      inherit rust rustc cargo;
+      inherit rust;
 
       buildRustPackage = callPackage ./packages/rust/build-support/rust {
         inherit rust;
