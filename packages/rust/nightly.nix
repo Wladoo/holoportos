@@ -17,9 +17,9 @@ rec {
       sha256 = "bf9715a05565040ab962a5d92d154d6842f60a68a6f463cd40b6660af0526c73";
     };
 
-    patches = [
-      ./patches/darwin-disable-fragile-tcp-tests.patch
-    ] ++ stdenv.lib.optional stdenv.needsPax ./patches/grsec.patch;
+    #patches = [
+    #  ./patches/darwin-disable-fragile-tcp-tests.patch
+    #] ++ stdenv.lib.optional stdenv.needsPax ./patches/grsec.patch;
 
     doCheck = false;
     broken = true;
