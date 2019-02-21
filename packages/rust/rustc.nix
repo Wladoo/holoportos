@@ -50,8 +50,8 @@ stdenv.mkDerivation {
                 ++ [ "--enable-vendor" "--disable-locked-deps" ]
                 ++ [ "--enable-llvm-link-shared" ]
                 # ++ [ "--jemalloc-root=${jemalloc}/lib"
+                ++ [ "--default-linker=${stdenv.cc}/bin/cc" ]
                 #++ [ "--default-linker=${stdenv.cc}/bin/cc" "--default-ar=${binutils.out}/bin/ar" ]
-                ++ [ "--default-linker=${stdenv.cc}/bin/cc" "--default-ar=${binutils.out}/bin/ar" ]
                 ++ optional (stdenv.cc.cc ? isClang) "--enable-clang"
                 ++ optional (targets != []) "--target=${target}"
                 ++ optional (!forceBundledLLVM) "--llvm-root=${llvmShared}";
