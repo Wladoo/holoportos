@@ -19,6 +19,7 @@ rustPlatform.buildRustPackage rec {
     pkgs.coreutils
     pkgs.cmake
     pkgs.python
+    #pkgs.libsodium
   ];
 
   cargoSha256 = "06nvsllzv4qkyv1213qa566dfanpfb44mhp4n19w64hjw45qpc83";
