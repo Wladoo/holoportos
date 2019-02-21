@@ -6,6 +6,7 @@ self: super:
 let
   callPackage = super.lib.callPackageWith super;
   #newScope = super.lib.newScope super;
+  rustRegistry = callPackage ./rust-packages.nix { };
   rustNightly = (super.recurseIntoAttrs (callPackage ./packages/rust/nightly.nix {}));
   rust = rustNightly;
   cargo = rust.cargo;
@@ -18,6 +19,7 @@ let
 
       buildRustPackage = callPackage ./packages/rust/build-support/rust {
         inherit rust;
+        rustRegistry = rustRegistry;
       };
 
       rustcSrc = super.stdenv.mkDerivation {
