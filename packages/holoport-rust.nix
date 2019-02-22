@@ -16,7 +16,7 @@ let
       [ "x86_64-unknown-linux-gnu" "wasm32-unknown-unknown" ]
      );
     rustc = channels.rust;
-    inherit (channels) cargo;
+    cargo = channels.cargo;
   };
   rustPlatform = recurseIntoAttrs (makeRustPlatform rust cargo);
 in
