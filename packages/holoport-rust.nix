@@ -6,8 +6,8 @@ let
     rev = "e37160aaf4de5c4968378e7ce6fe5212f4be239f";
     sha256 = "013hapfp76s87wiwyc02mzq1mbva2akqxyh37p27ngqiz0kq5f2n";
   };
-  #rustOverlay = import "${rustOverlayRepo}/rust-overlay.nix";
-  nixpkgs = import <nixpkgs> { overlays = [ rustOverlayRepo ]; };
+  rustOverlay = import "${rustOverlayRepo}/rust-overlay.nix";
+  nixpkgs = import <nixpkgs> { overlays = [ rustOverlay ]; };
   rust = (nixpkgs.rustChannelOfTargets
       "2019-01-24"
       "nightly"
