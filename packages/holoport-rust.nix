@@ -16,9 +16,10 @@ let
       [ "x86_64-unknown-linux-gnu" "wasm32-unknown-unknown" ]
      );
   };
-  rustc = rust.rustc;
+  rustc = rust.rust;
   #cargo = rust.cargo;
-  rustPlatform = makeRustPlatform {rustc = rustc; inherit (rust) cargo;};
+  inherit (rust) cargo;
+  rustPlatform = makeRustPlatform {rustc = rustc; cargo = cargo;};
 in
 rustPlatform.buildRustPackage rec {
   name = "holochain-rust";
