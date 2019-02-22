@@ -15,7 +15,7 @@ let
   );
   rustPlatform = makeRustPlatform {
     rustc = rust.rust;
-    inherit (rust) cargo;
+    inherit (rustc) cargo;
   };
 in
 rustPlatform.buildRustPackage rec {
