@@ -17,7 +17,7 @@ let
      );
   };
   rustc = rust.channels.rust;
-  cargo = rust.channels.cargo;
+  inherit (rust.channels) cargo;
   rustPlatform = makeRustPlatform {rustc = rustc; cargo = cargo;};
 in
 rustPlatform.buildRustPackage rec {
