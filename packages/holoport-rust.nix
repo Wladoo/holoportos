@@ -1,4 +1,4 @@
-{ pkgs, stdenv, fetchFromGitHub, recurseIntoAttrs, makeRustPlatform }:
+{ pkgs, stdenv, cargo, fetchFromGitHub, recurseIntoAttrs, makeRustPlatform }:
 let
   rustOverlayRepo = fetchFromGitHub {
     owner = "mozilla";
