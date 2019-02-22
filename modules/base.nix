@@ -1,4 +1,4 @@
-{ config, pkgs, lib, fetchFromGithub... }:
+{ config, pkgs, lib, ... }:
 
 with lib;
 
