@@ -13,7 +13,7 @@ let
       targets = [ "x86_64-unknown-linux-gnu" "wasm32-unknown-unknown" ];
   };
   rustPlatform = makeRustPlatform {
-    rustc = rust.rust;
+    rustc = rust.rustc;
     inherit (rust) cargo;
   };
 in
