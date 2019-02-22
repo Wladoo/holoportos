@@ -27,8 +27,8 @@ rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "samrose";
     repo = "hello_world";
-    rev = "be6efdbdcb5dd10bf9da860a0882b34f94aac68a";
-    sha256 = "0blfx8m0sc4mlbmbw9m0z1sybn10sxpjqw6bhhnans86ywybgkaa";
+    rev = "1454aea0217924b57b0baf0bdf39cb4439aec861";
+    sha256 = "02b6cdk8rwj1qhwx9mb0jpki8rsjk67h94285pkyavpiw71rgflc";
   };
   #buildInputs = [ pkgs.rustc pkgs.cargo ];
   cargoSha256 = "0sjjj9z1dhilhpc8pq4154czrb79z9cm044jvn75kxcjv6v5l2m5";
