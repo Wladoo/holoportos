@@ -15,9 +15,9 @@ let
       "2019-01-24"
       [ "x86_64-unknown-linux-gnu" "wasm32-unknown-unknown" ]
      );
-    rustc = channels.rust;
-    cargo = channels.cargo;
   };
+  rustc = rust.rustc;
+  cargo = rust.cargo;
   rustPlatform = recurseIntoAttrs (makeRustPlatform rust cargo);
 in
 rustPlatform.buildRustPackage rec {
