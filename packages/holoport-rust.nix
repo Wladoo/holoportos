@@ -1,4 +1,4 @@
-{ pkgs, stdenv, cargo, fetchFromGitHub, recurseIntoAttrs, makeRustPlatform }:
+{ pkgs, stdenv, fetchFromGitHub, recurseIntoAttrs, makeRustPlatform }:
 let
   rustOverlayRepo = fetchFromGitHub {
     owner = "mozilla";
@@ -17,8 +17,8 @@ let
      );
   };
   rustc = rust.channels.rust;
-  inherit (rust.channels) cargo;
-  rustPlatform = makeRustPlatform {rustc = rustc; cargo = cargo;};
+  #inherit (rust.channels) cargo;
+  rustPlatform = makeRustPlatform {rustc = rustc; inherit (rust.channels) cargo;};
 in
 rustPlatform.buildRustPackage rec {
   name = "holochain-rust";
