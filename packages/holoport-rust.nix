@@ -18,7 +18,7 @@ let
     rustc = channels.rust;
     inherit (channels) cargo;
   };
-  rustPlatform = recurseIntoAttrs (makeRustPlatform rust);
+  rustPlatform = recurseIntoAttrs (makeRustPlatform rustc cargo);
 in
 rustPlatform.buildRustPackage rec {
   name = "holochain-rust";
