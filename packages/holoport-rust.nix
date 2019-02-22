@@ -1,4 +1,4 @@
-{ pkgs, stdenv, fetchFromGitHub, makeRustPlatform }:
+{ pkgs, stdenv, fetchFromGitHub, recurseIntoAttrs, makeRustPlatform }:
 let
   rustOverlayRepo = fetchFromGitHub {
     owner = "mozilla";
@@ -13,10 +13,7 @@ let
       "2019-01-24"
       [ "x86_64-unknown-linux-gnu" "wasm32-unknown-unknown" ]
   );
-  rustPlatform = makeRustPlatform {
-    rustc = rust.rust;
-    inherit (rustc) cargo;
-  };
+  rustPlatform = recurseIntoAttrs (makeRustPlatform rust);
 in
 rustPlatform.buildRustPackage rec {
   name = "holochain-rust";
