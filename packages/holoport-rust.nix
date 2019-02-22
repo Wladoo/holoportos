@@ -7,11 +7,11 @@ let
     sha256 = "013hapfp76s87wiwyc02mzq1mbva2akqxyh37p27ngqiz0kq5f2n";
   };
   rustOverlay = import "${rustOverlayRepo}/rust-overlay.nix";
-  rust = (rustOverlay.rustChannelOfTargets {
-      date = "2019-01-24";
-      channel = "nightly";
-      targets = [ "x86_64-unknown-linux-gnu" "wasm32-unknown-unknown" ];
-  });
+  rust = (rustOverlay.rustChannelOfTargets
+      "2019-01-24"
+      "nightly"
+      [ "x86_64-unknown-linux-gnu" "wasm32-unknown-unknown" ]
+  );
   rustPlatform = makeRustPlatform {
     rustc = rust.rustc;
     inherit (rust) cargo;
