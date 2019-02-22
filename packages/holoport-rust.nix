@@ -17,8 +17,8 @@ let
      );
   };
   rustc = rust.channels.rust;
-  #inherit (rust.channels) cargo;
-  rustPlatform = makeRustPlatform {rustc = rustc; inherit (rust.channels) cargo;};
+  cargo = rust.channels.rust;
+  rustPlatform = makeRustPlatform {rustc = rustc; cargo = cargo;};
 in
 rustPlatform.buildRustPackage rec {
   name = "holochain-rust";
