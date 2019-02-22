@@ -18,7 +18,7 @@ let
   };
   rustc = rust.rustc;
   cargo = rust.cargo;
-  rustPlatform = recurseIntoAttrs (makeRustPlatform rust cargo);
+  rustPlatform = makeRustPlatform {rust; cargo;};
 in
 rustPlatform.buildRustPackage rec {
   name = "holochain-rust";
