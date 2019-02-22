@@ -9,8 +9,8 @@ let
   rustOverlay = import "${rustOverlayRepo}/rust-overlay.nix";
   nixpkgs = import <nixpkgs> { overlays = [ rustOverlay ]; };
   rust = (nixpkgs.rustChannelOfTargets
-      "2019-01-24"
       "nightly"
+      "2019-01-24"
       [ "x86_64-unknown-linux-gnu" "wasm32-unknown-unknown" ]
   );
   rustPlatform = makeRustPlatform {
