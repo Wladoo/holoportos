@@ -5,14 +5,6 @@ self: super:
 # that imports our modules into the NixOS modules
 let
   callPackage = super.lib.callPackageWith super;
-  #newScope = super.lib.newScope super;
-  rustRegistry = callPackage ./rust-packages.nix { };
-  rustNightly = (super.recurseIntoAttrs (callPackage ./packages/rust/nightly.nix {}));
-  rust = rustNightly;
-  cargo = rust.cargo;
-  rustc = rust.rustc;
-
-  holorustPlatform = super.recurseIntoAttrs (super.makeRustPlatform rust);
 
 in
 
@@ -25,6 +17,6 @@ in
 
 
   holoport-cloudflared = callPackage ./modules/holoport-cloudflared/cloudflared.nix {};
-  hello-rust = callPackage ./packages/holoport-rust.nix { rustPlatform = holorustPlatform; };
+  #hello-rust = callPackage ./packages/holoport-rust.nix { rustPlatform = holorustPlatform; };
 
 }
