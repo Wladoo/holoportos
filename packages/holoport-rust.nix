@@ -21,21 +21,33 @@ let
   rustPlatform = makeRustPlatform {rustc = rustc; cargo = cargo;};
 in
 rustPlatform.buildRustPackage rec {
-  name = "hello_world";
-  version = "0.0.2";
+  name = "holochain-rust";
+  version = "0.0.1";
 
   src = fetchFromGitHub {
-    owner = "samrose";
-    repo = "hello_world";
-    rev = "475be237ccd37e1864302b2035b65c303a8b9c8e";
-    sha256 = "0k7k5zal6g1vw1ci71f685rwbx7294azr7hcxrpccpzs4ydwsyc6";
+    owner = "holochain";
+    repo = "holochain-rust";
+    rev = "330af276015c02956ba4b3d1d65b032585778931";
+    sha256 = "10z21m18rwk1xa5d4zm77j5bp3b4vyvnqvb9hn8wbi2kqixlqnzr";
   };
-  #buildInputs = [ pkgs.rustc pkgs.cargo ];
-  cargoSha256 = "0sjjj9z1dhilhpc8pq4154czrb79z9cm044jvn75kxcjv6v5l2m5";
+  buildInputs = [
+    pkgs.zeromq4
+    pkgs.binutils
+    pkgs.gcc
+    pkgs.gnumake
+    pkgs.openssl
+    pkgs.pkgconfig
+    pkgs.coreutils
+    pkgs.cmake
+    pkgs.python
+    pkgs.libsodium
+  ];
+
+  cargoSha256 = "06nvsllzv4qkyv1213qa566dfanpfb44mhp4n19w64hjw45qpc83";
 
   meta = with stdenv.lib; {
-    description = "a test";
-    homepage = https://github.com/samrose/hello_world;
+    description = "holochain-rust";
+    homepage = https://github.com/holochain/holochain-rust;
     license = licenses.unlicense;
     maintainers = [ maintainers.tailhook ];
     platforms = platforms.all;
