@@ -40,3 +40,4 @@ buildRustPackage rec {
     maintainers = [ maintainers.tailhook ];
     platforms = platforms.all;
   };
+}
