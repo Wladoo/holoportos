@@ -30,7 +30,7 @@ rustPlatform.buildRustPackage rec {
     rev = "330af276015c02956ba4b3d1d65b032585778931";
     sha256 = "10z21m18rwk1xa5d4zm77j5bp3b4vyvnqvb9hn8wbi2kqixlqnzr";
   };
-  sourceRoot = "./conductor";
+  sourceRoot = "holochain-rust/conductor";
   buildInputs = [
     pkgs.zeromq4
     pkgs.binutils
