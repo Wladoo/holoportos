@@ -24,13 +24,20 @@ rustPlatform.buildRustPackage rec {
   name = "holochain-rust";
   version = "0.0.1";
 
-  src = fetchFromGitHub {
+  src =
+  let
+    source = fetchFromGitHub {
     owner = "holochain";
     repo = "holochain-rust";
-    rev = "330af276015c02956ba4b3d1d65b032585778931";
-    sha256 = "10z21m18rwk1xa5d4zm77j5bp3b4vyvnqvb9hn8wbi2kqixlqnzr";
+    rev = "6d58e5b34321429ca8ef2337c225fb7e4b8d3159";
+    sha256 = "12y03iy1g8wbjj3ydmdf87xg32124py2zjazg09pipz8szxy1dgn";
   };
-  sourceRoot = "${src}/conductor";
+  in
+  runCommand "holochain-rust-src" {} ''
+    cp -R ${source} $out
+    chmod -R +w $out
+  '';
+
   buildInputs = [
     pkgs.zeromq4
     pkgs.binutils
@@ -43,9 +50,9 @@ rustPlatform.buildRustPackage rec {
     pkgs.python
     pkgs.libsodium
   ];
-
+  useRealVendorConfig = true;
   cargoSha256 = "06nvsllzv4qkyv1213qa566dfanpfb44mhp4n19w64hjw45qpc83";
-  cargoSha256Version = 2;
+  #cargoSha256Version = 2;
   meta = with stdenv.lib; {
     description = "holochain-rust";
     homepage = https://github.com/holochain/holochain-rust;
@@ -53,4 +60,5 @@ rustPlatform.buildRustPackage rec {
     maintainers = [ maintainers.tailhook ];
     platforms = platforms.all;
   };
+
 }
