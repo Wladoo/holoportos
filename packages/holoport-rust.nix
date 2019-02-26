@@ -1,4 +1,5 @@
-{ pkgs, stdenv, fetchFromGitHub, recurseIntoAttrs, makeRustPlatform, runCommand }:
+#{ pkgs, stdenv, fetchFromGitHub, recurseIntoAttrs, makeRustPlatform, runCommand }:
+with import <nixpkgs> {};
 let
   rustOverlayRepo = fetchFromGitHub {
     owner = "mozilla";
@@ -8,7 +9,7 @@ let
   };
   rustOverlay = import "${rustOverlayRepo}/rust-overlay.nix";
   nixpkgs = import <nixpkgs> { overlays = [ rustOverlay ]; };
-  rust = rec {
+  holoRust = rec {
 
     channels = (nixpkgs.rustChannelOfTargets
       "nightly"
@@ -16,11 +17,11 @@ let
       [ "x86_64-unknown-linux-gnu" "wasm32-unknown-unknown" ]
      );
   };
-  rustc = rust.channels;
-  cargo = rust.channels;
-  #rustPlatform = makeRustPlatform {rustc = rustc; cargo = cargo;};
-  fetchcargo = pkgs.callPackage (import ./fetchcargo.nix) { inherit rust; };
-  buildRustPackage = pkgs.callPackage (import ./build-rust-package.nix) { inherit rust; };
+  rustc = holoRust.channels;
+  cargo = holoRust.channels;
+  rust = makeRustPlatform {rustc = rustc; cargo = cargo;};
+  fetchcargo = pkgs.callPackage (import ./fetchcargo.nix) { inherit (rust) rust; };
+  buildRustPackage = pkgs.callPackage (import ./build-rust-package.nix) { inherit (rust) rust; };
 in
 pkgs.callPackage ./derivation.nix {
   inherit buildRustPackage rust;

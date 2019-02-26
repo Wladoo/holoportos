@@ -1,5 +1,14 @@
-{ buildRustPackage, postgresql, mysql, sqlite, openssl, rust, pkgconfig, fetchgit }:
-
+{ pkgs, stdenv, buildRustPackage, neon, openssl, rust, pkgconfig, fetchFromGitHub, runCommand }:
+let
+  nodejs-8_13 = pkgs.nodejs-8_x.overrideAttrs(oldAttrs: rec {
+    name = "nodejs-${version}";
+    version = "8.13.0";
+    src = pkgs.fetchurl {
+      url = "https://nodejs.org/dist/v${version}/node-v${version}.tar.xz";
+      sha256 = "1qidcj4smxsz3pmamg3czgk6hlbw71yw537h2jfk7iinlds99a9a";
+    };
+  });
+in
 buildRustPackage rec {
   name = "holochain-rust";
   version = "0.0.1";
@@ -7,13 +16,13 @@ buildRustPackage rec {
   src =
   let
     source = fetchFromGitHub {
-    owner = "holochain";
-    repo = "holochain-rust";
-    rev = "6d58e5b34321429ca8ef2337c225fb7e4b8d3159";
-    sha256 = "12y03iy1g8wbjj3ydmdf87xg32124py2zjazg09pipz8szxy1dgn";
+    owner = "samrose";
+    repo = "conductor";
+    rev = "126345d7ac46a2a588171560fc573eedb245b25e";
+    sha256 = "0qf5dc93gvarvdzzxppb5sprw4w4advrdczglxlcnfpr52bmrnf2";
   };
   in
-  runCommand "holochain-rust-src" {} ''
+  runCommand "conductor-src" {} ''
     cp -R ${source} $out
     chmod -R +w $out
   '';
@@ -29,9 +38,11 @@ buildRustPackage rec {
     pkgs.cmake
     pkgs.python
     pkgs.libsodium
+    nodejs-8_13
+    neon
   ];
   useRealVendorConfig = true;
-  cargoSha256 = "06nvsllzv4qkyv1213qa566dfanpfb44mhp4n19w64hjw45qpc83";
+  cargoSha256 = "0jawyvs4182jwxj7f4ay0jg1r9ws95r0g3qqd87hn4ryyjn9k697";
   #cargoSha256Version = 2;
   meta = with stdenv.lib; {
     description = "holochain-rust";
@@ -40,3 +51,4 @@ buildRustPackage rec {
     maintainers = [ maintainers.tailhook ];
     platforms = platforms.all;
   };
+}
