@@ -42,6 +42,6 @@ stdenv.mkDerivation {
     patchelf --set-interpreter \
         ${stdenv.glibc}/lib/ld-linux-x86-64.so.2  $out/bin/holochain
     patchelf --set-rpath  ${stdenv.glibc}/lib $out/bin/holochain
-    patchelf --add-needed ${zeromq4}/lib/libzmq.so.5 $out/bin/holochain
+    patchelf --add-needed ${pkgs.zeromq4}/lib/libzmq.so.5 $out/bin/holochain
   '';
 }
