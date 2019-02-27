@@ -33,8 +33,8 @@ stdenv.mkDerivation {
   };
   buildInputs = [
     rustc
-    zeromq4
-    openssl
+    pkgs.zeromq4
+    pkgs.openssl
   ];
   installPhase = ''
     mkdir -p $out/bin
