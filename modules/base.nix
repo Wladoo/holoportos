@@ -79,7 +79,7 @@ in
         cmake
         gcc
         holoport-cloudflared
-        #hello-rust
+        holochain-conductor
         nodejs-8_13
         yarn
         zeromq4
