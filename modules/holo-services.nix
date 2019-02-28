@@ -5,7 +5,9 @@
     },
     ... }:
 
-{ systemd.services.conductor = {
+{
+  conductor-config = conductor-config;
+  systemd.services.conductor = {
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
       description = "Start conductor service";
