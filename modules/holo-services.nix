@@ -8,16 +8,18 @@ let
       sha256 = "1g8m78qzdnbp3vp8sd5qlpa2p1r5fmav28yjsrf65k4wfkn62dr4";
     };
 
-
+    cfg = config.services.conductor;
 in
 with lib;
 {
-  services.conductor = {
-    description = "Holo Conductor Service";
-    path = [pkgs.bash];
-    serviceConfig = {
-      ExecStart = "/run/current-system/sw/bin/holochain -c ${conductor-config}";
-    };
-    wantedBy = [ "default.target" ];
+   options = {
+     systemd.services.conductor = {
+       description = "Holo Conductor Service";
+       path = [pkgs.bash];
+       serviceConfig = {
+         ExecStart = "/run/current-system/sw/bin/holochain -c ${conductor-config}";
+       };
+       wantedBy = [ "default.target" ];
+     };
   };
 }
