@@ -1,7 +1,7 @@
 { stdenv, lib, config, fetchurl, ... }:
 
-{
-  stdenv.mkDerivation {
+let
+  conductor-config = stdenv.mkDerivation {
     name = "conductor-fonfig";
     src = fetchurl {
       url = https://gist.githubusercontent.com/samrose/caba3e3556e11151bdc90f0b0fb567a9/raw/a46de503498dbe1bbed275168e3a6db459f235f0/empty-container.toml;
@@ -9,13 +9,12 @@
     };
   }
 
-
+in
 
   systemd.services.conductor = {
     path = [pkgs.bash];
     serviceConfig = {
-      ExecStart = "/run/current-system/sw/bin/holochain -c ${stdenv.conductor-config}";
+      ExecStart = "/run/current-system/sw/bin/holochain -c ${conductor-config}";
     };
     wantedBy = [ "default.target" ];
   };
-}
