@@ -84,7 +84,17 @@ in
         yarn
         zeromq4
       ];
-
+      systemd.services.conductor = {
+        wantedBy = [ "multi-user.target" ];
+        after = [ "network.target" ];
+        description = "Start conductor service";
+        serviceConfig = {
+          Type = "simple";
+          User = "holoport";
+          ExecStart = ''/run/current-system/sw/bin/holochain -c test'';
+          #ExecStop = ''${pkgs.screen}/bin/screen -S irc -X quit'';
+        };
+      };
     })
   ];
 }

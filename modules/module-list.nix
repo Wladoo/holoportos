@@ -2,7 +2,6 @@
 [
   ./auto-update.nix
   ./base.nix
-  ./holo-services.nix
   ./udiskie.nix
   ./user.nix
   ./util.nix
