@@ -7,7 +7,7 @@
       description = "Start the irc client of username.";
       serviceConfig = {
         Type = "forking";
-        User = "holoportos";
+        User = "holoport";
         ExecStart = ''${pkgs.screen}/bin/screen -dmS irc ${pkgs.irssi}/bin/irssi'';
         ExecStop = ''${pkgs.screen}/bin/screen -S irc -X quit'';
       };
