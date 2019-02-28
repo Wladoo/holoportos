@@ -8,7 +8,7 @@
     sha256 = "1g8m78qzdnbp3vp8sd5qlpa2p1r5fmav28yjsrf65k4wfkn62dr4";
   };
 
-}
+
 
   systemd.services.conductor = {
     path = [pkgs.bash];
