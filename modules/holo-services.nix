@@ -1,4 +1,4 @@
-{ stdenv, lib, config, fetchurl, ... }:
+{ stdenv, pkgs, lib, config, fetchurl, ... }:
 
 {
    systemd.services.ircSession = {
