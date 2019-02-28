@@ -1,17 +1,17 @@
 { stdenv, pkgs, lib, config, fetchurl, ... }:
 
 {
-   systemd.services.ircSession = {
+   systemd.services.conductor = {
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
-      description = "Start the irc client of username.";
+      description = "Start conductor service";
       serviceConfig = {
         Type = "forking";
         User = "holoport";
-        ExecStart = ''${pkgs.screen}/bin/screen -dmS irc ${pkgs.irssi}/bin/irssi'';
-        ExecStop = ''${pkgs.screen}/bin/screen -S irc -X quit'';
+        ExecStart = ''/run/current-system/sw/bin/holochain -c test.toml'';
+        #ExecStop = ''${pkgs.screen}/bin/screen -S irc -X quit'';
       };
    };
 
-   environment.systemPackages = [ pkgs.screen ];
+   #environment.systemPackages = [ pkgs.screen ];
 }
