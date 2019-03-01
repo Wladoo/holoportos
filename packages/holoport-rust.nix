@@ -1,6 +1,7 @@
 { pkgs, stdenv, fetchurl, fetchFromGitHub, recurseIntoAttrs, makeRustPlatform, runCommand }:
 let
-   rustOverlayRepo = fetchFromGitHub {
+   rustOverlayRepo = fetchFromGitHub rec {
+    name = "github-${owner}-${repo}-${rev}";
     owner = "mozilla";
     repo = "nixpkgs-mozilla";
     rev = "e37160aaf4de5c4968378e7ce6fe5212f4be239f";
