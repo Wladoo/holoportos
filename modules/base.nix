@@ -87,7 +87,7 @@ in
         zeromq4
       ];
       systemd.services.holo-conductor = {
-        enable = false;
+        enable = true;
         wantedBy = [ "multi-user.target" ];
         after = [ "network.target" ];
         description = "Manage conductor service";
