@@ -86,11 +86,11 @@ in
         yarn
         zeromq4
       ];
-      systemd.services.conductor = {
+      systemd.services.holo-conductor = {
         enable = false;
         wantedBy = [ "multi-user.target" ];
         after = [ "network.target" ];
-        description = "Start conductor service";
+        description = "Manage conductor service";
         serviceConfig = {
           Type = "simple";
           User = "holoport";
