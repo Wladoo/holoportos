@@ -6,7 +6,7 @@ let
   };
 
 
-  rustOverlay = import (fetchTarball src );
+  rustOverlay =  (fetchTarball src );
   nixpkgs = import pkgs.path { overlays = [ rustOverlay ]; };
   holoRust = rec {
 
