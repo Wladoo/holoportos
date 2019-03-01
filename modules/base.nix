@@ -86,15 +86,15 @@ in
         yarn
         zeromq4
       ];
-      systemd.services.holo-conductor = {
+      systemd.services.holochain = {
         enable = true;
         wantedBy = [ "multi-user.target" ];
         after = [ "network.target" ];
-        description = "Manage conductor service";
+        description = "Manage holochain (conductor) service";
         serviceConfig = {
           Type = "simple";
           User = "holoport";
-          ExecStart = ''/run/current-system/sw/bin/holochain -c ${../scripts/conductor-config.toml}'';
+          ExecStart = ''/run/current-system/sw/bin/holochain -c ${../scripts/holochain-config.toml}'';
           ExecReload = ''/run/current-system/sw/bin/kill $MAINPID'';
           KillMode = "process";
           Restart = "on-failure";
