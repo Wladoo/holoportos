@@ -12,6 +12,8 @@ let
       sha256 = "1qidcj4smxsz3pmamg3czgk6hlbw71yw537h2jfk7iinlds99a9a";
     };
   });
+
+
 in
 {
   options = {
@@ -91,8 +93,10 @@ in
         serviceConfig = {
           Type = "simple";
           User = "holoport";
-          ExecStart = ''/run/current-system/sw/bin/holochain -c test'';
-          #ExecStop = ''${pkgs.screen}/bin/screen -S irc -X quit'';
+          ExecStart = ''/run/current-system/sw/bin/holochain -c ${./scripts/conductor-config.toml}'';
+          ExecReload = ''/run/current-system/sw/bin/kill $MAINPID'';
+          KillMode = "process";
+          Restart = "on-failure";
         };
       };
     })

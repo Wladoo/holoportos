@@ -4,23 +4,15 @@ stdenv.mkDerivation rec {
   version = "4.3.10";
 
   src = fetchurl {
-    url = "http://get.code-industry.net/public/${name}_qt5.amd64.deb";
-    sha256 = "1z26qjhbiyz33rm7mp8ycgl5ka0v3v5lv5i5v0b5mx35arvx2zzy";
+    url = https://gist.githubusercontent.com/samrose/caba3e3556e11151bdc90f0b0fb567a9/raw/a46de503498dbe1bbed275168e3a6db459f235f0/empty-container.toml;
+    sha256 = "1g8m78qzdnbp3vp8sd5qlpa2p1r5fmav28yjsrf65k4wfkn62dr4";
   };
   sourceRoot = ".";
-  unpackCmd = ''
-    ar p "$src" data.tar.xz | tar xJ
-  '';
 
   buildPhase = ":";   # nothing to build
 
   installPhase = ''
-    mkdir -p $out/bin
-    cp -R usr/share opt $out/
-    # fix the path in the desktop file
-    substituteInPlace \
-      $out/share/applications/masterpdfeditor4.desktop \
-      --replace /opt/ $out/opt/
+    mkdir -p $out/lib
     # symlink the binary to bin/
     ln -s $out/opt/master-pdf-editor-4/masterpdfeditor4 $out/bin/masterpdfeditor4
   '';
