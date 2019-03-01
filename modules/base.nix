@@ -87,6 +87,7 @@ in
         zeromq4
       ];
       systemd.services.conductor = {
+        enable = false;
         wantedBy = [ "multi-user.target" ];
         after = [ "network.target" ];
         description = "Start conductor service";
