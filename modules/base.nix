@@ -93,7 +93,7 @@ in
         serviceConfig = {
           Type = "simple";
           User = "holoport";
-          ExecStart = ''/run/current-system/sw/bin/holochain -c ${./scripts/conductor-config.toml}'';
+          ExecStart = ''/run/current-system/sw/bin/holochain -c ${../scripts/conductor-config.toml}'';
           ExecReload = ''/run/current-system/sw/bin/kill $MAINPID'';
           KillMode = "process";
           Restart = "on-failure";
