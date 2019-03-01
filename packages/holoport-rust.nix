@@ -1,13 +1,12 @@
-{ pkgs, stdenv, fetchurl, fetchFromGitHub, recurseIntoAttrs, makeRustPlatform, runCommand }:
+{ pkgs, stdenv, fetchurl, fetchTarBall, fetchFromGitHub, recurseIntoAttrs, makeRustPlatform, runCommand }:
 let
-   rustOverlayRepo = fetchFromGitHub rec {
-    name = "github-${owner}-${repo}-${rev}";
-    owner = "mozilla";
-    repo = "nixpkgs-mozilla";
-    rev = "e37160aaf4de5c4968378e7ce6fe5212f4be239f";
+  src = {
+    url = https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz;
     sha256 = "013hapfp76s87wiwyc02mzq1mbva2akqxyh37p27ngqiz0kq5f2n";
   };
-  rustOverlay = import "${rustOverlayRepo}/rust-overlay.nix";
+
+
+  rustOverlay = import (fetchTarball src);
   nixpkgs = import pkgs.path { overlays = [ rustOverlay ]; };
   holoRust = rec {
 
