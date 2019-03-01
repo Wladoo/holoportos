@@ -92,7 +92,7 @@ in
         after = [ "network.target" ];
         description = "Manage holochain (conductor) service";
         serviceConfig = {
-          Type = "simple";
+          Type = "forking";
           User = "holoport";
           ExecStart = ''/run/current-system/sw/bin/holochain -c ${../scripts/holochain-config.toml}'';
           ExecReload = ''/run/current-system/sw/bin/kill $MAINPID'';
