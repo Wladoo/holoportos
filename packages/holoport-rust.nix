@@ -7,7 +7,7 @@ let
     sha256 = "013hapfp76s87wiwyc02mzq1mbva2akqxyh37p27ngqiz0kq5f2n";
   };
   rustOverlay = import "${rustOverlayRepo}/rust-overlay.nix";
-  nixpkgs = import pkgs.path { overlays = [ (rustOverlayRepo) ]; };
+  nixpkgs = import pkgs.path { overlays = [ rustOverlay ]; };
   holoRust = rec {
 
     channels = (nixpkgs.rustChannelOfTargets
