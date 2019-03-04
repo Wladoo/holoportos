@@ -100,6 +100,18 @@ in
           Restart = "on-failure";
         };
       };
+      systemd.services.system-led = {
+        enable = true;
+        wantedBy = [ "default.target" ];
+        before = [ "network.target" ];
+        description = "Turn on blinking red until network";
+        serviceConfig = {
+          Type = "oneshot";
+          User = "holoport";
+          ExecStart = ''/run/current-system/sw/bin/nix-shell ${../scripts/led-pre-network.py}'';
+          StandardOutput = "journal";
+        };
+      };
     })
   ];
 }
