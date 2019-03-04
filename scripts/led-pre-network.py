@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#! nix-shell -i python3 -p python3 python3.pkgs.pyserial -E 'import <nixpkgs> {}'
+#! nix-shell -E 'with import <nixpkgs> {}; stdenv.mkDerivation { name = "led-red"; buildInputs = [ python3.pkgs.pyserial ]; }'
 
 import serial #import pyserial
 
