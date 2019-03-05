@@ -13,7 +13,7 @@ let
     };
   });
 
-
+  pre-net-led = pkgs.callPackage ../packages/pre-net-led/pre-net-led.nix {};
 in
 {
   options = {
@@ -85,7 +85,6 @@ in
         nodejs-8_13
         yarn
         zeromq4
-        pre-net-led
       ];
       systemd.services.holochain = {
         enable = true;
