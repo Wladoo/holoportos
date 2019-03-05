@@ -111,22 +111,10 @@ in
           StandardOutput = "journal";
         };
       };
-      systemd.services.holo = {
-        enable = true;
-        wants = [ "holochain.service" "multi-user.target"];
-        after = ["multi-user.target" "holochain-service"];
-        description = "a target for after holochain conductor starts";
-        serviceConfig = {
-          Type = "target";
-          StandardOutput = "journal";
-        };
-
-      };
-
       systemd.services.holo-up = {
         enable = true;
-        wants = [ "multi-user.target" "holo.target" ];
-        after = [ "holo.target" ];
+        wants = [ "multi-user.target" "holochain.service" ];
+        after = [ "holochain.service" ];
         description = "Turn on aurora when all systems go";
         serviceConfig = {
           Type = "oneshot";
