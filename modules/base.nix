@@ -14,6 +14,7 @@ let
   });
 
   pre-net-led = pkgs.callPackage ../packages/pre-net-led/pre-net-led.nix {};
+  holo-led = pkgs.callPackage ../packages/holo-led/holo-led.nix {};
 in
 {
   options = {
