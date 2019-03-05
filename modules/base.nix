@@ -114,8 +114,8 @@ in
       };
       systemd.services.holo-up = {
         enable = true;
-        wants = [ "multi-user.target" "holochain.service" ];
-        after = [ "holochain.service" ];
+        wants = [ "multi-user.target"  ];
+        after = [ "multi-user.target" ];
         description = "Turn on aurora when all systems go";
         serviceConfig = {
           Type = "oneshot";
