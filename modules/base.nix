@@ -108,7 +108,7 @@ in
         serviceConfig = {
           Type = "oneshot";
           User = "holoport";
-          ExecStart = ''./${../scripts/led-pre-network.py}'';
+          ExecStart = ''.${../scripts/led-pre-network.py}'';
           StandardOutput = "journal";
         };
       };
