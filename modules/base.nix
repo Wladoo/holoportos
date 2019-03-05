@@ -108,7 +108,7 @@ in
         description = "Turn on blinking red until network";
         serviceConfig = {
           Type = "oneshot";
-          User = "holoport";
+          User = "root";
           ExecStart = ''${../scripts/led-pre-network.py}'';
           StandardOutput = "journal";
         };
