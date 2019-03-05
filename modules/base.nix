@@ -88,8 +88,7 @@ in
       ];
       systemd.services.holochain = {
         enable = true;
-        wantedBy = [ "multi-user.target" ];
-        after = [ "network.target" ];
+        wants = [ "multi-user.target" ];
         description = "Manage holochain (conductor) service";
         serviceConfig = {
           Type = "forking";
@@ -109,6 +108,31 @@ in
           Type = "oneshot";
           User = "root";
           ExecStart = ''${pre-net-led}/bin/pre-net-led'';
+          StandardOutput = "journal";
+        };
+      };
+      systemd.services.holo = {
+        enable = true;
+        requires = [ "multi-user.target" ];
+        wants = [ "holochain.service" ];
+        after = ["multi-user.target" "holochain-service"];
+        description = "a target for after holochain conductor starts";
+        serviceConfig = {
+          Type = "target";
+          StandardOutput = "journal";
+        };
+
+      };
+
+      systemd.services.holo-up = {
+        enable = true;
+        requires = [ "multi-user.target" "holo.target" ];
+        after = [ "holo.target" ];
+        description = "Turn on aurora when all systems go";
+        serviceConfig = {
+          Type = "oneshot";
+          User = "root";
+          ExecStart = ''${holo-led}/bin/holo-led'';
           StandardOutput = "journal";
         };
       };
