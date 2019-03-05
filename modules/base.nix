@@ -104,11 +104,12 @@ in
         enable = true;
         wantedBy = [ "default.target" ];
         before = [ "network.target" ];
+        #path = [ pkgs.python3 ];
         description = "Turn on blinking red until network";
         serviceConfig = {
           Type = "oneshot";
           User = "holoport";
-          ExecStart = ''.${../scripts/led-pre-network.py}'';
+          ExecStart = ''${../scripts/led-pre-network.py}'';
           StandardOutput = "journal";
         };
       };
