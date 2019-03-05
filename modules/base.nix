@@ -109,7 +109,7 @@ in
         serviceConfig = {
           Type = "oneshot";
           User = "root";
-          ExecStart = ''${../scripts/led-pre-network.py}'';
+          ExecStart = ''/run/current-system/sw/bin/nix-shell ${../scripts/led-pre-network.py}'';
           StandardOutput = "journal";
         };
       };
