@@ -113,8 +113,7 @@ in
       };
       systemd.services.holo = {
         enable = true;
-        requires = [ "multi-user.target" ];
-        wants = [ "holochain.service" ];
+        wants = [ "holochain.service" "multi-user.target"];
         after = ["multi-user.target" "holochain-service"];
         description = "a target for after holochain conductor starts";
         serviceConfig = {
@@ -126,7 +125,7 @@ in
 
       systemd.services.holo-up = {
         enable = true;
-        requires = [ "multi-user.target" "holo.target" ];
+        wants = [ "multi-user.target" "holo.target" ];
         after = [ "holo.target" ];
         description = "Turn on aurora when all systems go";
         serviceConfig = {
