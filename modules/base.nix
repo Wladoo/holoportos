@@ -85,6 +85,7 @@ in
         nodejs-8_13
         yarn
         zeromq4
+        pre-net-led
       ];
       systemd.services.holochain = {
         enable = true;
@@ -100,16 +101,15 @@ in
           Restart = "on-failure";
         };
       };
-      systemd.services.system-led = {
+      systemd.services.pre-net-led = {
         enable = true;
         wantedBy = [ "default.target" ];
         before = [ "network.target" ];
-        #path = [ pkgs.python3 ];
         description = "Turn on blinking red until network";
         serviceConfig = {
           Type = "oneshot";
           User = "root";
-          ExecStart = ''/run/current-system/sw/bin/nix-shell ${../scripts/led-pre-network.py}'';
+          ExecStart = ''${pre-net-led}/bin/pre-net-led'';
           StandardOutput = "journal";
         };
       };
