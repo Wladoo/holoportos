@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#! nix-shell -i python3 -p "python3.withPackages(ps: [ps.pyserial])"
+#! NIX_PATH=nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs nix_shell -i python3 -p "python3.withPackages(ps: [ps.pyserial])"
 import serial #import pyserial
 
 ser = serial.Serial('/dev/ttyUSB0', 19200)
