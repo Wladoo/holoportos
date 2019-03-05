@@ -1,6 +1,5 @@
 #!/usr/bin/env nix-shell
-#! nix-shell -E 'with import <nixpkgs> {}; stdenv.mkDerivation { name = "led-red"; buildInputs = [ python3.pkgs.pyserial ]; }'
-
+#! nix-shell -i python3 -p "python3.withPackages(ps: [ps.pyserial])"
 import serial #import pyserial
 
 ser = serial.Serial('/dev/ttyUSB0', 19200)
