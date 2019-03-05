@@ -10,7 +10,7 @@ buildGoPackage rec {
     owner  = "samrose";
     repo   = "holo-led";
     rev    = "52fb2e5c8081884546d5490226b85121fc1feba0"; # untagged
-    sha256 = "52fb2e5c8081884546d5490226b85121fc1feba0";
+    sha256 = "0rq9mndsgsssya4y32w8acclrvgnn548wf4b3lw307k8vb8y35wl";
   };
 
   goDeps = ./deps.nix;
