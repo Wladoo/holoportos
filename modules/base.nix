@@ -127,14 +127,14 @@ in
       };
       systemd.services.holo-shutdown = {
         enable = true;
-        wantedBy = [ "shutdown.target" ];
-        after = [ "shutdown.target" ];
+        wantedBy = [ "multi-user.target" ];
         description = "Flash blue on any request for shutdown/poweroff/reboot";
         serviceConfig = {
           Type = "oneshot";
           User = "root";
-          ExecStart = ''${shutdown-led}/bin/shutdown-led'';
+          ExecStop = ''${shutdown-led}/bin/shutdown-led'';
           StandardOutput = "journal";
+          RemainAfterExit = "yes";
         };
       };
     })
