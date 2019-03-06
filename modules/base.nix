@@ -15,6 +15,7 @@ let
 
   pre-net-led = pkgs.callPackage ../packages/pre-net-led/pre-net-led.nix {};
   holo-led = pkgs.callPackage ../packages/holo-led/holo-led.nix {};
+  shutdown-led = pkgs.callPackage ../packages/shutdown-led/shutdown-led.nix {};
 in
 {
   options = {
@@ -121,6 +122,18 @@ in
           Type = "oneshot";
           User = "root";
           ExecStart = ''${holo-led}/bin/holo-led'';
+          StandardOutput = "journal";
+        };
+      };
+      systemd.services.holo-shutdown = {
+        enable = true;
+        wantedBy = [ "final.target" ];
+        after = [ "final.target" ];
+        description = "Flash blue on any request for shutdown/poweroff/reboot";
+        serviceConfig = {
+          Type = "oneshot";
+          User = "root";
+          ExecStart = ''${shutdown-led}/bin/shutdown-led'';
           StandardOutput = "journal";
         };
       };
