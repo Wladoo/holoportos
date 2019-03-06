@@ -114,6 +114,7 @@ in
       };
       systemd.services.holo-up = {
         enable = true;
+        wantedBy = [ "default.target" ];
         after = [ "getty.target" ];
         description = "Turn on aurora when all systems go";
         serviceConfig = {
