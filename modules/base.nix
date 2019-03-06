@@ -127,8 +127,8 @@ in
       };
       systemd.services.holo-shutdown = {
         enable = true;
-        wantedBy = [ "final.target" ];
-        after = [ "final.target" ];
+        wantedBy = [ "shutdown.target" ];
+        after = [ "shutdown.target" ];
         description = "Flash blue on any request for shutdown/poweroff/reboot";
         serviceConfig = {
           Type = "oneshot";
