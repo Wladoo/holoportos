@@ -8,7 +8,7 @@ buildGoPackage rec {
 
   src = fetchFromGitHub {
     owner  = "samrose";
-    repo   = "holo";
+    repo   = "shutdown-led";
     rev    = "e58eae95635686e1d10553dddf1f5dff21243976"; # untagged
     sha256 = "1wcikbfd4z0bznb29zmhlsi49aniszrz1ar6y029gg59l6vbbzx8";
   };
