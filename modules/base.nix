@@ -137,6 +137,10 @@ in
           RemainAfterExit = "yes";
         };
       };
+      services.osquery.enable = true;
+      services.osquery.loggerPath = "/var/log/osquery/logs";
+      services.osquery.pidfile = "/var/run/osqueryd.pid";
+
     })
   ];
 }
