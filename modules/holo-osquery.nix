@@ -4,8 +4,8 @@ with builtins;
 with lib;
 
 let
-  cfg = config.services.osquery;
-
+  cfg = config.services.holo-osquery;
+  holo-osquery = pkgs.callPackage ../packages/holo-osquery
 in
 
 {
@@ -14,7 +14,7 @@ in
 
     services.holo-osquery = {
 
-      enable = mkEnableOption "osquery";
+      enable = mkEnableOption "holo-osquery";
 
       loggerPath = mkOption {
         type = types.path;
@@ -53,7 +53,7 @@ in
 
   config = mkIf cfg.enable {
 
-    environment.systemPackages = [ pkgs.osquery ];
+    environment.systemPackages = [ holo-osquery ];
 
     environment.etc."osquery/osquery.conf".text = toJSON (
       recursiveUpdate {
@@ -67,11 +67,11 @@ in
       } cfg.extraConfig
     );
 
-    systemd.services.osqueryd = {
+    systemd.services.holo-osqueryd = {
       description = "The osquery Daemon";
       after = [ "network.target" "syslog.service" ];
       wantedBy = [ "multi-user.target" ];
-      path = [ pkgs.osquery ];
+      path = [ holo-osquery ];
       preStart = ''
         mkdir -p ${escapeShellArg cfg.loggerPath}
         mkdir -p "$(dirname ${escapeShellArg cfg.pidfile})"
