@@ -9,8 +9,8 @@ buildGoPackage rec {
   src = fetchFromGitHub {
     owner  = "samrose";
     repo   = "pre-net-led";
-    rev    = "4aaf1b3082e5b267f9ed630dfef7e3ca9db8b394"; # untagged
-    sha256 = "0q8m0390hsjv6a0wj0h333zziwjh84m3xj5gaq3njpcdd7gv9aq0";
+    rev    = "d64f55299205dd45d28934303695c79bc15ab4b1"; # untagged
+    sha256 = "0fs3c0q3jqiv7349sr1zgjvp61xs7l9clqj8jfawh3aays03cng8";
   };
 
   goDeps = ./deps.nix;
