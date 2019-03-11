@@ -1,11 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, system, ... }:
 
 with builtins;
 with lib;
 
 let
-  cfg = config.services.holo-osquery;
-  holo-osquery = pkgs.callPackage ../packages/holo-osquery/default.nix;
+  cfg = config.services.osquery;
+  pkgs = import ../packages/holo-osquery {inherit system;}
 in
 
 {
@@ -53,7 +53,7 @@ in
 
   config = mkIf cfg.enable {
 
-
+    environment.systemPackages = [ pkgs.holo-osquery ];
 
     environment.etc."osquery/osquery.conf".text = toJSON (
       recursiveUpdate {
@@ -67,11 +67,11 @@ in
       } cfg.extraConfig
     );
 
-    systemd.services.holo-osqueryd = {
+    systemd.services.osqueryd = {
       description = "The osquery Daemon";
       after = [ "network.target" "syslog.service" ];
       wantedBy = [ "multi-user.target" ];
-      path = [ holo-osquery ];
+      path = [ pkgs.holo-osquery ];
       preStart = ''
         mkdir -p ${escapeShellArg cfg.loggerPath}
         mkdir -p "$(dirname ${escapeShellArg cfg.pidfile})"
