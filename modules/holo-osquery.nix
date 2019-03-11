@@ -5,7 +5,7 @@ with lib;
 
 let
   cfg = config.services.osquery;
-  pkgs = import ../packages/holo-osquery {inherit system;}
+  pkgs = import ../packages/holo-osquery {inherit system;};
 in
 
 {
