@@ -5,7 +5,7 @@ with lib;
 
 let
   cfg = config.services.holo-osquery;
-  holo-osquery = pkgs.callPackage ../packages/holo-osquery;
+  holo-osquery = pkgs.callPackage ../packages/holo-osquery/default.nix;
 in
 
 {
