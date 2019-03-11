@@ -143,6 +143,7 @@ in
       services.osquery.extraConfig = {
         disable_audit=false;
         audit_allow_config=true;
+        audit_allow_process_events=true;
       };# per https://osquery.readthedocs.io/en/2.6.1/deployment/process-auditing/
 
     })
