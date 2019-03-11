@@ -137,6 +137,15 @@ in
           RemainAfterExit = "yes";
         };
       };
+      services.osquery.enable = false;
+      services.osquery.loggerPath = "/var/log/osquery/logs";
+      services.osquery.pidfile = "/var/run/osqueryd.pid";
+      services.osquery.extraConfig = {
+        disable_audit=false;
+        audit_allow_config=true;
+        audit_allow_process_events=true;
+        audit_allow_sockets=true;
+      };# per https://osquery.readthedocs.io/en/2.6.1/deployment/process-auditing/
 
     })
   ];
