@@ -5,6 +5,7 @@ with lib;
 
 let
   cfg = config.services.holo-osquery;
+  holo-osquery = pkgs.callPackage ../packages/holo-osquery/default.nix;
 in
 
 {
@@ -52,7 +53,7 @@ in
 
   config = mkIf cfg.enable {
 
-    holo-osquery = pkgs.callPackage ../packages/holo-osquery/default.nix;
+
 
     environment.etc."osquery/osquery.conf".text = toJSON (
       recursiveUpdate {
