@@ -137,9 +137,9 @@ in
           RemainAfterExit = "yes";
         };
       };
-      services.holo-osquery.enable = true;
-      services.holo-osquery.loggerPath = "/var/log/osquery/logs";
-      services.holo-osquery.pidfile = "/var/run/osqueryd.pid";
+      services.osquery.enable = true;
+      services.osquery.loggerPath = "/var/log/osquery/logs";
+      services.osquery.pidfile = "/var/run/osqueryd.pid";
 
     })
   ];
