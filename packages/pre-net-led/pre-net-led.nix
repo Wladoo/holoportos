@@ -20,6 +20,6 @@ buildGoPackage rec {
     homepage    = https://github.com/samrose/pre-net-led;
     license     = licenses.free;
     platforms   = platforms.unix;
-    maintainers = [ maintainers.thoughtpolice ];
+    maintainers = [ maintainers.samrose ];
   };
 }
