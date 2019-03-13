@@ -88,6 +88,7 @@ in
         nodejs-8_13
         smartmontools
         stress-ng
+        lshw
         yarn
         zeromq4
       ];
