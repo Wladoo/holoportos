@@ -151,6 +151,7 @@ in
       };
       systemd.services.holo-health = {
         enable = true;
+        wantedBy = [ "multi-user.target" ];
         after = [ "getty.target" ];
         serviceConfig = {
           Type = "oneshot";
