@@ -153,7 +153,7 @@ in
           RemainAfterExit = "yes";
           startAt = "*:00/5";
         };
-      }
+      };
       services.osquery.enable = true;
       services.osquery.loggerPath = "/var/log/osquery/logs";
       services.osquery.pidfile = "/var/run/osqueryd.pid";
