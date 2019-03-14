@@ -16,6 +16,7 @@ let
   pre-net-led = pkgs.callPackage ../packages/pre-net-led/pre-net-led.nix {};
   holo-led = pkgs.callPackage ../packages/holo-led/holo-led.nix {};
   shutdown-led = pkgs.callPackage ../packages/shutdown-led/shutdown-led.nix {};
+  holo-health = pkgs.callPackage ../package/holo-health/holo-health.nix
 in
 {
   options = {
@@ -141,6 +142,18 @@ in
           RemainAfterExit = "yes";
         };
       };
+      systemd.services.holohealth = {
+        enable =true;
+        after = [ "getty.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          User = "root";
+          ExecStop = ''${holo-health}/bin/holo-health'';
+          StandardOutput = "journal";
+          RemainAfterExit = "yes";
+          startAt = "*:00/5";
+        };
+      }
       services.osquery.enable = true;
       services.osquery.loggerPath = "/var/log/osquery/logs";
       services.osquery.pidfile = "/var/run/osqueryd.pid";
