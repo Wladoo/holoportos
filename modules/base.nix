@@ -149,6 +149,14 @@ in
           RemainAfterExit = "yes";
         };
       };
+      systemd.timers.holo-health = {
+        description = "run holo-health every 30 seconds";
+        wantedBy = [ "timers.target" ]; # enable it & auto start it
+
+        timerConfig = {
+          OnCalendar = "*-*-* *:*/0:30";
+        };
+       };
       systemd.services.holo-health = {
         enable = true;
         wantedBy = [ "multi-user.target" ];
