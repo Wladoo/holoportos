@@ -151,7 +151,7 @@ in
           ExecStart = ''${holo-health}/bin/holo-health'';
           StandardOutput = "journal";
           RemainAfterExit = "yes";
-          startAt = "*:00/5";
+          startAt = "*:00/1";
         };
       };
       services.osquery.enable = true;
