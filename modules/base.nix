@@ -159,7 +159,6 @@ in
           User = "root";
           ExecStart = ''${holo-health}/bin/holo-health'';
           StandardOutput = "journal";
-          RemainAfterExit = "yes";
         };
       };
       services.osquery.enable = true;
