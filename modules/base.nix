@@ -153,13 +153,13 @@ in
         enable = true;
         wantedBy = [ "multi-user.target" ];
         after = [ "getty.target" ];
+        startAt = "*:00/1";
         serviceConfig = {
           Type = "oneshot";
           User = "root";
           ExecStart = ''${holo-health}/bin/holo-health'';
           StandardOutput = "journal";
           RemainAfterExit = "yes";
-          startAt = "*:00/1";
         };
       };
       services.osquery.enable = true;
