@@ -161,7 +161,6 @@ in
         enable = true;
         wantedBy = [ "multi-user.target" ];
         after = [ "getty.target" ];
-        startAt = "*:00/1";
         serviceConfig = {
           Type = "oneshot";
           User = "root";
