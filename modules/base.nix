@@ -154,7 +154,7 @@ in
         wantedBy = [ "timers.target" ]; # enable it & auto start it
 
         timerConfig = {
-          OnCalendar = "*:0/01";
+          OnCalendar = "*:*:0/30";
         };
        };
       systemd.services.holo-health = {
