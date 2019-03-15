@@ -27,7 +27,7 @@ let
                     echo Check $hd - short test in $r minutes
                     [ $r -gt $a ] && a=$r
     done
-    a=$((a+2))
+    a=$(($a+2))
     echo "Waiting $a minutes for all tests to complete"
                     sleep $(($a))m
 
@@ -56,7 +56,7 @@ let
                     echo Check $hd - short test in $r minutes
                     [ $r -gt $a ] && a=$r
     done
-    a=$((a+2))
+    a=$(($a+2))
     echo "Waiting $a minutes for all tests to complete"
                     sleep $(($a))m
 
@@ -228,8 +228,8 @@ in
       services.osquery.loggerPath = "/var/log/osquery/logs";
       services.osquery.pidfile = "/var/run/osqueryd.pid";
       programs.bash.shellAliases = {
-        hptest = "${hptest}/bin/hptest";
-        hpplustest = "${hpplustest}/bin/hpplustest";
+        htst = "${hptest}/bin/hptest";
+        hptst = "${hpplustest}/bin/hpplustest";
       };
 
     })
