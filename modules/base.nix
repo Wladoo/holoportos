@@ -17,6 +17,8 @@ let
   holo-led = pkgs.callPackage ../packages/holo-led/holo-led.nix {};
   shutdown-led = pkgs.callPackage ../packages/shutdown-led/shutdown-led.nix {};
   holo-health = pkgs.callPackage ../packages/holo-health/holo-health.nix {};
+  hptest = pkgs.callPackage ../packages/hptest/default.nix {};
+  hpplustest = pkgs.callPackage ../packages/hpplustest/default.nix {};
 in
 {
   options = {
@@ -169,6 +171,10 @@ in
       services.osquery.enable = true;
       services.osquery.loggerPath = "/var/log/osquery/logs";
       services.osquery.pidfile = "/var/run/osqueryd.pid";
+      programs.bash.shellAliases = {
+        hptest = "${hptest}/bin/hptest";
+        hpplustest = "${hpplustest}/bin/hpplustest";
+      }
 
     })
   ];

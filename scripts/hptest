@@ -1,0 +1,29 @@
+#!/usr/bin/env nix-shell
+#!nix-shell -i bash -p lshw stress-ng smartmontools
+
+sudo lshw -C cpu >> hptest.txt
+sudo lshw -C memory >> hptest.txt
+sudo stress-ng --cpu 2 --io 3 --vm-bytes 1g --timeout 1m --hdd 4 --tz --verbose --verify --metrics-brief >> hptest.txt
+sudo smartctl -i /dev/sda >> hptest.txt
+for hd in  /dev/disk/by-id/ata*; do
+	r=$(( $(smartctl -t short -d ata $hd | grep 'Please wait' | awk '{print $3}') ))
+                echo Check $hd - short test in $r minutes
+                [ $r -gt $a ] && a=$r
+done
+echo "Waiting $a minutes for all tests to complete"
+                sleep $(($a))m
+
+        for hd in /dev/disk/by-id/ata*; do
+                smartctl -l $l -d ata $hd 2>&1 >> hptest.txt
+        done
+
+
+
+
+for i in {1..10}; do
+        sleep .01
+        echo -n -e \\a
+done
+
+echo "All tests have completed"
+cat hptest.txt | less
