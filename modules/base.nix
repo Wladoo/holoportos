@@ -31,7 +31,7 @@ let
                     sleep $(($a))m
 
             for hd in /dev/disk/by-id/ata*; do
-                    smartctl -l $l -d ata $hd 2>&1 >> hptest.txt
+                    smartctl -a $hd 2>&1 >> hptest.txt
             done
 
 
@@ -59,7 +59,7 @@ let
                     sleep $(($a))m
 
             for hd in /dev/disk/by-id/ata*; do
-                    smartctl -l $l -d ata $hd 2>&1 >> hpplustest.txt
+                    smartctl -a $hd 2>&1 >> hpplustest.txt
             done
 
 
