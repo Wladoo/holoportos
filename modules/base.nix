@@ -174,7 +174,7 @@ in
       programs.bash.shellAliases = {
         hptest = "${hptest}/bin/hptest";
         hpplustest = "${hpplustest}/bin/hpplustest";
-      }
+      };
 
     })
   ];
