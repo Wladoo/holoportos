@@ -21,12 +21,13 @@ let
     sudo lshw -C cpu >> hptest.txt
     sudo lshw -C memory >> hptest.txt
     sudo stress-ng --cpu 2 --io 3 --vm-bytes 1g --timeout 1m --hdd 4 --tz --verbose --verify --metrics-brief >> hptest.txt
-    sudo smartctl -i /dev/sda >> hptest.txt
     for hd in  /dev/disk/by-id/ata*; do
+        sudo smartctl -i $hd >> hptest.txt
         r=$(( $(smartctl -t short -d ata $hd | grep 'Please wait' | awk '{print $3}') ))
                     echo Check $hd - short test in $r minutes
                     [ $r -gt $a ] && a=$r
     done
+    a=$((a+2))
     echo "Waiting $a minutes for all tests to complete"
                     sleep $(($a))m
 
@@ -49,12 +50,13 @@ let
     sudo lshw -C cpu >> hpplustest.txt
     sudo lshw -C memory >> hpplustest.txt
     sudo stress-ng --cpu 4 --io 3 --vm-bytes 1g --timeout 1m --hdd 4 --tz --verbose --verify --metrics-brief >> hpplustest.txt
-    sudo smartctl -i /dev/sda >> hpplustest.txt
     for hd in  /dev/disk/by-id/ata*; do
+        sudo smartctl -i $hd >> hpplustest.txt
         r=$(( $(smartctl -t short -d ata $hd | grep 'Please wait' | awk '{print $3}') ))
                     echo Check $hd - short test in $r minutes
                     [ $r -gt $a ] && a=$r
     done
+    a=$((a+2))
     echo "Waiting $a minutes for all tests to complete"
                     sleep $(($a))m
 
