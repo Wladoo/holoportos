@@ -17,8 +17,62 @@ let
   holo-led = pkgs.callPackage ../packages/holo-led/holo-led.nix {};
   shutdown-led = pkgs.callPackage ../packages/shutdown-led/shutdown-led.nix {};
   holo-health = pkgs.callPackage ../packages/holo-health/holo-health.nix {};
-  hptest = pkgs.callPackage ../packages/hptest/default.nix {};
-  hpplustest = pkgs.callPackage ../packages/hpplustest/default.nix {};
+  hptest = pkgs.writeShellScriptBin "hptest" ''
+    sudo lshw -C cpu >> hptest.txt
+    sudo lshw -C memory >> hptest.txt
+    sudo stress-ng --cpu 2 --io 3 --vm-bytes 1g --timeout 1m --hdd 4 --tz --verbose --verify --metrics-brief >> hptest.txt
+    sudo smartctl -i /dev/sda >> hptest.txt
+    for hd in  /dev/disk/by-id/ata*; do
+        r=$(( $(smartctl -t short -d ata $hd | grep 'Please wait' | awk '{print $3}') ))
+                    echo Check $hd - short test in $r minutes
+                    [ $r -gt $a ] && a=$r
+    done
+    echo "Waiting $a minutes for all tests to complete"
+                    sleep $(($a))m
+
+            for hd in /dev/disk/by-id/ata*; do
+                    smartctl -l $l -d ata $hd 2>&1 >> hptest.txt
+            done
+
+
+
+
+    for i in {1..10}; do
+            sleep .01
+            echo -n -e \\a
+    done
+
+    echo "All tests have completed"
+    cat hptest.txt | less
+    '';
+  hpplustest = pkgs.writeShellScriptBin "hpplustest" ''
+    sudo lshw -C cpu >> hpplustest.txt
+    sudo lshw -C memory >> hpplustest.txt
+    sudo stress-ng --cpu 4 --io 3 --vm-bytes 1g --timeout 1m --hdd 4 --tz --verbose --verify --metrics-brief >> hpplustest.txt
+    sudo smartctl -i /dev/sda >> hpplustest.txt
+    for hd in  /dev/disk/by-id/ata*; do
+        r=$(( $(smartctl -t short -d ata $hd | grep 'Please wait' | awk '{print $3}') ))
+                    echo Check $hd - short test in $r minutes
+                    [ $r -gt $a ] && a=$r
+    done
+    echo "Waiting $a minutes for all tests to complete"
+                    sleep $(($a))m
+
+            for hd in /dev/disk/by-id/ata*; do
+                    smartctl -l $l -d ata $hd 2>&1 >> hpplustest.txt
+            done
+
+
+
+
+    for i in {1..10}; do
+            sleep .01
+            echo -n -e \\a
+    done
+
+    echo "All tests have completed"
+    cat hpplustest.txt | less
+    '';
 in
 {
   options = {
