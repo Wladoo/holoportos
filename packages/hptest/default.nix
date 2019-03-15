@@ -10,7 +10,7 @@ rec
 
     name = "hptest-${version}";
 
-    src = ./scripts/hptest;
+    src = ../scripts/hptest;
 
     installPhase =
         ''
