@@ -22,17 +22,20 @@ let
     sudo lshw -C memory >> hptest.txt
     sudo stress-ng --cpu 2 --io 3 --vm-bytes 1g --timeout 1m --hdd 4 --tz --verbose --verify --metrics-brief >> hptest.txt
     for hd in  /dev/disk/by-id/ata*; do
-        sudo smartctl -i $hd >> hptest.txt
-        r=$(( $(smartctl -t short -d ata $hd | grep 'Please wait' | awk '{print $3}') ))
-                    echo Check $hd - short test in $r minutes
-                    [ $r -gt $a ] && a=$r
+        if [[ ${hd} != *"-part"* ]];then
+            sudo smartctl -i $hd >> hptest.txt
+            r=$(sudo smartctl -t short -d ata $hd | awk '/Please wait/ {print $3}')
+                        echo Check $hd - short test in $r minutes
+                        [[ $r -gt $a ]] && a=$r
+        fi
     done
-    a=$(($a+2))
     echo "Waiting $a minutes for all tests to complete"
                     sleep $(($a))m
 
             for hd in /dev/disk/by-id/ata*; do
+            if [[ ${hd} != *"-part"* ]];then
                     smartctl -a $hd 2>&1 >> hptest.txt
+            fi
             done
 
 
@@ -51,17 +54,20 @@ let
     sudo lshw -C memory >> hpplustest.txt
     sudo stress-ng --cpu 4 --io 3 --vm-bytes 1g --timeout 1m --hdd 4 --tz --verbose --verify --metrics-brief >> hpplustest.txt
     for hd in  /dev/disk/by-id/ata*; do
-        sudo smartctl -i $hd >> hpplustest.txt
-        r=$(( $(smartctl -t short -d ata $hd | grep 'Please wait' | awk '{print $3}') ))
-                    echo Check $hd - short test in $r minutes
-                    [ $r -gt $a ] && a=$r
+        if [[ ${hd} != *"-part"* ]];then
+            sudo smartctl -i $hd >> hpplustest.txt
+            r=$(sudo smartctl -t short -d ata $hd | awk '/Please wait/ {print $3}')
+                        echo Check $hd - short test in $r minutes
+                        [[ $r -gt $a ]] && a=$r
+        fi
     done
-    a=$(($a+2))
     echo "Waiting $a minutes for all tests to complete"
                     sleep $(($a))m
 
             for hd in /dev/disk/by-id/ata*; do
+            if [[ ${hd} != *"-part"* ]];then
                     smartctl -a $hd 2>&1 >> hpplustest.txt
+            fi
             done
 
 
@@ -175,7 +181,7 @@ in
         enable = true;
         wantedBy = [ "default.target" ];
         before = [ "network.target" ];
-        description = "Turn on blinking red until network";
+        description = "Turn on blinking purple until network is live";
         serviceConfig = {
           Type = "oneshot";
           User = "root";
