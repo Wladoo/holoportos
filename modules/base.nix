@@ -22,7 +22,7 @@ let
     sudo lshw -C memory >> hptest.txt
     sudo stress-ng --cpu 2 --io 3 --vm-bytes 1g --timeout 1m --hdd 4 --tz --verbose --verify --metrics-brief >> hptest.txt
     for hd in  /dev/disk/by-id/ata*; do
-        if [[ ${hd} != *"-part"* ]];then
+        if [[ $hd != *"-part"* ]];then
             sudo smartctl -i $hd >> hptest.txt
             r=$(sudo smartctl -t short -d ata $hd | awk '/Please wait/ {print $3}')
                         echo Check $hd - short test in $r minutes
@@ -33,7 +33,7 @@ let
                     sleep $(($a))m
 
             for hd in /dev/disk/by-id/ata*; do
-            if [[ ${hd} != *"-part"* ]];then
+            if [[ $hd != *"-part"* ]];then
                     smartctl -a $hd 2>&1 >> hptest.txt
             fi
             done
@@ -54,7 +54,7 @@ let
     sudo lshw -C memory >> hpplustest.txt
     sudo stress-ng --cpu 4 --io 3 --vm-bytes 1g --timeout 1m --hdd 4 --tz --verbose --verify --metrics-brief >> hpplustest.txt
     for hd in  /dev/disk/by-id/ata*; do
-        if [[ ${hd} != *"-part"* ]];then
+        if [[ $hd != *"-part"* ]];then
             sudo smartctl -i $hd >> hpplustest.txt
             r=$(sudo smartctl -t short -d ata $hd | awk '/Please wait/ {print $3}')
                         echo Check $hd - short test in $r minutes
@@ -65,7 +65,7 @@ let
                     sleep $(($a))m
 
             for hd in /dev/disk/by-id/ata*; do
-            if [[ ${hd} != *"-part"* ]];then
+            if [[ $hd != *"-part"* ]];then
                     smartctl -a $hd 2>&1 >> hpplustest.txt
             fi
             done
