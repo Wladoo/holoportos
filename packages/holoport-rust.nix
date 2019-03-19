@@ -19,19 +19,15 @@ let
   cargo = holoRust.channels;
   rust = makeRustPlatform {rustc = rustc; cargo = cargo;};
 
-  release = "v0.0.4-alpha";
-  archiveName = "conductor-v0.0.4-alpha-x86_64-ubuntu.tar.gz";
-  fileDir = "conductor-v0.0.4-alpha-x86_64-unknown-linux-gnu";
 in
 stdenv.mkDerivation {
   name = "holochain-conductor";
 
   src = fetchurl {
-    url = https://github.com/holochain/holochain-rust/releases/download/v0.0.4-alpha/conductor-v0.0.4-alpha-x86_64-ubuntu.tar.gz;
-    sha256 = "0kxp52726dwhjxjhx7h14rav9vwbm6zkp4i49caq1p3gggja287q";
+    url = https://github.com/holochain/holochain-rust/releases/download/v0.0.7-alpha/conductor-v0.0.7-alpha-x86_64-ubuntu-linux-gnu.tar.gz;
+    sha256 = "0dakl5qsykkjznd3fdw4lvqk28fyv59axzmkmy0k2fasgkqphmka";
   };
   buildInputs = [
-    pkgs.zeromq4
     pkgs.openssl
   ];
   installPhase = ''
@@ -40,6 +36,5 @@ stdenv.mkDerivation {
     patchelf --set-interpreter \
         ${stdenv.glibc}/lib/ld-linux-x86-64.so.2  $out/bin/holochain
     patchelf --set-rpath  ${stdenv.glibc}/lib $out/bin/holochain
-    patchelf --add-needed ${pkgs.zeromq4}/lib/libzmq.so.5 $out/bin/holochain
   '';
 }
