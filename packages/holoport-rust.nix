@@ -1,4 +1,4 @@
-{ pkgs, stdenv, fetchurl, fetchFromGitHub, recurseIntoAttrs, makeRustPlatform, runCommand }:
+{ pkgs, stdenv, fetchurl, fetchFromGitHub, recurseIntoAttrs, makeRustPlatform, runCommand, openssl }:
 let
   rustOverlay = fetchurl {
     url = https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz;
@@ -28,7 +28,7 @@ stdenv.mkDerivation {
     sha256 = "1f15yp4aw866hxqr3mswic2scz41mklc5s2vhn5nv7kxxbqjdqgc";
   };
   buildInputs = [
-    pkgs.openssl
+    openssl
   ];
   installPhase = ''
     mkdir -p $out/bin
@@ -36,6 +36,5 @@ stdenv.mkDerivation {
     patchelf --set-interpreter \
         ${stdenv.glibc}/lib/ld-linux-x86-64.so.2  $out/bin/holochain
     patchelf --set-rpath  ${stdenv.glibc}/lib $out/bin/holochain
-    patchelf --add-needed libssl.so.1.0.0 $out/bin/holochain
   '';
 }
