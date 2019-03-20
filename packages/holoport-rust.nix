@@ -26,6 +26,7 @@ let
       url = "https://www.openssl.org/source/${name}.tar.gz";
       sha256 = "003xh9f898i56344vpvpxxxzmikivxig4xwlm7vbi7m8n43qxaah";
     };
+    patches = [./nix-ssl-cert-file.patch];
   });
 
 
