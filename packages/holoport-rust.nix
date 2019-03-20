@@ -18,7 +18,7 @@ let
   rustc = holoRust.channels;
   cargo = holoRust.channels;
   rust = makeRustPlatform {rustc = rustc; cargo = cargo;};
-  holo-openssl = pkgs.callPackage ./holo-openssl/default.nix {};
+  holo-openssl = pkgs.callPackage ./holo-openssl {};
 
 in
 stdenv.mkDerivation {
