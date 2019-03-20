@@ -1,4 +1,4 @@
-{ pkgs, stdenv, fetchurl, fetchFromGitHub, recurseIntoAttrs, makeRustPlatform, runCommand, openssl }:
+{ pkgs, stdenv, fetchurl, fetchFromGitHub, recurseIntoAttrs, makeRustPlatform, runCommand }:
 let
   rustOverlay = fetchurl {
     url = https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz;
@@ -18,7 +18,7 @@ let
   rustc = holoRust.channels;
   cargo = holoRust.channels;
   rust = makeRustPlatform {rustc = rustc; cargo = cargo;};
-  openssl-1_02p = openssl.overrideAttrs(oldAttrs: rec {
+  openssl-1_02p = pkgs.openssl_1_0_2.overrideAttrs(oldAttrs: rec {
     version = "1.0.2p";
     sha256 = "003xh9f898i56344vpvpxxxzmikivxig4xwlm7vbi7m8n43qxaah";
     patches = [];

@@ -228,9 +228,9 @@ in
           StandardOutput = "journal";
         };
       };
-      services.osquery.enable = true;
-      services.osquery.loggerPath = "/var/log/osquery/logs";
-      services.osquery.pidfile = "/var/run/osqueryd.pid";
+      #services.osquery.enable = true;
+      #services.osquery.loggerPath = "/var/log/osquery/logs";
+      #services.osquery.pidfile = "/var/run/osqueryd.pid";
       programs.bash.shellAliases = {
         htst = "${hptest}/bin/hptest";
         hptst = "${hpplustest}/bin/hpplustest";
