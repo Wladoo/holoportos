@@ -1,4 +1,4 @@
-{ pkgs, stdenv, fetchurl, fetchFromGitHub, recurseIntoAttrs, makeRustPlatform, runCommand }:
+{ pkgs, stdenv, fetchurl, fetchFromGitHub, recurseIntoAttrs, makeRustPlatform, runCommand, perl }:
 let
   rustOverlay = fetchurl {
     url = https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz;
@@ -19,7 +19,11 @@ let
   cargo = holoRust.channels;
   rust = makeRustPlatform {rustc = rustc; cargo = cargo;};
   holo-openssl = pkgs.callPackage ./holo-openssl {};
-
+  holo-openssl = pkgs.buildPackages.holo-openssl.override {
+        fetchurl = stdenv.fetchurlBoot;
+        inherit perl;
+        pkgs.buildPackages = { inherit perl; };
+   };
 in
 stdenv.mkDerivation {
   name = "holochain-conductor";
