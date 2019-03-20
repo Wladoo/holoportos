@@ -27,9 +27,9 @@ stdenv.mkDerivation {
     url = https://github.com/holochain/holochain-rust/releases/download/v0.0.7-alpha/conductor-v0.0.7-alpha-x86_64-ubuntu-linux-gnu.tar.gz;
     sha256 = "1f15yp4aw866hxqr3mswic2scz41mklc5s2vhn5nv7kxxbqjdqgc";
   };
-  buildInputs = [
-    openssl
-  ];
+  #buildInputs = [
+  #  openssl
+  #];
   installPhase = ''
     mkdir -p $out/bin
     cp holochain $out/bin
