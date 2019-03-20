@@ -18,10 +18,15 @@ let
   rustc = holoRust.channels;
   cargo = holoRust.channels;
   rust = makeRustPlatform {rustc = rustc; cargo = cargo;};
-  #openssl-1_02p = pkgs.openssl_1_0_2.overrideAttrs(oldAttrs: rec {
-   # version = "1.0.2p";
-    #sha256 = "003xh9f898i56344vpvpxxxzmikivxig4xwlm7vbi7m8n43qxaah";
-  #});
+  #match version in holochain-rust toolchain
+  openssl-102p = pkgs.openssl.overrideAttrs(oldAttrs: rec {
+    name = "openssl-${version}";
+    version = "1.0.2p";
+    src = pkgs.fetchurl {
+      url = "https://www.openssl.org/source/${name}.tar.gz";
+      sha256 = "003xh9f898i56344vpvpxxxzmikivxig4xwlm7vbi7m8n43qxaah";
+    };
+  });
 
 
 in
@@ -33,7 +38,7 @@ stdenv.mkDerivation {
     sha256 = "1f15yp4aw866hxqr3mswic2scz41mklc5s2vhn5nv7kxxbqjdqgc";
   };
   buildInputs = [
-    openssl
+    openssl-102p
   ];
   installPhase = ''
     mkdir -p $out/bin
@@ -41,6 +46,6 @@ stdenv.mkDerivation {
     patchelf --set-interpreter \
         ${stdenv.glibc}/lib/ld-linux-x86-64.so.2  $out/bin/holochain
     patchelf --set-rpath  ${stdenv.glibc}/lib $out/bin/holochain
-    patchelf --set-rpath ${openssl.out}/lib $out/bin/holochain
+    patchelf --set-rpath ${openssl-102p.out}/lib $out/bin/holochain
   '';
 }
