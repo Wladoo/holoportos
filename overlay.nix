@@ -16,8 +16,5 @@ in
   };
 
 
-  holoport-cloudflared = callPackage ./modules/holoport-cloudflared/cloudflared.nix {};
   holochain-conductor = callPackage ./packages/holoport-rust.nix {};
-  pre-net-led = callPackage ./packages/pre-net-led/pre-net-led.nix {};
-
 }

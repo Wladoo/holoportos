@@ -155,7 +155,6 @@ in
         binutils
         cmake
         gcc
-        holoport-cloudflared
         holochain-conductor
         nodejs-8_13
         smartmontools
