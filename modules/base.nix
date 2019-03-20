@@ -12,7 +12,6 @@ let
       sha256 = "1qidcj4smxsz3pmamg3czgk6hlbw71yw537h2jfk7iinlds99a9a";
     };
   });
-
   pre-net-led = pkgs.callPackage ../packages/pre-net-led/pre-net-led.nix {};
   holo-led = pkgs.callPackage ../packages/holo-led/holo-led.nix {};
   shutdown-led = pkgs.callPackage ../packages/shutdown-led/shutdown-led.nix {};
