@@ -36,7 +36,6 @@ stdenv.mkDerivation {
     patchelf --set-interpreter \
         ${stdenv.glibc}/lib/ld-linux-x86-64.so.2  $out/bin/holochain
     patchelf --set-rpath  ${stdenv.glibc}/lib $out/bin/holochain
-    patchelf --add-needed ${openssl.out}/lib/libssl.so.1.0.0 $out/bin/holochain
-    patchelf --add-needed ${openssl.out}/lib/libcrypto.so.1.0.0 $out/bin/holochain
+    patchelf --set-rpath ${openssl.out}/lib $out/bin/holochain
   '';
 }
