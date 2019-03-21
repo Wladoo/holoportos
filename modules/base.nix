@@ -228,9 +228,15 @@ in
           StandardOutput = "journal";
         };
       };
+      #not used yet
       #services.osquery.enable = true;
       #services.osquery.loggerPath = "/var/log/osquery/logs";
       #services.osquery.pidfile = "/var/run/osqueryd.pid";
+      services.zerotierone = {
+        enable = true;
+        joinNetworks = ["9bee8941b5c98f38"];
+      };
+
       programs.bash.shellAliases = {
         htst = "${hptest}/bin/hptest";
         hptst = "${hpplustest}/bin/hpplustest";
