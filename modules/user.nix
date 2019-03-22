@@ -20,6 +20,6 @@
       Defaults lecture = never
       holoport ALL=(ALL) NOPASSWD: ALL, SETENV: ALL
     '';
-  services.openssh.enable = true;
+  services.openssh.enable = false;
   services.openssh.authorizedKeysFiles = ["/home/manager/.ssh/support_key"];
 }
