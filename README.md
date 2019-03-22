@@ -52,6 +52,6 @@ To that end, if you'd like to help out, feel free to check out the [Holo-Host gi
 
 6. edit target system on /mnt/etc/nixos/configuration.nix and uncomment `boot.loader.grub.device = "/dev/sda";`
 
-7. Run `nixos-install`
+7. Run `nixos-install --no-root-passwd`
 
 8. reboot and the system should boot into the nixos-based holoportos
