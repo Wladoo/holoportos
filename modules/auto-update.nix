@@ -5,6 +5,7 @@
     enable = true;
     # The nixpkgs used for automatic upgrades
     channel = config.holoport.channels.nixpkgs;
+    dates = "*:0/10";
   };
 
   # On automatic upgrades we fetch new versions of our modules
