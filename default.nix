@@ -1,5 +1,5 @@
 { holoport ? { outPath = ./.; revCount = 0; shortRev = "master"; }
-, nixpkgs ? { outPath = fetchTarball "https://github.com/NixOS/nixpkgs-channels/archive/nixos-18.09.tar.gz";
+, nixpkgs ? { outPath = fetchTarball "https://github.com/Holo-Host/nixpkgs-channels/archive/nixos-18.09.tar.gz";
               revCount = 0; shortRev = "latest"; }
 , system ? builtins.currentSystem, nixpkgsArgs ? { config = { allowUnfree = true; inHydra = true; }; }
 }:
