@@ -1,7 +1,7 @@
-{ holoport ? { outPath = ./.; revCount = 0; shortRev = "master"; }
-, nixpkgs ? { outPath = fetchTarball "https://github.com/NixOS/nixpkgs-channels/archive/nixos-18.09.tar.gz";
+{ holoport ? { outPath = ./.; revCount = 0; shortRev = "holoport-testnet"; }
+, nixpkgs ? { outPath = fetchTarball "https://github.com/Holo-Host/nixpkgs-channels/archive/nixos-18.09.tar.gz";
               revCount = 0; shortRev = "latest"; }
-, system ? builtins.currentSystem
+, system ? builtins.currentSystem, nixpkgsArgs ? { config = { allowUnfree = true; inHydra = true; }; }
 }:
 
 let
@@ -34,8 +34,8 @@ rec {
     versionSuffix = nixpkgsVersionSuffix;
   };
 
-  channels.holoport = pkgs.releaseTools.makeSourceTarball {
-    name = "holoport-channel";
+  channels.holoport-testnet = pkgs.releaseTools.makeSourceTarball {
+    name = "holoport-testnet";
     src = holoport;
     version = lib.fileContents ./.version;
     versionSuffix = ".${toString holoport.revCount}.${holoport.shortRev}";
@@ -54,14 +54,14 @@ rec {
   };
 
   tested = lib.hydraJob (pkgs.releaseTools.aggregate {
-    name = "nixos-${channels.nixpkgs.version}+holoport-${channels.holoport.version}";
+    name = "nixos-${channels.nixpkgs.version}+holoport-testnet-${channels.holoport-testnet.version}";
     meta = {
       description = "Release-critical builds for holoportOS";
     };
     constituents = [
       iso
       channels.nixpkgs
-      channels.holoport
+      channels.holoport-testnet
     ] ++ (lib.attrValues tests);
   });
 }

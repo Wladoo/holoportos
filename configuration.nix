@@ -11,7 +11,6 @@ in
 
 {
   holoport.modules = holoportModules;
-
   imports = [
     # The local system's configuration
     "/etc/nixos/configuration.nix"
