@@ -35,7 +35,7 @@ rec {
   };
 
   channels.holoport-testnet = pkgs.releaseTools.makeSourceTarball {
-    name = "holoport-testnet-channel";
+    name = "holoport-testnet";
     src = holoport;
     version = lib.fileContents ./.version;
     versionSuffix = ".${toString holoport.revCount}.${holoport.shortRev}";
@@ -54,7 +54,7 @@ rec {
   };
 
   tested = lib.hydraJob (pkgs.releaseTools.aggregate {
-    name = "nixos-${channels.nixpkgs.version}+holoport-testnet${channels.holoport-testnet.version}";
+    name = "nixos-${channels.nixpkgs.version}+holoport-testnet-${channels.holoport-testnet.version}";
     meta = {
       description = "Release-critical builds for holoportOS";
     };
