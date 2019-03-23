@@ -5,6 +5,7 @@
     git
     vim
     htop
+    emacs
   ];
 
   programs.bash.enableCompletion = true;
