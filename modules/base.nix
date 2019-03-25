@@ -121,10 +121,7 @@ in
     { nixpkgs.overlays = [ (import ../overlay.nix) ]; }
 
     (mkIf (!cfg.isInstallMedium) {
-      boot.loader.grub.splashImage = (pkgs.fetchurl {
-        url = "https://i.imgur.com/S8tZLqs.jpg";
-        sha256 = "aa281dc590987818188ca27b3f6c0f56f975505c909a1fd2156be54a38a0e57e";
-      });
+      boot.loader.grub.splashImage = ../artwork/holoport.jpg;
       swapDevices = [
         {
            device = "/var/swapfile";
