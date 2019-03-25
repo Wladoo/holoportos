@@ -60,8 +60,8 @@ let
                         [[ $r -gt $a ]] && a=$r
         fi
     done
-    echo "Waiting $a minutes for all tests to complete"
-                    sleep $(($a))m
+    echo "Waiting 5 minutes for all tests to complete"
+                    sleep 5m
 
             for hd in /dev/disk/by-id/ata*; do
             if [[ $hd != *"-part"* ]];then
