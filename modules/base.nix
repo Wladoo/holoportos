@@ -60,8 +60,8 @@ let
                         [[ $r -gt $a ]] && a=$r
         fi
     done
-    echo "Waiting $a minutes for all tests to complete"
-                    sleep $(($a))m
+    echo "Waiting 5 minutes for all tests to complete"
+                    sleep 5m
 
             for hd in /dev/disk/by-id/ata*; do
             if [[ $hd != *"-part"* ]];then
@@ -121,10 +121,7 @@ in
     { nixpkgs.overlays = [ (import ../overlay.nix) ]; }
 
     (mkIf (!cfg.isInstallMedium) {
-      boot.loader.grub.splashImage = (pkgs.fetchurl {
-        url = "https://i.imgur.com/S8tZLqs.jpg";
-        sha256 = "aa281dc590987818188ca27b3f6c0f56f975505c909a1fd2156be54a38a0e57e";
-      });
+      boot.loader.grub.splashImage = ../artwork/holoport.jpg;
       swapDevices = [
         {
            device = "/var/swapfile";
