@@ -18,25 +18,14 @@ let
   rustc = holoRust.channels;
   cargo = holoRust.channels;
   rust = makeRustPlatform {rustc = rustc; cargo = cargo;};
-  #match version in holochain-rust toolchain
-  #openssl-102p = pkgs.openssl.overrideAttrs(oldAttrs: rec {
-  #  name = "openssl-${version}";
-  #  version = "1.0.2p";
-  #  src = pkgs.fetchurl {
-  #    url = "https://www.openssl.org/source/${name}.tar.gz";
-  #    sha256 = "003xh9f898i56344vpvpxxxzmikivxig4xwlm7vbi7m8n43qxaah";
-  #  };
-  #  patches = [./patches/nix-ssl-cert-file.patch];
-  #});
-
 
 in
 stdenv.mkDerivation {
   name = "holochain-conductor";
 
   src = fetchurl {
-    url = https://github.com/holochain/holochain-rust/releases/download/v0.0.7-alpha/conductor-v0.0.7-alpha-x86_64-ubuntu-linux-gnu.tar.gz;
-    sha256 = "1f15yp4aw866hxqr3mswic2scz41mklc5s2vhn5nv7kxxbqjdqgc";
+    url = https://github.com/holochain/holochain-rust/releases/download/v0.0.8-alpha/conductor-v0.0.8-alpha-x86_64-ubuntu-linux-gnu.tar.gz;
+    sha256 = "19j4bjmv8sdpwj5innx5nqq474jc57kfsag1lacrp8d29yzyrldj";
   };
   buildInputs = [
     openssl
@@ -47,6 +36,8 @@ stdenv.mkDerivation {
     patchelf --set-interpreter \
         ${stdenv.glibc}/lib/ld-linux-x86-64.so.2  $out/bin/holochain
     patchelf --set-rpath  ${stdenv.glibc}/lib $out/bin/holochain
-    patchelf --set-rpath ${openssl}/lib $out/bin/holochain
+    patchelf --set-rpath  ${openssl.out}/lib $out/bin/holochain
+    #patchelf --add-needed ${openssl.out}/lib/libssl.so.1.0.0 $out/bin/holochain
+    #patchelf --add-needed ${openssl.out}/lib/libcrypto.so.1.0.0 $out/bin/holochain
   '';
 }
