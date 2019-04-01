@@ -4,18 +4,11 @@ with lib;
 
 let
   cfg = config.holoport;
-  nodejs-8_13 = pkgs.nodejs-8_x.overrideAttrs(oldAttrs: rec {
-    name = "nodejs-${version}";
-    version = "8.13.0";
-    src = pkgs.fetchurl {
-      url = "https://nodejs.org/dist/v${version}/node-v${version}.tar.xz";
-      sha256 = "1qidcj4smxsz3pmamg3czgk6hlbw71yw537h2jfk7iinlds99a9a";
-    };
-  });
   pre-net-led = pkgs.callPackage ../packages/pre-net-led/pre-net-led.nix {};
   holo-led = pkgs.callPackage ../packages/holo-led/holo-led.nix {};
   shutdown-led = pkgs.callPackage ../packages/shutdown-led/shutdown-led.nix {};
   holo-health = pkgs.callPackage ../packages/holo-health/holo-health.nix {};
+  n3h = pkgs.callPackage ../packages/n3h/default.nix {};
   hptest = pkgs.writeShellScriptBin "hptest" ''
     sudo lshw -C cpu >> hptest.txt
     sudo lshw -C memory >> hptest.txt
@@ -122,7 +115,7 @@ in
 
     (mkIf (!cfg.isInstallMedium) {
       boot.loader.grub.splashImage = ../artwork/holoport.jpg;
-      swapDevices = [
+       swapDevices = [
         {
            device = "/var/swapfile";
            size = 2000; #MiB
@@ -152,7 +145,7 @@ in
         cmake
         gcc
         holochain-conductor
-        nodejs-8_13
+        n3h
         smartmontools
         stress-ng
         lshw
