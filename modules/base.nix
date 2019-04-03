@@ -149,7 +149,7 @@ in
         smartmontools
         stress-ng
         lshw
-        yarn
+        yarn2nix
         zeromq4
       ];
       systemd.services.pre-net-led = {
