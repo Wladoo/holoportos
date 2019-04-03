@@ -152,19 +152,6 @@ in
         yarn
         zeromq4
       ];
-      systemd.services.holochain = {
-        enable = true;
-        wants = [ "multi-user.target" ];
-        description = "Manage holochain (conductor) service";
-        serviceConfig = {
-          Type = "forking";
-          User = "holoport";
-          ExecStart = ''/run/current-system/sw/bin/holochain -c ${../scripts/holochain-config.toml}'';
-          ExecReload = ''/run/current-system/sw/bin/kill $MAINPID'';
-          KillMode = "process";
-          Restart = "on-failure";
-        };
-      };
       systemd.services.pre-net-led = {
         enable = true;
         wantedBy = [ "default.target" ];
