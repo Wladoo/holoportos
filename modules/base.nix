@@ -147,6 +147,7 @@ in
         gcc
         holochain-conductor
         n3h
+        nodejs
         smartmontools
         stress-ng
         lshw
