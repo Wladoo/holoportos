@@ -17,5 +17,4 @@ in
 
 
   holochain-conductor = callPackage ./packages/holoport-rust.nix {};
-  yarn2nix = callPackage ./packages/yarn2nix {};
 }
