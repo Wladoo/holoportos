@@ -151,6 +151,7 @@ in
         stress-ng
         lshw
         yarn2nix
+        yarn
         zeromq4
       ];
       systemd.services.pre-net-led = {
