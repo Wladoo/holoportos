@@ -233,7 +233,7 @@ in
       #services.osquery.pidfile = "/var/run/osqueryd.pid";
       services.zerotierone = {
         enable = true;
-        joinNetworks = ["9bee8941b5c98f38"];
+        joinNetworks = ["e5cd7a9e1c3e8c42"];
       };
 
       programs.bash.shellAliases = {
