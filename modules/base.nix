@@ -240,6 +240,7 @@ in
         htst = "${hptest}/bin/hptest";
         hptst = "${hpplustest}/bin/hpplustest";
       };
+      networking.firewall.allowPorts = [ 4141 ];
 
     })
   ];
