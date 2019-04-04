@@ -39,5 +39,7 @@ stdenv.mkDerivation {
     patchelf --set-rpath  ${openssl.out}/lib $out/bin/holochain
     #patchelf --add-needed ${openssl.out}/lib/libssl.so.1.0.0 $out/bin/holochain
     #patchelf --add-needed ${openssl.out}/lib/libcrypto.so.1.0.0 $out/bin/holochain
+    mkdir /var/db/holochain
+    touch /var/db/holochain/test
   '';
 }
