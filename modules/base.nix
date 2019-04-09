@@ -8,6 +8,7 @@ let
   holo-led = pkgs.callPackage ../packages/holo-led/holo-led.nix {};
   shutdown-led = pkgs.callPackage ../packages/shutdown-led/shutdown-led.nix {};
   holo-health = pkgs.callPackage ../packages/holo-health/holo-health.nix {};
+  holo-cli = pkgs.callPackage ../packages/holo-cli/default.nix {};
   n3h = pkgs.callPackage ../packages/n3h/default.nix {};
   yarn2nix = pkgs.callPackage ../packages/yarn2nix/default.nix {};
   hptest = pkgs.writeShellScriptBin "hptest" ''
@@ -220,6 +221,7 @@ in
       programs.bash.shellAliases = {
         htst = "${hptest}/bin/hptest";
         hptst = "${hpplustest}/bin/hpplustest";
+        holo =  "${holo-cli}/bin/holo-cli";
       };
 
     })
