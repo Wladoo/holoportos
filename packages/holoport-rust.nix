@@ -25,14 +25,14 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = https://github.com/Holo-Host/holoportos/releases/download/conductor-0.0.11-alpha1/conductor-0.0.11-alpha1-x86_64-generic-linux-gnu.tar.gz;
-    sha256 = "1idg90x8fayki5s0kqhciidvbps0i085324cyyan6ygxs5s2vdc4";
+    sha256 = "1q06p3ixc0332hdb8yjhzjq44msjbw0aprfmsqipk3sf5bfs15fd";
   };
   #buildInputs = [
   #  openssl
   #];
   installPhase = ''
     mkdir -p $out/bin
-    cp ${src}/holochain $out/bin
+    cp holochain $out/bin
     patchelf --set-interpreter \
         ${stdenv.glibc}/lib/ld-linux-x86-64.so.2  $out/bin/holochain
     patchelf --set-rpath  ${stdenv.glibc}/lib $out/bin/holochain
