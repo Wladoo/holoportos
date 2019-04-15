@@ -32,7 +32,7 @@ stdenv.mkDerivation {
   #];
   installPhase = ''
     mkdir -p $out/bin
-    cp holochain $out/bin
+    cp ${src}/holochain $out/bin
     patchelf --set-interpreter \
         ${stdenv.glibc}/lib/ld-linux-x86-64.so.2  $out/bin/holochain
     patchelf --set-rpath  ${stdenv.glibc}/lib $out/bin/holochain
