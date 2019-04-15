@@ -24,8 +24,8 @@ stdenv.mkDerivation {
   name = "holochain-conductor";
 
   src = fetchurl {
-    url = https://github.com/holochain/holochain-rust/releases/download/v0.0.10-alpha2/conductor-v0.0.10-alpha2-x86_64-ubuntu-linux-gnu.tar.gz;
-    sha256 = "11763a4y5lqi9d18pygzdn9w81156pgbnfsx2a8z689gyxg27ajw";
+    url = https://github.com/Holo-Host/holoportos/releases/download/conductor-0.0.11-alpha1/conductor-0.0.11-alpha1-x86_64-generic-linux-gnu.tar.gz;
+    sha256 = "1idg90x8fayki5s0kqhciidvbps0i085324cyyan6ygxs5s2vdc4";
   };
   #buildInputs = [
   #  openssl
@@ -36,7 +36,7 @@ stdenv.mkDerivation {
     patchelf --set-interpreter \
         ${stdenv.glibc}/lib/ld-linux-x86-64.so.2  $out/bin/holochain
     patchelf --set-rpath  ${stdenv.glibc}/lib $out/bin/holochain
-    patchelf --set-rpath  ${openssl.out}/lib $out/bin/holochain
+    #patchelf --set-rpath  ${openssl.out}/lib $out/bin/holochain
     #patchelf --add-needed ${openssl.out}/lib/libssl.so.1.0.0 $out/bin/holochain
     #patchelf --add-needed ${openssl.out}/lib/libcrypto.so.1.0.0 $out/bin/holochain
   '';

@@ -16,7 +16,6 @@ buildGoPackage rec {
 
   goDeps = ./deps.nix;
 
-  # TODO: add metadata https://nixos.org/nixpkgs/manual/#sec-standard-meta-attributes
   meta = with stdenv.lib; {
     description = "holo-cli";
     homepage    = https://github.com/Holo-Host/holo-cli;
