@@ -251,7 +251,7 @@ in
           '';
           serviceConfig = {
             ExecStart = ''/run/current-system/sw/bin/holochain -c /etc/holochain/holochain.toml'';
-            WorkingDirectory = "${cfg.home}";
+            WorkingDirectory = "/var/lib/holochain";
             Restart = "always";
             User = "holochain";
             StandardOutput = "journal";
