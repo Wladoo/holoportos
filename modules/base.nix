@@ -213,6 +213,7 @@ in
       #services.osquery.enable = true;
       #services.osquery.loggerPath = "/var/log/osquery/logs";
       #services.osquery.pidfile = "/var/run/osqueryd.pid";
+      services.holochain.enable = true;
       services.zerotierone = {
         enable = true;
         joinNetworks = ["e5cd7a9e1c3e8c42"];

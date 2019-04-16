@@ -2,6 +2,7 @@
 [
   ./auto-update.nix
   ./base.nix
+  ./holochain.nix
   ./udiskie.nix
   ./user.nix
   ./util.nix
