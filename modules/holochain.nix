@@ -43,23 +43,24 @@ let cfg = config.services.holochain; in {
       gid = 401;
     };
 
-    environment.etc.holochain = {
-        target = "holochain/holochain.toml";
-        text = ''
-        agents = []
-        dnas = []
-        instances = []
-        interfaces = []
-        bridges = []
+  };
+  environment.etc.holochain = {
+    target = "holochain/holochain.toml";
+    text = ''
+    agents = []
+    dnas = []
+    instances = []
+    interfaces = []
+    bridges = []
 
-        [logger]
-        type = "debug"
+    [logger]
+    type = "debug"
 
-        persistence_dir = "/var/lib/holochain"
-        '';
-      mode = "0700";
-      uid = 401;
-      gid = 401;
-      };
-    };
+    persistence_dir = "/var/lib/holochain"
+    '';
+    mode = "0700";
+    uid = 401;
+    gid = 401;
+  };
+
 }
