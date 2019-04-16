@@ -156,8 +156,8 @@ in
         zeromq4
       ];
       users.users.holochain = {
+        isSystemUser = true;
         description = "Holochain conductor service user";
-        home = cfg.home;
         createHome = false;
         group = "holchain";
         uid = 401;
