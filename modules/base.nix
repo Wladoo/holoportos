@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 
 with lib;
-with import ./holochain.nix {};
 let
   cfg = config.holoport;
   pre-net-led = pkgs.callPackage ../packages/pre-net-led/pre-net-led.nix {};
@@ -156,6 +155,34 @@ in
         yarn
         zeromq4
       ];
+      users.users.holochain = {
+        description = "Holochain conductor service user";
+        home = cfg.home;
+        createHome = false;
+        group = "holchain";
+        uid = 401;
+      };
+      users.groups.holochain.gid = 401;
+
+      environment.etc.holochain = {
+        target = "holochain/holochain.toml";
+        text = ''
+        agents = []
+        dnas = []
+        instances = []
+        interfaces = []
+        bridges = []
+
+        [logger]
+        type = "debug"
+
+        persistence_dir = "/var/lib/holochain"
+        '';
+        mode = "0700";
+        uid = 401;
+        gid = 401;
+      };
+
       systemd.services.pre-net-led = {
         enable = true;
         wantedBy = [ "default.target" ];
@@ -213,7 +240,24 @@ in
       #services.osquery.enable = true;
       #services.osquery.loggerPath = "/var/log/osquery/logs";
       #services.osquery.pidfile = "/var/run/osqueryd.pid";
-      services.holochain.enable = true;
+      systemd.services.holochain = {
+          description = "Holochain conductor service";
+          after = [ "local-fs.target" "network.target" ];
+          wantedBy = [ "multi-user.target" ];
+          preStart = ''
+            mkdir -p /var/lib/holochain
+            chmod 700 /var/lib/holochain
+            chown -R holochain:holochain /var/lib/holochain
+          '';
+          serviceConfig = {
+            ExecStart = ''/run/current-system/sw/bin/holochain -c /etc/holochain/holochain.toml'';
+            WorkingDirectory = "${cfg.home}";
+            Restart = "always";
+            User = "holochain";
+            StandardOutput = "journal";
+          };
+      };
+
       services.zerotierone = {
         enable = true;
         joinNetworks = ["e5cd7a9e1c3e8c42"];
@@ -224,25 +268,6 @@ in
         hptst = "${hpplustest}/bin/hpplustest";
         holo =  "${holo-cli}/bin/holo-cli";
       };
-      environment.etc.holochain = {
-        target = "holochain/holochain.toml";
-        text = ''
-        agents = []
-        dnas = []
-        instances = []
-        interfaces = []
-        bridges = []
-
-        [logger]
-        type = "debug"
-
-        persistence_dir = "/var/lib/holochain"
-        '';
-        mode = "0700";
-        uid = 401;
-        gid = 401;
-      };
-
 
     })
   ];
