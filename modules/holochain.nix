@@ -30,7 +30,6 @@ let cfg = config.services.holochain; in {
         WorkingDirectory = "${cfg.home}";
         Restart = "always";
         User = "holochain";
-        UMask = "0022";
         StandardOutput = "journal";
       };
     };
@@ -40,10 +39,11 @@ let cfg = config.services.holochain; in {
       home = cfg.home;
       createHome = false;
       group = "holchain";
-      uid = config.ids.uids.holochain;
+      uid = 401;
+      gid = 401;
     };
 
-    users.groups.holochain.gid = config.ids.gids.holochain;
+    users.groups.holochain.gid = 401;
     environment.etc.holochain = {
         target = "holochain/holochain.toml";
         text = ''
@@ -59,7 +59,7 @@ let cfg = config.services.holochain; in {
         persistence_dir = "/var/lib/holochain"
         '';
       mode = "0700";
-      uid = config.ids.uids.holochain;
+      uid = 401;
       };
     };
 }
