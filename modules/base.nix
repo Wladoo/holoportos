@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 with lib;
-
+with import ./module-list.nix {};
 let
   cfg = config.holoport;
   pre-net-led = pkgs.callPackage ../packages/pre-net-led/pre-net-led.nix {};
