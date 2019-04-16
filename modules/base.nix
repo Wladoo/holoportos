@@ -224,6 +224,25 @@ in
         hptst = "${hpplustest}/bin/hpplustest";
         holo =  "${holo-cli}/bin/holo-cli";
       };
+      environment.etc.holochain = {
+        target = "holochain/holochain.toml";
+        text = ''
+        agents = []
+        dnas = []
+        instances = []
+        interfaces = []
+        bridges = []
+
+        [logger]
+        type = "debug"
+
+        persistence_dir = "/var/lib/holochain"
+        '';
+        mode = "0700";
+        uid = 401;
+        gid = 401;
+      };
+
 
     })
   ];
