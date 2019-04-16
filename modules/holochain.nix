@@ -43,7 +43,6 @@ let cfg = config.services.holochain; in {
       gid = 401;
     };
 
-    users.groups.holochain.gid = 401;
     environment.etc.holochain = {
         target = "holochain/holochain.toml";
         text = ''
@@ -60,6 +59,7 @@ let cfg = config.services.holochain; in {
         '';
       mode = "0700";
       uid = 401;
+      gid = 401;
       };
     };
 }
