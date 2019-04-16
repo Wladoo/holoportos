@@ -17,6 +17,6 @@ let
 in
   mkYarnPackage {
     src = envoy;
-    packageJson = ${envoy}/package.json;
-    yarnLock = ${envoy}/yarn.lock;
+    packageJson = "${envoy}/package.json";
+    yarnLock = "${envoy}/yarn.lock";
   }
