@@ -7,7 +7,7 @@ let
     sha256 = "0h2kzdfiw43rbiiffpqq9lkhvdv8mgzz2w29pzrxgv8d39x67vr9";
   };
   yarn2nixRepo = pkgs.callPackage ./yarn2nixSrc {};
-  inherit (yarn2nixRepo) mkYarn;
+  inherit (yarn2nixRepo) mkYarnPackage;
   envoy = fetchFromGitHub {
     owner = "samrose";
     repo = "envoy";
