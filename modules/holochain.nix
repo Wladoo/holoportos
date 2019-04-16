@@ -40,9 +40,8 @@ let cfg = config.services.holochain; in {
       createHome = false;
       group = "holchain";
       uid = 401;
-      gid = 401;
     };
-
+    users.groups.holochain.gid = 401;
   };
 
 }
