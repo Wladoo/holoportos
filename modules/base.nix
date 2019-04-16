@@ -8,7 +8,6 @@ let
   shutdown-led = pkgs.callPackage ../packages/shutdown-led/shutdown-led.nix {};
   holo-health = pkgs.callPackage ../packages/holo-health/holo-health.nix {};
   holo-cli = pkgs.callPackage ../packages/holo-cli/default.nix {};
-  n3h = pkgs.callPackage ../packages/n3h/default.nix {};
   yarn2nix = pkgs.callPackage ../packages/yarn2nix/default.nix {};
   hptest = pkgs.writeShellScriptBin "hptest" ''
     sudo lshw -C cpu >> hptest.txt
@@ -130,7 +129,12 @@ in
         # The custom configuration.nix that injects our modules
         "nixos-config=/etc/nixos/holoport-configuration.nix"
       ];
-
+      system.activationScripts = {
+        hcdir = {
+            text = ''if [ ! -d /var/lib/holochain ] ; then mkdir /var/lib/holochain && chmod 0700 && chown -R holochain:holochain /var/lib/holochain; fi'';
+            deps = [];
+            };
+      };
       # Caches tarballs obtained via fetchurl for 60 seconds, mainly
       # used for the channels
       nix.extraOptions = ''
@@ -146,7 +150,7 @@ in
         cmake
         gcc
         holochain-conductor
-        n3h
+
         nodejs
         smartmontools
         stress-ng
@@ -162,7 +166,6 @@ in
         group = "holchain";
         uid = 401;
       };
-      users.groups.holochain.gid = 401;
 
       environment.etc.holochain = {
         target = "holochain/holochain.toml";
@@ -180,7 +183,6 @@ in
         '';
         mode = "0700";
         uid = 401;
-        gid = 401;
       };
 
       systemd.services.pre-net-led = {
@@ -244,11 +246,6 @@ in
           description = "Holochain conductor service";
           after = [ "local-fs.target" "network.target" ];
           wantedBy = [ "multi-user.target" ];
-          preStart = ''
-            mkdir -p /var/lib/holochain
-            chmod 700 /var/lib/holochain
-            chown -R holochain:holochain /var/lib/holochain
-          '';
           serviceConfig = {
             ExecStart = ''/run/current-system/sw/bin/holochain -c /etc/holochain/holochain.toml'';
             WorkingDirectory = "/var/lib/holochain";
