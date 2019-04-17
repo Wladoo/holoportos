@@ -255,7 +255,7 @@ in
             StandardOutput = "journal";
           };
       };
-      systemd.services.holochain = {
+      systemd.services.envoy = {
           description = "envoy service";
           after = [ "local-fs.target" "network.target" ];
           wantedBy = [ "multi-user.target" ];
