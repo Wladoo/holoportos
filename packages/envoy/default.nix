@@ -1,18 +1,14 @@
-{ pkgs, fetchFromGitHub }:
+{ pkgs, fetchzip }:
 let
-  yarn2nixSrc = fetchFromGitHub {
-    owner = "moretea";
-    repo = "yarn2nix";
-    rev = "3cc020e384ce2a439813adb7a0cc772a034d90bb";
-    sha256 = "0h2kzdfiw43rbiiffpqq9lkhvdv8mgzz2w29pzrxgv8d39x67vr9";
+  yarn2nixSrc = fetchzip {
+    url = https://github.com/moretea/yarn2nix/archive/master.zip;
+    sha256 = "0d3naf94bvw1klmr1qnfggl9s1v3r80svxly7q4w39knxl5lafzl";
   };
   yarn2nixRepo = pkgs.callPackage yarn2nixSrc {};
   inherit (yarn2nixRepo) mkYarnPackage;
-  envoy = fetchFromGitHub {
-    owner = "samrose";
-    repo = "envoy";
-    rev = "b86d72718195f6a878b7e0ac25fe59a8267751fe";
-    sha256 = "1lqm9hr8mx3bbmwphplpq8m1z5a9rkzh6z39z7d9l7984514y7xq";
+  envoy = fetchzip {
+    url = "samrose";
+    sha256 = "071avjxnm998wmlnc8x0nlg8c61c0rs2ksb3s77lai9v13vlff8w";
   };
 in
   mkYarnPackage {

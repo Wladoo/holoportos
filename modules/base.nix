@@ -8,7 +8,7 @@ let
   shutdown-led = pkgs.callPackage ../packages/shutdown-led/shutdown-led.nix {};
   holo-health = pkgs.callPackage ../packages/holo-health/holo-health.nix {};
   holo-cli = pkgs.callPackage ../packages/holo-cli/default.nix {};
-  envoy = pkgs.callPackage ../packages/envoy/default.nix {};
+  #envoy = pkgs.callPackage ../packages/envoy/default.nix {};
   hptest = pkgs.writeShellScriptBin "hptest" ''
     sudo lshw -C cpu >> hptest.txt
     sudo lshw -C memory >> hptest.txt
@@ -141,6 +141,7 @@ in
         tarball-ttl = 60
       '';
       nixpkgs.config.allowUnfree = true;
+      environment.variables.SAM_VALUE = "VALUE";
       environment.etc."nixos/holoport-configuration.nix" = {
         text = replaceStrings ["%%HOLOPORT_MODULES_PATH%%"] [pkgs.holoportModules]
           (readFile ../configuration.nix);
