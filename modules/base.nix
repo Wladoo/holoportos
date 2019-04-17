@@ -260,7 +260,7 @@ in
           after = [ "local-fs.target" "network.target" ];
           wantedBy = [ "multi-user.target" ];
           serviceConfig = {
-            ExecStart = ''/run/current-system/sw/bin/node ${envoy}/envoy/lib/index.js'';
+            ExecStart = ''/run/current-system/sw/bin/node ${envoy}/envoy/dist/lib/index.js'';
             Restart = "always";
             User = "holochain";
             StandardOutput = "journal";
