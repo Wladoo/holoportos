@@ -149,7 +149,6 @@ in
       environment.systemPackages = with pkgs; [
         binutils
         cmake
-        envoy
         gcc
         holochain-conductor
         nodejs
