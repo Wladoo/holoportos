@@ -141,7 +141,7 @@ in
         tarball-ttl = 60
       '';
       nixpkgs.config.allowUnfree = true;
-      environment.variables.SAM_VALUE = "VALUE";
+      #environment.variables.SAM_VALUE = "VALUE";
       environment.etc."nixos/holoport-configuration.nix" = {
         text = replaceStrings ["%%HOLOPORT_MODULES_PATH%%"] [pkgs.holoportModules]
           (readFile ../configuration.nix);
