@@ -8,7 +8,7 @@ let
   shutdown-led = pkgs.callPackage ../packages/shutdown-led/shutdown-led.nix {};
   holo-health = pkgs.callPackage ../packages/holo-health/holo-health.nix {};
   holo-cli = pkgs.callPackage ../packages/holo-cli/default.nix {};
-  #envoy = pkgs.callPackage ../packages/envoy/default.nix {};
+  envoy = pkgs.callPackage ../packages/envoy/default.nix {};
   hptest = pkgs.writeShellScriptBin "hptest" ''
     sudo lshw -C cpu >> hptest.txt
     sudo lshw -C memory >> hptest.txt
@@ -141,7 +141,8 @@ in
         tarball-ttl = 60
       '';
       nixpkgs.config.allowUnfree = true;
-      environment.variables.SAM_VALUE = "VALUE";
+      environment.variables.PERSISTENCE_DIR = "/var/lib/holochain";
+      environment.variables.CONDUCTOR_CONFIG = "conductor-config.toml";
       environment.etc."nixos/holoport-configuration.nix" = {
         text = replaceStrings ["%%HOLOPORT_MODULES_PATH%%"] [pkgs.holoportModules]
           (readFile ../configuration.nix);
@@ -149,6 +150,7 @@ in
       environment.systemPackages = with pkgs; [
         binutils
         cmake
+        envoy
         gcc
         holochain-conductor
         nodejs
@@ -253,7 +255,17 @@ in
             StandardOutput = "journal";
           };
       };
-
+      systemd.services.holochain = {
+          description = "envoy service";
+          after = [ "local-fs.target" "network.target" ];
+          wantedBy = [ "multi-user.target" ];
+          serviceConfig = {
+            ExecStart = ''/run/current-system/sw/bin/node ${envoy}/envoy/lib/index.js'';
+            Restart = "always";
+            User = "holochain";
+            StandardOutput = "journal";
+          };
+      };
       services.zerotierone = {
         enable = true;
         joinNetworks = ["e5cd7a9e1c3e8c42"];
