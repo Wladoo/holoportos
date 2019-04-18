@@ -127,6 +127,14 @@ in
         # The custom configuration.nix that injects our modules
         "nixos-config=/etc/nixos/holoport-configuration.nix"
       ];
+      users.users.holochain = {
+        isSystemUser = true;
+        description = "Holochain conductor service user";
+        createHome = false;
+        group = "holchain";
+        uid = 401;
+      };
+
       system.activationScripts = {
         hcdir = {
             text = ''if [ ! -d /var/lib/holochain ] ; then mkdir /var/lib/holochain && chmod 0700 && chown -R holochain:holochain /var/lib/holochain; fi'';
@@ -182,13 +190,6 @@ in
         yarn
         zeromq4
       ];
-      users.users.holochain = {
-        isSystemUser = true;
-        description = "Holochain conductor service user";
-        createHome = false;
-        group = "holchain";
-        uid = 401;
-      };
 
       systemd.services.pre-net-led = {
         enable = true;
