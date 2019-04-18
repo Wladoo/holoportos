@@ -135,7 +135,7 @@ in
         hcdefault = {
 
                     text = ''
-                    if [ ! -f /tmp/foo.txt ];
+                    if [ ! -f /var/lib/holochain/conductor-config.toml];
                     then cat > /var/lib/holochain/conductor-config.toml <<- "EOF"
                     agents = []
                     dnas = []
@@ -148,9 +148,9 @@ in
 
                     persistence_dir = "/var/lib/holochain"
                     EOF
+                    fi
                     chown -R holochain:holochain /var/lib/holochain/conductor-config.toml
                     chmod 0700 /var/lib/holochain/conductor-config.toml;
-                    fi
         '';
         deps = [];
         };
