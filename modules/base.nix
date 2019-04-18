@@ -256,6 +256,9 @@ in
             Restart = "always";
             User = "holochain";
             StandardOutput = "journal";
+            ExecStartPre = ''/run/current-system/sw/bin/chown -R holochain:holochain /var/lib/holochain/conductor-config.toml && \
+                             /run/current-system/sw/bin/chmod 0700 /var/lib/holochain/conductor-config.toml'';
+
           };
       };
       systemd.services.envoy = {
@@ -267,9 +270,6 @@ in
             Restart = "always";
             User = "holochain";
             StandardOutput = "journal";
-            ExecStartPre = ''/run/current-system/sw/bin/chown -R holochain:holochain /var/lib/holochain/conductor-config.toml;
-                             /run/current-system/sw/bin/chmod 0700 /var/lib/holochain/conductor-config.toml'';
-
           };
       };
       services.zerotierone = {
