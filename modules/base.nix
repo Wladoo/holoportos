@@ -131,7 +131,7 @@ in
         isSystemUser = true;
         description = "Holochain conductor service user";
         createHome = false;
-        group = "holchain";
+        group = "holochain";
         uid = 401;
       };
 
