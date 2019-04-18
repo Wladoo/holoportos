@@ -87,7 +87,6 @@ in
 
     holoport.channels.nixpkgs = mkOption {
       type = types.str;
-      # FIXME: final url
       default = "http://holoportbuild.holo.host/job/holoportOs-testnet-dev-18_09/testnet-dev/channels.nixpkgs/latest/download/1";
       description = ''
         URL understood by Nix to a nixpkgs/NixOS channel
@@ -96,7 +95,6 @@ in
 
     holoport.channels.holoport = mkOption {
       type = types.str;
-      # FIXME: final url
       default = "http://holoportbuild.holo.host/job/holoportOs-testnet-dev-18_09/testnet-dev/channels.holoport-testnet/latest/download/1";
       description = ''
         URL understood by Nix to the Holoport channel
@@ -134,6 +132,30 @@ in
             text = ''if [ ! -d /var/lib/holochain ] ; then mkdir /var/lib/holochain && chmod 0700 && chown -R holochain:holochain /var/lib/holochain; fi'';
             deps = [];
             };
+        hcdefault = {
+
+                    text = ''
+                    if [ ! -f /tmp/foo.txt ];
+                    then cat > /var/lib/holochain/conductor-config.toml <<- "EOF"
+                    agents = []
+                    dnas = []
+                    instances = []
+                    interfaces = []
+                    bridges = []
+
+                    [logger]
+                    type = "debug"
+
+                    persistence_dir = "/var/lib/holochain"
+                    EOF
+                    chown holochain:holochain /var/lib/holochain/conductor-config.toml
+                    chmod 0700 /var/lib/holochain/conductor-config.toml;
+                    fi
+        '';
+        deps = [];
+        };
+
+
       };
       # Caches tarballs obtained via fetchurl for 60 seconds, mainly
       # used for the channels
@@ -141,8 +163,8 @@ in
         tarball-ttl = 60
       '';
       nixpkgs.config.allowUnfree = true;
-      environment.variables.PERSISTENCE_DIR = "/var/lib/holochain";
-      environment.variables.CONDUCTOR_CONFIG = "conductor-config.toml";
+      #environment.variables.PERSISTENCE_DIR = "/var/lib/holochain";
+      #environment.variables.CONDUCTOR_CONFIG = "conductor-config.toml";
       environment.etc."nixos/holoport-configuration.nix" = {
         text = replaceStrings ["%%HOLOPORT_MODULES_PATH%%"] [pkgs.holoportModules]
           (readFile ../configuration.nix);
@@ -165,24 +187,6 @@ in
         description = "Holochain conductor service user";
         createHome = false;
         group = "holchain";
-        uid = 401;
-      };
-
-      environment.etc.holochain = {
-        target = "holochain/holochain.toml";
-        text = ''
-        agents = []
-        dnas = []
-        instances = []
-        interfaces = []
-        bridges = []
-
-        [logger]
-        type = "debug"
-
-        persistence_dir = "/var/lib/holochain"
-        '';
-        mode = "0700";
         uid = 401;
       };
 
@@ -248,7 +252,7 @@ in
           after = [ "local-fs.target" "network.target" ];
           wantedBy = [ "multi-user.target" ];
           serviceConfig = {
-            ExecStart = ''/run/current-system/sw/bin/holochain -c /etc/holochain/holochain.toml'';
+            ExecStart = ''/run/current-system/sw/bin/holochain -c /var/lib/conductor-config.toml'';
             WorkingDirectory = "/var/lib/holochain";
             Restart = "always";
             User = "holochain";
