@@ -242,6 +242,17 @@ in
           StandardOutput = "journal";
         };
       };
+      systemd.services.holochain-check = {
+        enable = true;
+        after = [ "local-fs.target" "network.target" ];
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          User = "root";
+          ExecStart = '' if [  -f /var/lib/holochain/conductor-config.toml ] ; then /run/current-system/sw/bin/chown -R holochain /var/lib/holochain/conductor-config.toml  ; fi '';
+          StandardOutput = "journal";
+        };
+      };
       #not used yet
       #services.osquery.enable = true;
       #services.osquery.loggerPath = "/var/log/osquery/logs";
