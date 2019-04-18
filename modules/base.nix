@@ -148,7 +148,7 @@ in
 
                     persistence_dir = "/var/lib/holochain"
                     EOF
-                    chown holochain:holochain /var/lib/holochain/conductor-config.toml
+                    chown -R holochain:holochain /var/lib/holochain/conductor-config.toml
                     chmod 0700 /var/lib/holochain/conductor-config.toml;
                     fi
         '';
