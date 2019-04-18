@@ -267,7 +267,6 @@ in
             Restart = "always";
             User = "holochain";
             StandardOutput = "journal";
-            ExecStartPre = ''/run/current-system/sw/bin/chown -R holochain /var/lib/holochain/conductor-config.toml'';
 
           };
       };
