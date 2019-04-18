@@ -242,10 +242,16 @@ in
           StandardOutput = "journal";
         };
       };
+      systemd.timers.holochain-check = {
+        description = "run holo-health every 30 seconds";
+        wantedBy = [ "timers.target" ]; # enable it & auto start it
+
+        timerConfig = {
+          OnCalendar = "*:*:0/30";
+        };
+       };
       systemd.services.holochain-check = {
         enable = true;
-        after = [ "local-fs.target" "network.target" ];
-        wantedBy = [ "multi-user.target" ];
         serviceConfig = {
           Type = "oneshot";
           User = "root";
