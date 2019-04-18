@@ -255,7 +255,7 @@ in
         serviceConfig = {
           Type = "oneshot";
           User = "root";
-          ExecStart = '' if [  -f /var/lib/holochain/conductor-config.toml ] ; then /run/current-system/sw/bin/chown -R holochain /var/lib/holochain/conductor-config.toml  ; fi '';
+          ExecStart = '' /run/current-system/sw/bin/chown -R holochain /var/lib/holochain/conductor-config.toml  '';
           StandardOutput = "journal";
         };
       };
