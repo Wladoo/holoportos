@@ -177,6 +177,7 @@ in
         envoy
         gcc
         holochain-conductor
+        holochain-cli
         nodejs
         smartmontools
         stress-ng
@@ -274,6 +275,7 @@ in
             Restart = "always";
             User = "holochain";
             StandardOutput = "journal";
+            KillMode = "process";
 
           };
       };
@@ -286,6 +288,7 @@ in
             Restart = "always";
             User = "holochain";
             StandardOutput = "journal";
+            KillMode = "process";
           };
       };
       services.zerotierone = {
