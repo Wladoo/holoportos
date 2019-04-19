@@ -266,7 +266,7 @@ in
       #services.osquery.pidfile = "/var/run/osqueryd.pid";
       systemd.services.holochain = {
           description = "Holochain conductor service";
-          after = [ "local-fs.target" "network.target" ];
+          after = [ "local-fs.target" "network.target" "systemd-activation.service" ];
           wantedBy = [ "multi-user.target" ];
           requires = [ "systemd-activation.service" ];
           serviceConfig = {
@@ -279,7 +279,7 @@ in
       };
       systemd.services.envoy = {
           description = "envoy service";
-          after = [ "local-fs.target" "network.target" ];
+          after = [ "local-fs.target" "network.target" "holochain.service" ];
           wantedBy = [ "multi-user.target" ];
           serviceConfig = {
             ExecStart = ''/run/current-system/sw/bin/node ${envoy}/envoy/dist/lib/index.js'';
