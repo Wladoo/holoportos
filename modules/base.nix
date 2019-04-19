@@ -270,7 +270,6 @@ in
           wantedBy = [ "multi-user.target" ];
           serviceConfig = {
             ExecStart = ''/run/current-system/sw/bin/holochain -c /var/lib/holochain/conductor-config.toml'';
-            WorkingDirectory = "/var/lib/holochain";
             Restart = "always";
             User = "holochain";
             StandardOutput = "journal";
