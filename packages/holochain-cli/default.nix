@@ -1,4 +1,4 @@
-{ pkgs, stdenv }:
+{ pkgs, stdenv, fetchurl, openssl }:
 
 stdenv.mkDerivation {
   name = "holochain-cli";
