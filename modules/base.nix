@@ -154,10 +154,10 @@ in
         isSystemUser = true;
         description = "Holochain conductor service user";
         createHome = false;
-        extraGroups = [ { name = "holochain"; gid = 500;} ];
+        extraGroups = [ "holochain" ];
         uid = 401;
       };
-
+      users.groups.holochain.gid = 501;
       # Caches tarballs obtained via fetchurl for 60 seconds, mainly
       # used for the channels
       nix.extraOptions = ''
