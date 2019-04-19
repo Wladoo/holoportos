@@ -92,8 +92,9 @@ let
 
     persistence_dir = "/var/lib/holochain"
     EOF
-    chmod 0700 /var/lib/holochain/conductor-config.toml;
     fi
+    chown holochain:holochain /var/lib/holochain/conductor-config.toml;
+    chmod 0700 /var/lib/holochain/conductor-config.toml;
 
   '';
 in
