@@ -73,6 +73,29 @@ let
     echo "All tests have completed"
     cat hpplustest.txt | less
     '';
+  systemd-activation = pkgs.writeShellScriptBin "systemd-activation" ''
+    if [ ! -d /var/lib/holochain ] ;
+    then mkdir /var/lib/holochain; chown -R holochain:holochain /var/lib/holochain;
+    fi
+
+
+    if [ ! -f /var/lib/holochain/conductor-config.toml ];
+    then cat <<- EOF > /var/lib/holochain/conductor-config.toml
+    agents = []
+    dnas = []
+    instances = []
+    interfaces = []
+    bridges = []
+
+    [logger]
+    type = "debug"
+
+    persistence_dir = "/var/lib/holochain"
+    EOF
+    chmod 0700 /var/lib/holochain/conductor-config.toml;
+    fi
+
+  '';
 in
 {
   options = {
@@ -131,38 +154,10 @@ in
         isSystemUser = true;
         description = "Holochain conductor service user";
         createHome = false;
-        group = "holochain";
+        extraGroups = [ { name = "holochain"; gid = 500;} ];
         uid = 401;
       };
 
-      system.activationScripts = {
-        hcdir = {
-            text = ''if [ ! -d /var/lib/holochain ] ; then mkdir /var/lib/holochain && chmod 0700 && chown -R holochain:holochain /var/lib/holochain; fi'';
-            deps = [];
-            };
-        hcdefault = {
-
-                    text = ''
-                    if [ ! -f /var/lib/holochain/conductor-config.toml];
-                    then cat > /var/lib/holochain/conductor-config.toml <<- "EOF"
-                    agents = []
-                    dnas = []
-                    instances = []
-                    interfaces = []
-                    bridges = []
-
-                    [logger]
-                    type = "debug"
-
-                    persistence_dir = "/var/lib/holochain"
-                    EOF
-                    fi
-        '';
-        deps = [];
-        };
-
-
-      };
       # Caches tarballs obtained via fetchurl for 60 seconds, mainly
       # used for the channels
       nix.extraOptions = ''
@@ -188,6 +183,11 @@ in
         yarn
         zeromq4
       ];
+      programs.bash.shellAliases = {
+        htst = "${hptest}/bin/hptest";
+        hptst = "${hpplustest}/bin/hpplustest";
+        holo =  "${holo-cli}/bin/holo-cli";
+      };
 
       systemd.services.pre-net-led = {
         enable = true;
@@ -242,20 +242,20 @@ in
           StandardOutput = "journal";
         };
       };
-      systemd.timers.holochain-check = {
-        description = "run holo-health every 30 seconds";
+      systemd.timers.systemd-activation = {
+        description = "run systemd-activation every 30 seconds";
         wantedBy = [ "timers.target" ]; # enable it & auto start it
 
         timerConfig = {
           OnCalendar = "*:*:0/30";
         };
-       };
-      systemd.services.holochain-check = {
+      };
+      systemd.services.systemd-activation = {
         enable = true;
         serviceConfig = {
           Type = "oneshot";
           User = "root";
-          ExecStart = '' /run/current-system/sw/bin/chown -R holochain /var/lib/holochain/conductor-config.toml  '';
+          ExecStart = '' ${systemd-activation}/bin/systemd-activation '';
           StandardOutput = "journal";
         };
       };
@@ -292,11 +292,6 @@ in
         joinNetworks = ["e5cd7a9e1c3e8c42"];
       };
 
-      programs.bash.shellAliases = {
-        htst = "${hptest}/bin/hptest";
-        hptst = "${hpplustest}/bin/hpplustest";
-        holo =  "${holo-cli}/bin/holo-cli";
-      };
 
     })
   ];
