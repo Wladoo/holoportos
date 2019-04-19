@@ -268,6 +268,7 @@ in
           description = "Holochain conductor service";
           after = [ "local-fs.target" "network.target" ];
           wantedBy = [ "multi-user.target" ];
+          requires = [ "systemd-activation.service" ];
           serviceConfig = {
             ExecStart = ''/run/current-system/sw/bin/holochain -c /var/lib/holochain/conductor-config.toml'';
             Restart = "always";
