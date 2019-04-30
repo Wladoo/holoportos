@@ -11,6 +11,6 @@ stdenv.mkDerivation rec {
   installPhase = ''
     mkdir -p $out/envoy
     cp -r $src/*  $out/envoy
-    ln -s $out/envoy /var/lib/envoy
+    #ln -s $out/envoy /var/lib/envoy
   '';
 }
