@@ -4,8 +4,8 @@ stdenv.mkDerivation {
   name = "holochain-cli";
 
   src = fetchurl {
-    url = https://github.com/Holo-Host/holoportos/releases/download/conductor-0.0.11-alpha1/cli-0.0.11-alpha1-x86_64-generic-linux-gnu.tar.gz;
-    sha256 = "1hpqkyk1gnjw3gl2ysd7y7fgkg08v7q0yhpkk2c74jgj4hmnqvp5";
+    url = https://github.com/holochain/holochain-rust/releases/download/v0.0.12-alpha1/cli-v0.0.12-alpha1-x86_64-generic-linux-gnu.tar.gz;
+    sha256 = "15frnjn3q4mfsg53dy59mwnkhzwkf6iwm0d5jix2d575i8cyn5xi";
   };
   #buildInputs = [
   #  openssl
