@@ -3,8 +3,8 @@ with import <nixpkgs> {};
 stdenv.mkDerivation rec {
   name = "envoy";
   src = fetchzip {
-    url = https://github.com/samrose/samenvoy/archive/master.zip;
-    sha256 = "0ws1yzrwnxldlwr0dgwvab3sv1afpxm2an1w01y1qln3r06l3lxf";
+    url = https://github.com/samrose/envoy/archive/tmp-demo.zip;
+    sha256 = "1c4pa30rmpfaq2xfhzpg6sgv2aibhyw2z5drlxm4l67ssy95kzwn";
   };
   unpackPhase = ":";
   
