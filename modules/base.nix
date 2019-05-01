@@ -94,6 +94,7 @@ let
     EOF
     fi
     chown holochain:holochain /var/lib/holochain/conductor-config.toml;
+    chown -R holochain:holochain /var/lib/holochain;
     chmod 0700 /var/lib/holochain/conductor-config.toml;
 
   '';
@@ -172,6 +173,7 @@ in
           (readFile ../configuration.nix);
       };
       environment.variables.NIX_STORE = "/nix/store";
+      environment.variables.TMPDIR = "/home/holochain";
       environment.systemPackages = with pkgs; [
         binutils
         cmake
