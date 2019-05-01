@@ -152,9 +152,9 @@ in
         "nixos-config=/etc/nixos/holoport-configuration.nix"
       ];
       users.users.holochain = {
-        isSystemUser = true;
+        isNormalUser = true;
         description = "Holochain conductor service user";
-        createHome = false;
+        createHome = true;
         extraGroups = [ "holochain" ];
         uid = 401;
       };
