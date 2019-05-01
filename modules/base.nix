@@ -273,7 +273,7 @@ in
           requires = [ "systemd-activation.service" ];
           serviceConfig = {
             ExecStart = ''/run/current-system/sw/bin/holochain -c /var/lib/holochain/conductor-config.toml'';
-            Restart = "always";
+            #Restart = "always";
             User = "holochain";
             StandardOutput = "journal";
             KillMode = "process";
