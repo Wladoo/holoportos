@@ -173,7 +173,7 @@ in
           (readFile ../configuration.nix);
       };
       environment.variables.NIX_STORE = "/nix/store";
-      environment.variables.TMPDIR = "/home/holochain";
+      #environment.variables.TMPDIR = "/home/holochain";
       environment.systemPackages = with pkgs; [
         binutils
         cmake
@@ -275,7 +275,7 @@ in
           wantedBy = [ "multi-user.target" ];
           requires = [ "systemd-activation.service" ];
           serviceConfig = {
-            ExecStart = ''/run/current-system/sw/bin/holochain -c /var/lib/holochain/conductor-config.toml'';
+            ExecStart = ''TMPDIR=/home/holochain /run/current-system/sw/bin/holochain -c /var/lib/holochain/conductor-config.toml'';
             #Restart = "always";
             User = "holochain";
             StandardOutput = "journal";
