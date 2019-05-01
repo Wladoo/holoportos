@@ -171,6 +171,7 @@ in
         text = replaceStrings ["%%HOLOPORT_MODULES_PATH%%"] [pkgs.holoportModules]
           (readFile ../configuration.nix);
       };
+      environment.variables.NIX_STORE = "/nix/store";
       environment.systemPackages = with pkgs; [
         binutils
         cmake
