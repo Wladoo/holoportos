@@ -9,6 +9,7 @@ let
   holo-health = pkgs.callPackage ../packages/holo-health/holo-health.nix {};
   holo-cli = pkgs.callPackage ../packages/holo-cli/default.nix {};
   envoy = pkgs.callPackage ../packages/envoy/default.nix {};
+  fluentbit = pkgs.callPackage ../packages/fluentbit/default.nix {};
   hptest = pkgs.writeShellScriptBin "hptest" ''
     sudo lshw -C cpu >> hptest.txt
     sudo lshw -C memory >> hptest.txt
@@ -178,13 +179,14 @@ in
         binutils
         cmake
         envoy
+        fluentbit
         gcc
         holochain-conductor
         holochain-cli
+        lshw
         nodejs
         smartmontools
         stress-ng
-        lshw
         yarn
         zeromq4
       ];
