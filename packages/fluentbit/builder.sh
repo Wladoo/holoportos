@@ -8,5 +8,5 @@ cd ./"$(basename "$src")"/build
 
 pwd && ls -la && cmake ../ && make
 
-mkdir --parents "$out"/bin
-cp --recursive ./bin "$out"/bin
+mkdir --parents "$out"
+cp --recursive ./bin "$out"
