@@ -1,4 +1,4 @@
-{ pkgs, stdenv, fetchgit, ... }:
+{ pkgs, stdenv, fetchgit, cmake, ... }:
 
 stdenv.mkDerivation rec {
   src = fetchgit {
