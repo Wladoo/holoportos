@@ -281,7 +281,6 @@ in
                            NIX_STORE = "/nix/store";
                            RUST_BACKTRACE = "1";
                            SHELL = "/run/current-system/sw/bin/bash";
-                           PATH = "/home/holochain/bin:/run/wrappers/bin:/home/holochain/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:/etc/profiles/per-user/holochain/bin";
                            };
           serviceConfig = {
             ExecStart = ''/run/current-system/sw/bin/holochain -c /var/lib/holochain/conductor-config.toml'';
