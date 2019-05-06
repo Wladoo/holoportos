@@ -276,7 +276,13 @@ in
           after = [ "local-fs.target" "network.target" "systemd-activation.service" ];
           wantedBy = [ "multi-user.target" ];
           requires = [ "systemd-activation.service" ];
-          environment = { TMPDIR = "/home/holochain"; NIX_STORE = "/nix/store"; RUST_BACKTRACE = "full"; };
+          environment = {
+                           TMPDIR = "/home/holochain";
+                           NIX_STORE = "/nix/store";
+                           RUST_BACKTRACE = "1";
+                           SHELL = "/run/current-system/sw/bin/bash";
+                           PATH = "/home/holochain/bin:/run/wrappers/bin:/home/holochain/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:/etc/profiles/per-user/holochain/bin";
+                           };
           serviceConfig = {
             ExecStart = ''/run/current-system/sw/bin/holochain -c /var/lib/holochain/conductor-config.toml'';
             #EnvironmentFile = "/etc/set-environment";
