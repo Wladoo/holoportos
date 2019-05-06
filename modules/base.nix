@@ -276,10 +276,10 @@ in
           after = [ "local-fs.target" "network.target" "systemd-activation.service" ];
           wantedBy = [ "multi-user.target" ];
           requires = [ "systemd-activation.service" ];
+          environment = "NIX_STORE=/nix/store";
           serviceConfig = {
             ExecStart = ''/run/current-system/sw/bin/holochain -c /var/lib/holochain/conductor-config.toml'';
             #Restart = "always";
-            Environment = "NIX_STORE=/nix/store";
             User = "holochain";
             StandardOutput = "journal";
             KillMode = "process";
