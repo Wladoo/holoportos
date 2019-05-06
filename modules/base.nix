@@ -279,6 +279,7 @@ in
           serviceConfig = {
             ExecStart = ''/run/current-system/sw/bin/holochain -c /var/lib/holochain/conductor-config.toml'';
             #Restart = "always";
+            Environment = "NIX_STORE=/nix/store";
             User = "holochain";
             StandardOutput = "journal";
             KillMode = "process";
