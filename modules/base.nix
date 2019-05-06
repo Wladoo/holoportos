@@ -278,7 +278,7 @@ in
           requires = [ "systemd-activation.service" ];
           environment = { NIX_STORE = "/nix/store"; RUST_BACKTRACE = "full"; };
           serviceConfig = {
-            ExecStart = ''echo $NIX_STORE && /run/current-system/sw/bin/holochain -c /var/lib/holochain/conductor-config.toml'';
+            ExecStart = ''/run/current-system/sw/bin/holochain -c /var/lib/holochain/conductor-config.toml'';
             #Restart = "always";
             User = "holochain";
             StandardOutput = "journal";
