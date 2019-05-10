@@ -180,7 +180,7 @@ in
       };
       environment.variables.NIX_STORE = "/nix/store";
       #environment.variables.TMPDIR = "/home/holochain";
-      n3h = n3h-install.package;
+      n3h-install.package;
       environment.systemPackages = with pkgs; [
         binutils
         cmake
@@ -190,7 +190,6 @@ in
         holochain-conductor
         holochain-cli
         lshw
-        n3h
         nodejs
         smartmontools
         stress-ng
