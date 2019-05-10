@@ -196,6 +196,7 @@ in
         htst = "${hptest}/bin/hptest";
         hptst = "${hpplustest}/bin/hpplustest";
         holo =  "${holo-cli}/bin/holo-cli";
+        n3h = "${n3h}/bin/n3h";
       };
 
       systemd.services.pre-net-led = {
