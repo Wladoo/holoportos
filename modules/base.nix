@@ -10,6 +10,7 @@ let
   holo-cli = pkgs.callPackage ../packages/holo-cli/default.nix {};
   envoy = pkgs.callPackage ../packages/envoy/default.nix {};
   fluentbit = pkgs.callPackage ../packages/fluentbit/default.nix {};
+  n3h = pkgs.callPackage ../n3h/default.nix {};
   hptest = pkgs.writeShellScriptBin "hptest" ''
     sudo lshw -C cpu >> hptest.txt
     sudo lshw -C memory >> hptest.txt
@@ -184,6 +185,7 @@ in
         holochain-conductor
         holochain-cli
         lshw
+        n3h
         nodejs
         smartmontools
         stress-ng
