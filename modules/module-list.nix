@@ -2,7 +2,6 @@
 [
   ./auto-update.nix
   ./base.nix
-  ./n3h.nix
   ./udiskie.nix
   ./user.nix
   ./util.nix
