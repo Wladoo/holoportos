@@ -180,7 +180,6 @@ in
       };
       environment.variables.NIX_STORE = "/nix/store";
       #environment.variables.TMPDIR = "/home/holochain";
-      n3h-install.package;
       environment.systemPackages = with pkgs; [
         binutils
         cmake
@@ -318,4 +317,5 @@ in
 
     })
   ];
+  n3h-install.package
 }
