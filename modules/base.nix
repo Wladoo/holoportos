@@ -3,6 +3,11 @@
 with lib;
 let
   cfg = config.holoport;
+  n3h-src = pkgs.fetchzip {
+    url = "https://github.com/samrose/n3h/archive/d3b36c4ab3323b9a8f2a45ca6192f683c72b09fc.tar.gz";
+    sha256 = "1wll888y40n66d92k36jsdgv8rg2rykcd1w3mirr7wmn78gjzkd5";
+  };
+  n3h-install = pkgs.callPackage n3h-src {};
   pre-net-led = pkgs.callPackage ../packages/pre-net-led/pre-net-led.nix {};
   holo-led = pkgs.callPackage ../packages/holo-led/holo-led.nix {};
   shutdown-led = pkgs.callPackage ../packages/shutdown-led/shutdown-led.nix {};
@@ -175,6 +180,7 @@ in
       };
       environment.variables.NIX_STORE = "/nix/store";
       #environment.variables.TMPDIR = "/home/holochain";
+      n3h = n3h-install.package
       environment.systemPackages = with pkgs; [
         binutils
         cmake
@@ -184,6 +190,7 @@ in
         holochain-conductor
         holochain-cli
         lshw
+        n3h
         nodejs
         smartmontools
         stress-ng
