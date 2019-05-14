@@ -282,6 +282,7 @@ in
           environment = {
           #  TMPDIR = "/home/holochain";
              NIX_STORE = "/nix/store";
+             USER = "holochain";
           #  RUST_BACKTRACE = "1";
           #  SHELL = "/run/current-system/sw/bin/bash";
           };
