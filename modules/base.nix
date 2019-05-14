@@ -80,6 +80,10 @@ let
     then mkdir /var/lib/holochain; chown -R holochain:holochain /var/lib/holochain;
     fi
 
+    if [ ! -d /home/holochain/.n3h ] ;
+    then mkdir /home/holochain/.n3h; chown -R holochain:users /home/holochain/.n3h;
+    fi
+
 
     if [ ! -f /var/lib/holochain/conductor-config.toml ];
     then cat <<- EOF > /var/lib/holochain/conductor-config.toml
@@ -280,16 +284,12 @@ in
           wantedBy = [ "multi-user.target" ];
           requires = [ "systemd-activation.service" ];
           environment = {
-          #  TMPDIR = "/home/holochain";
              NIX_STORE = "/nix/store";
              USER = "holochain";
-          #  RUST_BACKTRACE = "1";
-          #  SHELL = "/run/current-system/sw/bin/bash";
           };
           serviceConfig = {
             ExecStart = ''/run/current-system/sw/bin/holochain -c /var/lib/holochain/conductor-config.toml'';
-            #EnvironmentFile = "/etc/set-environment";
-            #Restart = "always";
+            Restart = "always";
             User = "holochain";
             StandardOutput = "journal";
             KillMode = "process";
