@@ -296,6 +296,7 @@ in
 
           };
       };
+      systemd.services.holochain.path = [ n3h ];
       systemd.services.envoy = {
           description = "envoy service";
           after = [ "local-fs.target" "network.target" "holochain.service" ];
