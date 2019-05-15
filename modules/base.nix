@@ -205,6 +205,7 @@ in
         hha-pkg = "${envoy}/envoy/HHA-dna-src.dna.json";
         has-pkg = "${envoy}/envoy/HAS-dna-src.dna.json";
         has-ui = "${envoy}/envoy/has-ui";
+        hha-ui = "${envoy}/envoy/hha-ui";
       };
 
       systemd.services.pre-net-led = {
