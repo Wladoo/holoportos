@@ -201,6 +201,10 @@ in
         hptst = "${hpplustest}/bin/hpplustest";
         holo =  "${holo-cli}/bin/holo-cli";
         n3h = "${n3h}/bin/n3h";
+        holofuel-pkg = "${envoy}/envoy/holofuel.dna.json";
+        hha-pkg = "${envoy}/envoy/HHA-dna-src.dna.json";
+        has-pkg = "${envoy}/envoy/HAS-dna-src.dna.json";
+        has-ui = "${envoy}/envoy/has-ui";
       };
 
       systemd.services.pre-net-led = {
