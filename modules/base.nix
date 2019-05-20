@@ -199,7 +199,7 @@ in
       programs.bash.shellAliases = {
         htst = "${hptest}/bin/hptest";
         hptst = "${hpplustest}/bin/hpplustest";
-        holo =  "${holo-cli}/bin/holo-cli";
+        holo =  "/run/wrappers/bin/sudo ${holo-cli}/bin/holo-cli";
         n3h = "${n3h}/bin/n3h";
         holofuel-pkg = "${envoy}/envoy/holofuel.dna.json";
         hha-pkg = "${envoy}/envoy/HHA-dna-src.dna.json";
