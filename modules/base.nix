@@ -81,7 +81,7 @@ let
     fi
 
     if [ ! -d /home/holochain/.n3h ] ;
-    then mkdir /home/holochain/.n3h; chown -R holochain:users /home/holochain/.n3h;
+    then mkdir /home/holochain/.n3h; chown -R holochain:holochain /home/holochain/.n3h;
     fi
 
 
